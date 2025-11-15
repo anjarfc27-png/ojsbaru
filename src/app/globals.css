@@ -26,7 +26,7 @@
   --color-primary-muted: var(--primary-muted);
   --color-border: var(--border);
   --color-muted: var(--muted);
-  --font-sans: var(--font-open-sans);
+  --font-sans: var(--font-open-sans, sans-serif);
 }
 
 body {
