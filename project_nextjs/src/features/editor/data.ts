@@ -1,0 +1,380 @@
+import { cache } from "react";
+
+import { getSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+
+import type {
+  EditorDashboardStats,
+  SubmissionActivityLog,
+  SubmissionDetail,
+  SubmissionFile,
+  SubmissionParticipant,
+  SubmissionStage,
+  SubmissionSummary,
+  SubmissionVersion,
+  SubmissionReviewRound,
+} from "./types";
+
+type ListSubmissionsParams = {
+  queue?: "my" | "all" | "archived";
+  stage?: SubmissionStage;
+  search?: string;
+  limit?: number;
+  offset?: number;
+  editorId?: string | null;
+};
+
+const FALLBACK_STATS: EditorDashboardStats = {
+  myQueue: 0,
+  inReview: 0,
+  copyediting: 0,
+  production: 0,
+  archived: 0,
+  tasks: 0,
+};
+
+export const getSessionUserId = cache(async () => {
+  try {
+    const supabase = createSupabaseServerClient();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    return session?.user?.id ?? null;
+  } catch {
+    return null;
+  }
+});
+
+export async function getEditorDashboardStats(editorId?: string | null): Promise<EditorDashboardStats> {
+  try {
+    const supabase = getSupabaseAdminClient();
+
+    const [myQueue, inReview, copyediting, production, archived, tasks] = await Promise.all([
+      countSubmissions({ supabase, filter: { queue: "my", editorId } }),
+      countSubmissions({ supabase, filter: { stage: "review" } }),
+      countSubmissions({ supabase, filter: { stage: "copyediting" } }),
+      countSubmissions({ supabase, filter: { stage: "production" } }),
+      countSubmissions({ supabase, filter: { queue: "archived" } }),
+      countTasks({ supabase, editorId }),
+    ]);
+
+    return {
+      myQueue,
+      inReview,
+      copyediting,
+      production,
+      archived,
+      tasks,
+    };
+  } catch {
+    return FALLBACK_STATS;
+  }
+}
+
+export async function listSubmissions(params: ListSubmissionsParams = {}): Promise<SubmissionSummary[]> {
+  const { queue = "all", stage, search, limit = 20, offset = 0, editorId } = params;
+  try {
+    const supabase = getSupabaseAdminClient();
+    let query = supabase
+      .from("submissions")
+      .select(
+        `
+        id,
+        title,
+        status,
+        current_stage,
+        is_archived,
+        submitted_at,
+        updated_at,
+        journal_id,
+        journals:journal_id (title)`
+      )
+      .order("updated_at", { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (queue === "archived") {
+      query = query.eq("is_archived", true);
+    } else {
+      query = query.eq("is_archived", false);
+    }
+
+    if (stage) {
+      query = query.eq("current_stage", stage);
+    }
+
+    if (search) {
+      query = query.ilike("title", `%${search}%`);
+    }
+
+    if (queue === "my" && editorId) {
+      const assignedIds = await getAssignedSubmissionIds(editorId);
+      if (assignedIds.length === 0) {
+        return [];
+      }
+      query = query.in("id", assignedIds);
+    }
+
+    const { data, error } = await query;
+    if (error || !data) {
+      throw error;
+    }
+
+    return data.map((row) => ({
+      id: row.id,
+      title: row.title,
+      journalId: row.journal_id,
+      journalTitle: (row.journals as { title?: string } | null)?.title,
+      stage: row.current_stage as SubmissionStage,
+      status: row.status,
+      isArchived: row.is_archived,
+      submittedAt: row.submitted_at,
+      updatedAt: row.updated_at,
+      assignees: [],
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export async function getSubmissionDetail(id: string): Promise<SubmissionDetail | null> {
+  try {
+    const supabase = getSupabaseAdminClient();
+    const [{ data: submission }, { data: versions }, { data: participants }, { data: files }, { data: activity }, { data: reviewRoundsData }] =
+      await Promise.all([
+        supabase
+          .from("submissions")
+          .select(
+            `
+            id,
+            title,
+            status,
+            current_stage,
+            is_archived,
+            submitted_at,
+            updated_at,
+            journal_id,
+            metadata,
+            journals:journal_id (title)`
+          )
+          .eq("id", id)
+          .single(),
+        supabase
+          .from("submission_versions")
+          .select("id, version, status, published_at, created_at, issue_id, issues:issue_id (title, year, volume)")
+          .eq("submission_id", id)
+          .order("version", { ascending: false }),
+        supabase
+          .from("submission_participants")
+          .select("user_id, role, stage, assigned_at")
+          .eq("submission_id", id),
+        supabase
+          .from("submission_files")
+          .select("id, label, stage, file_kind, storage_path, version_label, round, is_visible_to_authors, file_size, uploaded_at, uploaded_by")
+          .eq("submission_id", id)
+          .order("uploaded_at", { ascending: false })
+          .limit(50),
+        supabase
+          .from("submission_activity_logs")
+          .select("id, message, category, created_at, actor_id")
+          .eq("submission_id", id)
+          .order("created_at", { ascending: false })
+          .limit(20),
+        supabase
+          .from("submission_review_rounds")
+          .select(
+            `
+            id,
+            stage,
+            round,
+            status,
+            started_at,
+            closed_at,
+            notes,
+            submission_reviews (
+              id,
+              reviewer_id,
+              assignment_date,
+              due_date,
+              response_due_date,
+              status,
+              recommendation,
+              submitted_at
+            )
+          `,
+          )
+          .eq("submission_id", id)
+          .order("round", { ascending: true }),
+      ]);
+
+    if (!submission) {
+      return null;
+    }
+
+    const summary: SubmissionSummary = {
+      id: submission.id,
+      title: submission.title,
+      journalId: submission.journal_id,
+      journalTitle: (submission.journals as { title?: string } | null)?.title,
+      stage: submission.current_stage as SubmissionStage,
+      status: submission.status,
+      isArchived: submission.is_archived,
+      submittedAt: submission.submitted_at,
+      updatedAt: submission.updated_at,
+      assignees: [],
+    };
+
+    const mappedVersions: SubmissionVersion[] =
+      versions?.map((item) => ({
+        id: item.id,
+        version: item.version,
+        status: item.status,
+        issue: item.issues
+          ? {
+              id: item.issue_id,
+              title: (item.issues as { title?: string | null; year?: number | null; volume?: number | null }).title,
+              year: (item.issues as { year?: number | null }).year,
+              volume: (item.issues as { volume?: number | null }).volume,
+            }
+          : undefined,
+        publishedAt: item.published_at,
+        createdAt: item.created_at,
+      })) ?? [];
+
+    const mappedParticipants: SubmissionParticipant[] =
+      participants?.map((p) => ({
+        userId: p.user_id,
+        role: p.role,
+        stage: p.stage,
+        assignedAt: p.assigned_at,
+      })) ?? [];
+
+    const mappedFiles: SubmissionFile[] =
+      files?.map((file) => ({
+        id: file.id,
+        label: file.label,
+        stage: file.stage,
+        kind: (file as { file_kind?: string }).file_kind ?? "manuscript",
+        storagePath: (file as { storage_path: string }).storage_path,
+        versionLabel: (file as { version_label?: string | null }).version_label ?? null,
+        round: (file as { round?: number }).round ?? 1,
+        isVisibleToAuthors: Boolean((file as { is_visible_to_authors?: boolean }).is_visible_to_authors),
+        size: file.file_size,
+        uploadedAt: file.uploaded_at,
+        uploadedBy: file.uploaded_by,
+      })) ?? [];
+
+    const mappedActivity: SubmissionActivityLog[] =
+      activity?.map((log) => ({
+        id: log.id,
+        message: log.message,
+        category: log.category,
+        createdAt: log.created_at,
+        actorId: log.actor_id,
+      })) ?? [];
+
+    const reviewRounds: SubmissionReviewRound[] =
+      reviewRoundsData?.map((round) => ({
+        id: round.id,
+        stage: round.stage as SubmissionStage,
+        round: round.round,
+        status: round.status,
+        startedAt: round.started_at,
+        closedAt: round.closed_at,
+        notes: round.notes,
+        reviews:
+          (round.submission_reviews as {
+            id: string;
+            reviewer_id: string;
+            assignment_date: string;
+            due_date?: string | null;
+            response_due_date?: string | null;
+            status: string;
+            recommendation?: string | null;
+            submitted_at?: string | null;
+          }[])?.map((review) => ({
+            id: review.id,
+            reviewerId: review.reviewer_id,
+            assignmentDate: review.assignment_date,
+            dueDate: review.due_date ?? null,
+            responseDueDate: review.response_due_date ?? null,
+            status: review.status,
+            recommendation: review.recommendation ?? null,
+            submittedAt: review.submitted_at ?? null,
+          })) ?? [],
+      })) ?? [];
+
+    return {
+      summary,
+      metadata: submission.metadata ?? {},
+      versions: mappedVersions,
+      participants: mappedParticipants,
+      files: mappedFiles,
+      activity: mappedActivity,
+      reviewRounds,
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function countSubmissions({
+  supabase,
+  filter,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  filter: { queue?: "my" | "archived"; stage?: SubmissionStage; editorId?: string | null };
+}) {
+  let query = supabase.from("submissions").select("*", { head: true, count: "exact" });
+
+  if (filter.queue === "archived") {
+    query = query.eq("is_archived", true);
+  } else {
+    query = query.eq("is_archived", false);
+  }
+
+  if (filter.stage) {
+    query = query.eq("current_stage", filter.stage);
+  }
+
+  if (filter.queue === "my" && filter.editorId) {
+    const assignedIds = await getAssignedSubmissionIds(filter.editorId);
+    if (assignedIds.length === 0) return 0;
+    query = query.in("id", assignedIds);
+  }
+
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function countTasks({
+  supabase,
+  editorId,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  editorId?: string | null;
+}) {
+  let query = supabase.from("submission_tasks").select("*", { head: true, count: "exact" }).eq("status", "open");
+  if (editorId) {
+    query = query.eq("assignee_id", editorId);
+  }
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function getAssignedSubmissionIds(userId: string) {
+  try {
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .eq("user_id", userId)
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
