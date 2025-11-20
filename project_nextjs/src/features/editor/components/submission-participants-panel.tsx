@@ -35,7 +35,7 @@ export function SubmissionParticipantsPanel({ submissionId, journalId }: Props) 
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [search, setSearch] = useState("");
   const [userId, setUserId] = useState("");
-  const [role, setRole] = useState(JOURNAL_ROLE_OPTIONS[0].value);
+  const [role, setRole] = useState<string>(JOURNAL_ROLE_OPTIONS[0].value);
   const [stage, setStage] = useState<SubmissionStage>(SUBMISSION_STAGES[0]);
   const [feedback, setFeedback] = useState<{ tone: "success" | "error"; message: string } | null>(null);
   const [isAssigning, startAssign] = useTransition();

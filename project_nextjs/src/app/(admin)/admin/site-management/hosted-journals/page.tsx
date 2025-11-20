@@ -39,7 +39,7 @@ export default async function HostedJournalsPage() {
     journals = journals.map((j) => ({ ...j, name: j.name || nameMap.get(j.id) || j.path }));
   }
 
-  const loadError = error ? error.message : null;
+  const loadError = error && typeof error === 'object' && 'message' in error ? String(error.message) : null;
 
   return (
     <div className="min-h-screen bg-white">

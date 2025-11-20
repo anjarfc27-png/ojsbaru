@@ -103,7 +103,7 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
                       <FileText className="h-4 w-4" />
                     </Link>
                   )}
-                  {submission.status === "unassigned" && (
+                  {submission.assignees.length === 0 && (
                     <Link
                       href={`/editor/submissions/${submission.id}/assign`}
                       className="pkp_button_link text-[var(--primary)] hover:text-[var(--primary-dark)] p-1"

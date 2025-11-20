@@ -115,7 +115,7 @@ export function JournalSettingsWizard({ journal }: Props) {
 
   return (
     <div className="flex flex-col gap-6">
-      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as TabId)}>
+      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={(value) => setActiveTab(value as TabId)}>
         <TabsList>
           {TAB_LIST.map((tab) => (
             <TabsTrigger key={tab} value={tab}>

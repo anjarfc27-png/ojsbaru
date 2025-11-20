@@ -28,7 +28,8 @@ export default function TestLogin() {
         }, 1000);
       }
     } catch (error) {
-      setResult('Error: ' + error.message);
+      const message = error instanceof Error ? error.message : "Unknown error";
+      setResult('Error: ' + message);
     } finally {
       setLoading(false);
     }

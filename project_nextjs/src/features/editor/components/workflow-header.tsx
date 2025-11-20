@@ -38,25 +38,35 @@ export function WorkflowHeader({ submission, authorName = "—" }: Props) {
         </div>
         <div className="flex items-center gap-2">
           {submission.status === "published" && (
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/submissions/${submission.id}`} target="_blank">
-                View
-              </Link>
-            </Button>
+            <Link 
+              href={`/submissions/${submission.id}`} 
+              target="_blank"
+              className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              View
+            </Link>
           )}
           {submission.status !== "published" && submission.stage === "production" && (
-            <Button variant="outline" size="sm" asChild>
-              <Link href={`/submissions/${submission.id}/preview`} target="_blank">
-                Preview
-              </Link>
-            </Button>
+            <Link 
+              href={`/submissions/${submission.id}/preview`} 
+              target="_blank"
+              className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              Preview
+            </Link>
           )}
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/editor/submissions/${submission.id}#activity`}>Activity Log</Link>
-          </Button>
-          <Button variant="outline" size="sm" asChild>
-            <Link href={`/editor/submissions/${submission.id}/library`}>Submission Library</Link>
-          </Button>
+          <Link 
+            href={`/editor/submissions/${submission.id}#activity`}
+            className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Activity Log
+          </Link>
+          <Link 
+            href={`/editor/submissions/${submission.id}/library`}
+            className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Submission Library
+          </Link>
         </div>
       </div>
     </div>

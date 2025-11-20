@@ -196,7 +196,7 @@ export async function getUserRoles(userId: string) {
 
     // Get journal settings for context names (hanya jika ada context_id)
     const contextIds = userGroupsData?.map(ug => ug.context_id).filter(Boolean) || []
-    let journalSettings = []
+    let journalSettings: Array<{ journal_id: string; setting_name: string; setting_value: string }> = []
     if (contextIds.length > 0) {
       try {
         const { data: journalData, error: journalError } = await supabaseAdmin
