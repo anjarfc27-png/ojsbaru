@@ -1,61 +1,42 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { 
-  LayoutDashboard, 
-  Mail, 
-  Inbox, 
-  List, 
-  Archive, 
-  Settings, 
-  FileEdit, 
-  Eye, 
-  BookOpen, 
-  Megaphone, 
-  Users, 
-  Wrench,
-  BarChart3,
-  FileText,
-  User,
-  Layers
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
-const NAV_SECTIONS = [
+// Navigation items structure matching OJS 3.3
+interface NavItem {
+  label: string;
+  href: string;
+  submenu?: NavItem[];
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { label: "Submissions", href: "/editor" },
+  { label: "Issues", href: "/editor/issues" },
+  { label: "Announcements", href: "/editor/announcements" },
   {
-    label: "WORKFLOW",
-    items: [
-      { label: "Dashboard", href: "/editor", icon: LayoutDashboard },
-      { label: "Unassigned", href: "/editor/submissions?queue=unassigned", icon: Mail },
-      { label: "My Queue", href: "/editor/submissions?queue=my", icon: Inbox },
-      { label: "All Active", href: "/editor/submissions", icon: List },
-      { label: "Archived", href: "/editor/submissions?queue=archived", icon: Archive },
+    label: "Settings",
+    href: "/editor/settings/workflow",
+    submenu: [
+      { label: "Workflow", href: "/editor/settings/workflow" },
+      { label: "Distribution", href: "/editor/settings/distribution" },
+      { label: "Website", href: "/editor/settings/website" },
+      { label: "Access", href: "/editor/settings/access" },
+      { label: "Context", href: "/editor/settings/context" },
     ],
   },
+  { label: "Users & Roles", href: "/editor/users-roles" },
+  { label: "Tools", href: "/editor/tools" },
   {
-    label: "MONITORING",
-    items: [
-      { label: "Production", href: "/editor/submissions?stage=production", icon: Settings },
-      { label: "Copyediting", href: "/editor/submissions?stage=copyediting", icon: FileEdit },
-      { label: "Review", href: "/editor/submissions?stage=review", icon: Eye },
-    ],
-  },
-  {
-    label: "MANAGEMENT",
-    items: [
-      { label: "Issues", href: "/editor/issues", icon: FileText },
-      { label: "Announcements", href: "/editor/announcements", icon: Megaphone },
-      { label: "Users & Roles", href: "/editor/users-roles", icon: Users },
-      { label: "Settings: Workflow", href: "/editor/settings/workflow", icon: Settings },
-    ],
-  },
-  {
-    label: "STATISTICS",
-    items: [
-      { label: "Editorial", href: "/editor/statistics/editorial", icon: BarChart3 },
-      { label: "Publications", href: "/editor/statistics/publications", icon: BookOpen },
-      { label: "Users", href: "/editor/statistics/users", icon: User },
+    label: "Statistics",
+    href: "/editor/statistics/editorial",
+    submenu: [
+      { label: "Editorial", href: "/editor/statistics/editorial" },
+      { label: "Publications", href: "/editor/statistics/publications" },
+      { label: "Users", href: "/editor/statistics/users" },
     ],
   },
 ];
@@ -64,73 +45,255 @@ export function EditorSideNav() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { user } = useAuth();
+  const [openSubmenus, setOpenSubmenus] = useState<Set<string>>(new Set());
 
-  // Check if user is section editor
-  const isSectionEditor = user?.roles?.some(r => r.role_path === 'section_editor');
+  // Check if user has admin role
+  const hasAdminRole = user?.roles?.some(r => r.role_path === "admin");
 
-  // Add Sections menu for section editors
-  const navSections = isSectionEditor 
-    ? [
-        ...NAV_SECTIONS.slice(0, 2), // WORKFLOW and MONITORING
-        {
-          label: "SECTION EDITOR",
-          items: [
-            { label: "Sections", href: "/section-editor/sections", icon: Layers },
-          ],
-        },
-        ...NAV_SECTIONS.slice(2) // MANAGEMENT and STATISTICS
-      ]
-    : NAV_SECTIONS;
+  // Check if any submenu item is active to auto-expand
+  const shouldExpandSubmenu = (item: NavItem): boolean => {
+    if (!item.submenu) return false;
+    return item.submenu.some(subItem => 
+      isActive(pathname, searchParams?.toString() ?? "", subItem.href)
+    );
+  };
+
+  // Auto-expand submenus that have active items
+  useEffect(() => {
+    const initiallyOpen = new Set<string>();
+    NAV_ITEMS.forEach(item => {
+      if (item.submenu && shouldExpandSubmenu(item)) {
+        initiallyOpen.add(item.label);
+      }
+    });
+    if (initiallyOpen.size > 0) {
+      setOpenSubmenus(prev => {
+        const combined = new Set(prev);
+        initiallyOpen.forEach(label => combined.add(label));
+        return combined;
+      });
+    }
+  }, [pathname, searchParams]);
+
+  const toggleSubmenu = (label: string) => {
+    setOpenSubmenus(prev => {
+      const next = new Set(prev);
+      if (next.has(label)) {
+        next.delete(label);
+      } else {
+        next.add(label);
+      }
+      return next;
+    });
+  };
+
+  const renderNavItem = (item: NavItem) => {
+    const active = isActive(pathname, searchParams?.toString() ?? "", item.href);
+    const isSubmenuOpen = item.submenu ? openSubmenus.has(item.label) : false;
+    const hasActiveSubmenu = item.submenu ? shouldExpandSubmenu(item) : false;
+
+    return (
+      <li key={item.label} style={{ margin: 0 }}>
+        {item.submenu ? (
+          <>
+            {/* Parent item with submenu */}
+            <button
+              onClick={() => toggleSubmenu(item.label)}
+              className="pkp_nav_link"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+                padding: '0.75rem 1rem',
+                color: hasActiveSubmenu ? '#ffffff' : 'rgba(255,255,255,0.9)',
+                textDecoration: 'none',
+                fontSize: '0.9375rem',
+                fontWeight: hasActiveSubmenu ? '600' : '400',
+                backgroundColor: hasActiveSubmenu ? 'rgba(255,255,255,0.15)' : 'transparent',
+                transition: 'all 0.15s ease',
+                border: 'none',
+                background: hasActiveSubmenu ? 'rgba(255,255,255,0.15)' : 'transparent',
+                cursor: 'pointer',
+              }}
+              onMouseEnter={(e) => {
+                if (!hasActiveSubmenu) {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.95)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!hasActiveSubmenu) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
+                }
+              }}
+            >
+              <span>{item.label}</span>
+              <ChevronRight
+                className="h-4 w-4"
+                style={{
+                  width: '16px',
+                  height: '16px',
+                  transition: 'transform 0.2s ease',
+                  transform: isSubmenuOpen ? 'rotate(90deg)' : 'rotate(0deg)',
+                }}
+              />
+            </button>
+            {/* Submenu items */}
+            {isSubmenuOpen && (
+              <ul
+                style={{
+                  listStyle: 'none',
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {item.submenu.map((subItem) => {
+                  const subActive = isActive(pathname, searchParams?.toString() ?? "", subItem.href);
+                  return (
+                    <li key={subItem.href} style={{ margin: 0 }}>
+                      <Link
+                        href={subItem.href}
+                        className="pkp_nav_link"
+                        style={{
+                          display: 'block',
+                          padding: '0.625rem 1rem 0.625rem 2rem',
+                          color: subActive ? '#ffffff' : 'rgba(255,255,255,0.85)',
+                          textDecoration: 'none',
+                          fontSize: '0.875rem',
+                          fontWeight: subActive ? '600' : '400',
+                          backgroundColor: subActive ? 'rgba(255,255,255,0.15)' : 'transparent',
+                          transition: 'all 0.15s ease',
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!subActive) {
+                            e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
+                            e.currentTarget.style.color = 'rgba(255,255,255,0.95)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!subActive) {
+                            e.currentTarget.style.backgroundColor = 'transparent';
+                            e.currentTarget.style.color = 'rgba(255,255,255,0.85)';
+                          }
+                        }}
+                      >
+                        {subItem.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </>
+        ) : (
+          /* Regular menu item */
+          <Link
+            href={item.href}
+            className="pkp_nav_link"
+            style={{
+              display: 'block',
+              padding: '0.75rem 1rem',
+              color: active ? '#ffffff' : 'rgba(255,255,255,0.9)',
+              textDecoration: 'none',
+              fontSize: '0.9375rem',
+              fontWeight: active ? '600' : '400',
+              backgroundColor: active ? 'rgba(255,255,255,0.15)' : 'transparent',
+              transition: 'all 0.15s ease',
+            }}
+            onMouseEnter={(e) => {
+              if (!active) {
+                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
+                e.currentTarget.style.color = 'rgba(255,255,255,0.95)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!active) {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
+              }
+            }}
+          >
+            {item.label}
+          </Link>
+        )}
+      </li>
+    );
+  };
 
   return (
-    <aside className="pkp_structure_sidebar" style={{padding: '1.5rem'}}>
-      <nav className="pkp_nav">
-        {NAV_SECTIONS.map((section) => (
-          <div key={section.label} className="pkp_nav_group" style={{marginBottom: '2rem'}}>
-            <h4 className="pkp_nav_group_title" style={{fontSize: '0.875rem', fontWeight: 'bold', textTransform: 'uppercase', marginBottom: '0.75rem', color: 'rgba(255,255,255,0.8)', letterSpacing: '0.05em'}}>
-              {section.label}
-            </h4>
-            <ul className="pkp_nav_list" style={{listStyle: 'none', margin: 0, padding: 0}}>
-              {section.items.map((item) => {
-                const active = isActive(pathname, searchParams?.toString() ?? "", item.href);
-                const Icon = item.icon;
-                return (
-                  <li key={item.href} style={{margin: 0, marginBottom: '0.25rem'}}>
-                    <Link
-                      href={item.href}
-                      className="pkp_nav_link"
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.75rem',
-                        padding: '0.625rem 0',
-                        color: active ? 'white' : 'rgba(255,255,255,0.9)',
-                        textDecoration: 'none',
-                        fontSize: '0.9375rem',
-                        fontWeight: active ? '600' : '400',
-                        borderLeft: active ? '4px solid white' : 'none',
-                        paddingLeft: active ? '1rem' : '1.25rem',
-                        backgroundColor: active ? 'rgba(255,255,255,0.15)' : 'transparent',
-                        transition: 'all 0.2s',
-                        borderRadius: '4px'
-                      }}
-                    >
-                      <Icon className="h-5 w-5" style={{flexShrink: 0}} />
-                      <span>{item.label}</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
-      </nav>
-    </aside>
+    <nav className="pkp_nav hide-scrollbar" style={{
+      padding: '0.5rem 0',
+      overflowY: 'auto',
+      height: 'calc(100vh - 140px)',
+    }}>
+      <ul
+        className="pkp_nav_list"
+        style={{
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
+        }}
+      >
+        {NAV_ITEMS.map(renderNavItem)}
+        {/* Conditional Admin link */}
+        {hasAdminRole && (
+          <li style={{ margin: 0 }}>
+            <Link
+              href="/admin"
+              className="pkp_nav_link"
+              style={{
+                display: 'block',
+                padding: '0.75rem 1rem',
+                color: pathname?.startsWith('/admin') ? '#ffffff' : 'rgba(255,255,255,0.9)',
+                textDecoration: 'none',
+                fontSize: '0.9375rem',
+                fontWeight: pathname?.startsWith('/admin') ? '600' : '400',
+                backgroundColor: pathname?.startsWith('/admin') ? 'rgba(255,255,255,0.15)' : 'transparent',
+                transition: 'all 0.15s ease',
+              }}
+              onMouseEnter={(e) => {
+                if (!pathname?.startsWith('/admin')) {
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)';
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.95)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!pathname?.startsWith('/admin')) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
+                }
+              }}
+            >
+              Admin
+            </Link>
+          </li>
+        )}
+      </ul>
+    </nav>
   );
 }
 
 function isActive(pathname: string, queryString: string, targetHref: string) {
   const [targetPath, targetQuery] = targetHref.split("?");
+  
+  // Special case: /editor and /editor/submissions should both be active for Submissions nav
+  if (targetPath === "/editor" && (pathname === "/editor" || pathname === "/editor/submissions")) {
+    if (!targetQuery) {
+      return true;
+    }
+    // Check query params if needed
+    const current = new URLSearchParams(queryString);
+    const target = new URLSearchParams(targetQuery);
+    for (const [key, value] of target.entries()) {
+      if (current.get(key) !== value) {
+        return false;
+      }
+    }
+    return true;
+  }
+  
   if (pathname !== targetPath) {
     return false;
   }
@@ -146,4 +309,3 @@ function isActive(pathname: string, queryString: string, targetHref: string) {
   }
   return true;
 }
-

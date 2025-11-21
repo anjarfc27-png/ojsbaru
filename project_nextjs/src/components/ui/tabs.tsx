@@ -72,12 +72,12 @@ export function TabsTrigger({ value, children, className }: TabsTriggerProps) {
       type="button"
       onClick={() => onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-semibold ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-        isActive
-          ? "bg-white text-[var(--foreground)] shadow-sm"
-          : "text-[var(--muted)] hover:bg-white/50 hover:text-[var(--foreground)]",
+        "pkp_tab_trigger inline-flex items-center justify-center whitespace-nowrap transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        isActive && "pkp_tab_active",
         className,
       )}
+      data-state={isActive ? "active" : "inactive"}
+      data-value={value}
     >
       {children}
     </button>

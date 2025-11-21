@@ -1,10 +1,16 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useMemo } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { FormMessage } from "@/components/ui/form-message";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  hasStageAssignment,
+  canMakeDecision,
+} from "../dummy-helpers";
+import { STAGE_NAME_TO_ID } from "../dummy-data";
 import type { SubmissionStage, SubmissionStatus } from "../types";
 
 type Props = {
@@ -32,6 +38,14 @@ const EDITORIAL_DECISIONS: Record<SubmissionStage, EditorialDecision[]> = {
       nextStage: "review",
       status: "in_review",
       variant: "primary"
+    },
+    {
+      action: "send_to_copyediting",
+      label: "Send to Copyediting",
+      description: "Skip peer review, langsung ke tahap copyediting",
+      nextStage: "copyediting",
+      status: "accepted",
+      variant: "outline"
     },
     {
       action: "decline_submission",
@@ -123,11 +137,46 @@ const EDITORIAL_DECISIONS: Record<SubmissionStage, EditorialDecision[]> = {
 
 export function WorkflowStageActions({ submissionId, currentStage, status }: Props) {
   const router = useRouter();
+  const { user } = useAuth();
   const [note, setNote] = useState("");
   const [feedback, setFeedback] = useState<{ tone: "success" | "error"; message: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
+  // Get current user ID or fallback to dummy user ID
+  const currentUserId = user?.id || "current-user-id";
+  
+  // Get stage ID for permission checking
+  const stageId = STAGE_NAME_TO_ID[currentStage] || 1;
+
+  // Check if user has assignment and can make decisions
+  const hasAssignment = useMemo(
+    () => hasStageAssignment(submissionId, currentUserId, stageId),
+    [submissionId, currentUserId, stageId]
+  );
+
+  const canDecide = useMemo(
+    () => canMakeDecision(submissionId, currentUserId, stageId),
+    [submissionId, currentUserId, stageId]
+  );
+
   const handleDecision = (decision: EditorialDecision) => {
+    // Permission check before proceeding
+    if (!hasAssignment) {
+      setFeedback({
+        tone: "error",
+        message: "Anda tidak memiliki akses untuk melakukan keputusan editorial ini.",
+      });
+      return;
+    }
+
+    if (!canDecide) {
+      setFeedback({
+        tone: "error",
+        message: "Anda hanya dapat merekomendasikan, tidak dapat membuat keputusan final.",
+      });
+      return;
+    }
+
     startTransition(async () => {
       setFeedback(null);
       try {
@@ -155,7 +204,19 @@ export function WorkflowStageActions({ submissionId, currentStage, status }: Pro
     });
   };
 
-  const currentDecisions = EDITORIAL_DECISIONS[currentStage] || [];
+  // Filter decisions based on permissions
+  const currentDecisions = useMemo(() => {
+    const decisions = EDITORIAL_DECISIONS[currentStage] || [];
+    
+    // If user doesn't have assignment, don't show any decisions
+    if (!hasAssignment) {
+      return [];
+    }
+    
+    // If user can only recommend, disable decision actions (but still show them)
+    // In real OJS, recommend-only editors can still see but not execute
+    return decisions;
+  }, [currentStage, hasAssignment]);
 
   return (
     <div className="rounded-lg border border-[var(--border)] bg-white p-4 shadow-sm">
@@ -176,8 +237,15 @@ export function WorkflowStageActions({ submissionId, currentStage, status }: Pro
                   variant={decision.variant || "primary"}
                   onClick={() => handleDecision(decision)}
                   loading={isPending}
-                  disabled={isPending}
+                  disabled={isPending || !hasAssignment || !canDecide}
                   className="ml-2"
+                  title={
+                    !hasAssignment
+                      ? "Anda tidak memiliki akses untuk keputusan ini"
+                      : !canDecide
+                      ? "Anda hanya dapat merekomendasikan"
+                      : undefined
+                  }
                 >
                   Apply
                 </Button>
@@ -187,7 +255,9 @@ export function WorkflowStageActions({ submissionId, currentStage, status }: Pro
         </div>
         {currentDecisions.length === 0 && (
           <div className="text-sm text-[var(--muted)] text-center py-4">
-            No editorial decisions available for this stage.
+            {!hasAssignment
+              ? "Anda tidak memiliki akses untuk membuat keputusan editorial pada stage ini."
+              : "No editorial decisions available for this stage."}
           </div>
         )}
       </div>

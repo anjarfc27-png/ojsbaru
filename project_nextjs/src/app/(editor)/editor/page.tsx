@@ -2,322 +2,432 @@
 
 import { SubmissionTable } from "@/features/editor/components/submission-table";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useState } from "react";
-import type { SubmissionSummary } from "@/features/editor/types";
-
-// Dummy data - sama dengan yang digunakan di getDummySubmissions
-const dummySubmissions: SubmissionSummary[] = [
-  {
-    id: "1",
-    title: "Pemanfaatan Machine Learning untuk Prediksi Cuaca di Daerah Tropis",
-    journalId: "1",
-    journalTitle: "Jurnal Teknologi Informasi",
-    stage: "review",
-    current_stage: "review",
-    status: "in_review",
-    isArchived: false,
-    submittedAt: "2024-01-15T08:00:00Z",
-    updatedAt: "2024-01-20T10:30:00Z",
-    assignees: [],
-    author_name: "Dr. Andi Wijaya, M.Kom",
-  },
-  {
-    id: "2",
-    title: "Analisis Sentimen Terhadap Kebijakan Pemerintah Menggunakan Deep Learning",
-    journalId: "1",
-    journalTitle: "Jurnal Teknologi Informasi",
-    stage: "copyediting",
-    current_stage: "copyediting",
-    status: "queued",
-    isArchived: false,
-    submittedAt: "2024-01-10T09:15:00Z",
-    updatedAt: "2024-01-18T14:20:00Z",
-    assignees: [],
-    author_name: "Siti Nurhaliza, S.T., M.T.",
-  },
-  {
-    id: "3",
-    title: "Perancangan Sistem Informasi Manajemen Perpustakaan Berbasis Web",
-    journalId: "2",
-    journalTitle: "Jurnal Sistem Informasi",
-    stage: "production",
-    current_stage: "production",
-    status: "accepted",
-    isArchived: false,
-    submittedAt: "2024-01-05T07:30:00Z",
-    updatedAt: "2024-01-22T16:45:00Z",
-    assignees: [],
-    author_name: "Bambang Suryadi, S.Kom., M.Kom.",
-  },
-  {
-    id: "4",
-    title: "Implementasi Blockchain untuk Keamanan Data Kesehatan",
-    journalId: "1",
-    journalTitle: "Jurnal Teknologi Informasi",
-    stage: "submission",
-    current_stage: "submission",
-    status: "queued",
-    isArchived: false,
-    submittedAt: "2024-01-20T11:00:00Z",
-    updatedAt: "2024-01-21T09:15:00Z",
-    assignees: [],
-    author_name: "Dr. Ratih Pratiwi, M.Kom.",
-  },
-  {
-    id: "5",
-    title: "Kajian Perbandingan Metode Klasifikasi untuk Diagnosis Penyakit Jantung",
-    journalId: "3",
-    journalTitle: "Jurnal Kesehatan Digital",
-    stage: "review",
-    current_stage: "review",
-    status: "in_review",
-    isArchived: false,
-    submittedAt: "2023-12-20T10:00:00Z",
-    updatedAt: "2024-01-12T13:30:00Z",
-    assignees: [],
-    author_name: "Prof. Dr. Ahmad Rahman, M.Biomed.",
-  },
-  {
-    id: "6",
-    title: "Pengembangan Aplikasi Mobile untuk Monitoring Kualitas Udara",
-    journalId: "1",
-    journalTitle: "Jurnal Teknologi Informasi",
-    stage: "copyediting",
-    current_stage: "copyediting",
-    status: "queued",
-    isArchived: false,
-    submittedAt: "2024-01-12T14:00:00Z",
-    updatedAt: "2024-01-19T11:20:00Z",
-    assignees: [],
-    author_name: "Diana Putri, S.T., M.T.",
-  },
-  {
-    id: "7",
-    title: "Optimasi Algoritma Genetika untuk Penjadwalan Kuliah Otomatis",
-    journalId: "2",
-    journalTitle: "Jurnal Sistem Informasi",
-    stage: "submission",
-    current_stage: "submission",
-    status: "queued" as any, // Using queued but will be filtered as unassigned
-    isArchived: false,
-    submittedAt: "2024-01-18T09:30:00Z",
-    updatedAt: "2024-01-18T09:30:00Z",
-    assignees: [],
-    author_name: "Ir. Muhammad Faisal, M.Kom.",
-  },
-  {
-    id: "8",
-    title: "Analisis Kinerja Sistem Terdistribusi pada Lingkungan Cloud Computing",
-    journalId: "1",
-    journalTitle: "Jurnal Teknologi Informasi",
-    stage: "production",
-    current_stage: "production",
-    status: "accepted",
-    isArchived: false,
-    submittedAt: "2023-12-15T08:15:00Z",
-    updatedAt: "2024-01-23T15:00:00Z",
-    assignees: [],
-    author_name: "Dr. Citra Kusuma, M.Sc.",
-  },
-];
+import { useMemo, useEffect, useRef } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { HelpCircle } from "lucide-react";
+import {
+  getMyQueueSubmissions,
+  getUnassignedSubmissions,
+  getAllActiveSubmissions,
+  getArchivedSubmissions,
+  calculateDashboardStats,
+} from "@/features/editor/dummy-helpers";
 
 export default function EditorPage() {
-  // Filter data berdasarkan queue - sama seperti getDummySubmissions
-  const myQueue = dummySubmissions.filter(item => 
-    ["1", "2", "5", "6"].includes(item.id) // Simulate assigned submissions
+  const { user } = useAuth();
+  
+  // Use dummy user ID for demonstration (since we're using dummy data)
+  // This ensures My Queue shows dummy submissions assigned to "current-user-id"
+  const currentUserId = "current-user-id";
+  
+  // Check if user is Manager or Admin (for tab visibility)
+  const isManagerOrAdmin = useMemo(() => {
+    return user?.roles?.some(r => r.role_path === "admin" || r.role_path === "manager") ?? false;
+  }, [user]);
+  
+  // Untuk development/testing - tampilkan semua tabs
+  // TODO: Set to false setelah testing selesai dan pastikan user memiliki role Manager/Admin
+  const showAllTabsForTesting = true;
+  
+  // Filter data menggunakan helper functions yang sesuai dengan OJS 3.3 logic
+  const myQueue = useMemo(
+    () => getMyQueueSubmissions(currentUserId),
+    [currentUserId]
   );
   
-  // Unassigned: filter berdasarkan id yang tidak ada di myQueue (sama seperti getDummySubmissions)
-  // Di getDummySubmissions, unassigned filter berdasarkan status "unassigned"
-  // Tapi karena type tidak support, kita filter berdasarkan id yang tidak assigned
-  const assignedIds = ["1", "2", "5", "6"];
-  const unassigned = dummySubmissions.filter(item => 
-    !assignedIds.includes(item.id) && !item.isArchived && item.stage === "submission"
+  const unassigned = useMemo(() => getUnassignedSubmissions(), []);
+  
+  const active = useMemo(() => getAllActiveSubmissions(), []);
+  
+  const archived = useMemo(
+    () => getArchivedSubmissions(currentUserId, isManagerOrAdmin),
+    [currentUserId, isManagerOrAdmin]
   );
-  
-  const active = dummySubmissions.filter(item => !item.isArchived);
-  
-  const archived = dummySubmissions.filter(item => item.isArchived);
 
-  // Calculate stats - sama seperti getEditorDashboardStats
-  const stats = {
-    myQueue: myQueue.length,
-    unassigned: unassigned.length,
-    submission: active.filter(s => s.stage === "submission").length,
-    inReview: active.filter(s => s.stage === "review").length,
-    copyediting: active.filter(s => s.stage === "copyediting").length,
-    production: active.filter(s => s.stage === "production").length,
-    allActive: active.length,
-    archived: archived.length,
-    tasks: 0,
-  };
+  // Calculate stats real-time menggunakan helper function
+  const stats = useMemo(
+    () => calculateDashboardStats(currentUserId, isManagerOrAdmin),
+    [currentUserId, isManagerOrAdmin]
+  );
+
+  // Update tab active styling based on Tabs context
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const container = tabsContainerRef.current;
+    if (!container) return;
+
+    const updateTabStyling = () => {
+      const triggers = container.querySelectorAll('[data-value]');
+      triggers.forEach((trigger) => {
+        const el = trigger as HTMLElement;
+        const value = el.getAttribute('data-value');
+        const isActive = el.getAttribute('data-state') === 'active';
+        
+        if (isActive) {
+          el.style.backgroundColor = '#ffffff'; // White background for active tab
+          el.style.color = 'rgba(0, 0, 0, 0.84)'; // Dark grey text
+          el.style.borderTop = 'none';
+          el.style.borderRight = 'none';
+          el.style.borderBottom = '2px solid #006798'; // Blue underline at bottom
+          el.style.borderLeft = 'none';
+          el.style.marginBottom = '0';
+          el.classList.add('pkp_tab_active');
+
+          // Active badge styling - dark grey border and text
+          const badge = el.querySelector('span');
+          if (badge) {
+            badge.style.backgroundColor = '#ffffff';
+            badge.style.border = '1px solid rgba(0, 0, 0, 0.2)';
+            badge.style.color = 'rgba(0, 0, 0, 0.54)';
+          }
+        } else {
+          el.style.backgroundColor = 'transparent';
+          el.style.color = '#006798'; // Blue text for inactive tabs
+          el.style.borderTop = 'none';
+          el.style.borderRight = 'none';
+          el.style.borderBottom = '2px solid transparent';
+          el.style.borderLeft = 'none';
+          el.classList.remove('pkp_tab_active');
+
+          // Inactive badge styling - blue border and text
+          const badge = el.querySelector('span');
+          if (badge) {
+            badge.style.backgroundColor = '#ffffff';
+            badge.style.border = '1px solid #006798';
+            badge.style.color = '#006798';
+          }
+        }
+      });
+    };
+
+    // Initial update
+    updateTabStyling();
+
+    // Watch for changes
+    const observer = new MutationObserver(updateTabStyling);
+    observer.observe(container, {
+      attributes: true,
+      attributeFilter: ['data-state'],
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="space-y-10" style={{ gap: '2.5rem' }}>
-      {/* Breadcrumbs */}
-      <nav style={{ marginBottom: '1rem', fontSize: '1rem', color: '#666666' }}>
-        <span style={{ color: '#666666' }}>Home</span>
-        <span style={{ margin: '0 0.5rem', color: '#999999' }}>/</span>
-        <span style={{ color: '#666666' }}>Editorial</span>
-        <span style={{ margin: '0 0.5rem', color: '#999999' }}>/</span>
-        <span style={{ color: '#333333', fontWeight: '500' }}>Submissions</span>
-      </nav>
-
+    <section style={{ padding: 0 }}>
       {/* Page Header - OJS 3.3 Style */}
       <div style={{ marginBottom: '1.5rem' }}>
         <h1 className="app__pageHeading" style={{
           fontSize: '1.75rem',
-          fontWeight: 'bold',
-          marginBottom: '0.5rem',
+          fontWeight: 700,
+          margin: 0,
+          padding: 0,
+          lineHeight: '2.25rem',
           color: '#002C40'
         }}>
           Submissions
         </h1>
-        <p style={{
-          fontSize: '1rem',
-          color: '#666666',
-          marginTop: '0.25rem'
-        }}>
-          Manage journal submissions and editorial workflow
-        </p>
       </div>
 
       {/* Tabs - OJS 3.3 Style */}
       <Tabs defaultValue="myQueue" className="w-full">
-        <div style={{
-          borderBottom: '2px solid #ddd',
-          marginBottom: '1.5rem'
-        }}>
-          <TabsList className="bg-transparent p-0 h-auto">
-            <div style={{
-              padding: '0.75rem 1.25rem',
-              fontSize: '1rem',
-              fontWeight: '500',
-              color: '#666666',
-              marginBottom: '-2px',
-              display: 'inline-block'
-            }}>
+        <div 
+          ref={tabsContainerRef}
+          style={{
+            borderBottom: '2px solid #e5e5e5',
+            marginBottom: '1.5rem',
+            background: '#ffffff',
+            padding: 0,
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'flex-end'
+          }}
+        >
+          <TabsList className="bg-transparent p-0 h-auto" style={{
+            display: 'flex',
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            background: 'transparent',
+            alignItems: 'flex-end',
+            flex: 1,
+            gap: '0.25rem'
+          }}>
+            {/* My Queue Tab */}
               <TabsTrigger 
                 value="myQueue" 
-                className="data-[state=active]:border-b-2 data-[state=active]:border-[#006798] data-[state=active]:text-[#006798] data-[state=active]:font-semibold data-[state=active]:bg-transparent bg-transparent border-b-2 border-transparent rounded-none p-0 h-auto"
+              className="pkp_tab_trigger"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0 1rem',
+                lineHeight: '3rem',
+                height: '3rem',
+                fontSize: '0.875rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+                color: 'rgba(0, 0, 0, 0.84)',
+                backgroundColor: 'transparent',
+                border: 'none',
+                borderBottom: '2px solid transparent',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                position: 'relative',
+                whiteSpace: 'nowrap'
+              }}
               >
                 My Queue
                 {stats?.myQueue > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
-                    backgroundColor: '#006798',
-                    color: 'white',
-                    padding: '0.25rem 0.625rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.875rem',
-                    fontWeight: '600'
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: 'rgba(0, 0, 0, 0.54)',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                   }}>
                     {stats.myQueue}
                   </span>
                 )}
               </TabsTrigger>
-            </div>
-            <div style={{
-              padding: '0.75rem 1.25rem',
-              fontSize: '1rem',
-              fontWeight: '500',
-              color: '#666666',
-              marginBottom: '-2px',
-              display: 'inline-block'
-            }}>
+            
+            {/* Unassigned Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
               <TabsTrigger 
                 value="unassigned"
-                className="data-[state=active]:border-b-2 data-[state=active]:border-[#006798] data-[state=active]:text-[#006798] data-[state=active]:font-semibold data-[state=active]:bg-transparent bg-transparent border-b-2 border-transparent rounded-none p-0 h-auto"
+                className="pkp_tab_trigger"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0 1rem',
+                  lineHeight: '3rem',
+                  height: '3rem',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  color: '#006798',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  borderBottom: '2px solid transparent',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  position: 'relative',
+                  whiteSpace: 'nowrap'
+                }}
               >
                 Unassigned
                 {stats?.unassigned > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
-                    backgroundColor: '#006798',
-                    color: 'white',
-                    padding: '0.25rem 0.625rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.875rem',
-                    fontWeight: '600'
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     {stats.unassigned}
                   </span>
                 )}
               </TabsTrigger>
-            </div>
-            <div style={{
-              padding: '0.75rem 1.25rem',
-              fontSize: '1rem',
-              fontWeight: '500',
-              color: '#666666',
-              marginBottom: '-2px',
-              display: 'inline-block'
-            }}>
+            )}
+            
+            {/* All Active Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
               <TabsTrigger 
                 value="active"
-                className="data-[state=active]:border-b-2 data-[state=active]:border-[#006798] data-[state=active]:text-[#006798] data-[state=active]:font-semibold data-[state=active]:bg-transparent bg-transparent border-b-2 border-transparent rounded-none p-0 h-auto"
+                className="pkp_tab_trigger"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  padding: '0 1rem',
+                  lineHeight: '3rem',
+                  height: '3rem',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  color: '#006798',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  borderBottom: '2px solid transparent',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  position: 'relative',
+                  whiteSpace: 'nowrap'
+                }}
               >
-                Active
+                All Active
                 {stats?.allActive > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
-                    backgroundColor: '#006798',
-                    color: 'white',
-                    padding: '0.25rem 0.625rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.875rem',
-                    fontWeight: '600'
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}>
                     {stats.allActive}
                   </span>
                 )}
               </TabsTrigger>
-            </div>
-            <div style={{
-              padding: '0.75rem 1.25rem',
-              fontSize: '1rem',
-              fontWeight: '500',
-              color: '#666666',
-              marginBottom: '-2px',
-              display: 'inline-block'
-            }}>
+            )}
+            
+            {/* Archives Tab - Always visible for Editor */}
               <TabsTrigger 
                 value="archive"
-                className="data-[state=active]:border-b-2 data-[state=active]:border-[#006798] data-[state=active]:text-[#006798] data-[state=active]:font-semibold data-[state=active]:bg-transparent bg-transparent border-b-2 border-transparent rounded-none p-0 h-auto"
-              >
-                Archive
+              className="pkp_tab_trigger"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '0 1rem',
+                lineHeight: '3rem',
+                height: '3rem',
+                fontSize: '0.875rem',
+                fontWeight: 700,
+                textDecoration: 'none',
+                color: '#006798',
+                backgroundColor: 'transparent',
+                border: 'none',
+                borderBottom: '2px solid transparent',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                position: 'relative',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              Archives
                 {stats?.archived > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
-                    backgroundColor: '#006798',
-                    color: 'white',
-                    padding: '0.25rem 0.625rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.875rem',
-                    fontWeight: '600'
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: '#006798',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                   }}>
                     {stats.archived}
                   </span>
                 )}
               </TabsTrigger>
-            </div>
           </TabsList>
+          
+          {/* Help Link - Right side of tabs */}
+          <div style={{
+            padding: '0 1rem',
+            display: 'flex',
+            alignItems: 'center',
+            height: '3rem'
+          }}>
+            <a
+              href="#"
+              title="Help"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                textDecoration: 'none',
+                color: 'inherit',
+                fontSize: '0.875rem'
+              }}
+              className="hover:opacity-80"
+            >
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: '#00B24E', /* OJS green */
+                color: 'white',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                lineHeight: '1',
+                flexShrink: 0
+              }}>
+                i
+              </span>
+              <span style={{
+                color: '#006798',
+                fontSize: '0.875rem',
+                fontWeight: 400
+              }}>
+                Help
+              </span>
+            </a>
+          </div>
         </div>
 
-        <TabsContent value="myQueue">
-          <SubmissionTable submissions={myQueue} emptyMessage="Tidak ada submission di My Queue." />
+        {/* Tab Contents - Role-based visibility */}
+        <TabsContent value="myQueue" style={{ position: 'relative' }}>
+          <SubmissionTable 
+            submissions={myQueue} 
+            emptyMessage="Tidak ada submission di My Queue."
+            tabLabel="My Assigned"
+          />
         </TabsContent>
 
-        <TabsContent value="unassigned">
-          <SubmissionTable submissions={unassigned} emptyMessage="Tidak ada submission yang belum ditugaskan." />
-        </TabsContent>
+        {/* Unassigned and All Active only visible for Manager/Admin */}
+        {(isManagerOrAdmin || showAllTabsForTesting) && (
+          <>
+            <TabsContent value="unassigned" style={{ position: 'relative' }}>
+              <SubmissionTable 
+                submissions={unassigned} 
+                emptyMessage="Tidak ada submission yang belum ditugaskan."
+                tabLabel="Unassigned"
+              />
+            </TabsContent>
 
-        <TabsContent value="active">
-          <SubmissionTable submissions={active} emptyMessage="Tidak ada submission aktif." />
-        </TabsContent>
+            <TabsContent value="active" style={{ position: 'relative' }}>
+              <SubmissionTable 
+                submissions={active} 
+                emptyMessage="Tidak ada submission aktif."
+                tabLabel="All Active"
+              />
+            </TabsContent>
+          </>
+        )}
 
-        <TabsContent value="archive">
-          <SubmissionTable submissions={archived} emptyMessage="Tidak ada submission yang diarsipkan." />
+        <TabsContent value="archive" style={{ position: 'relative' }}>
+          <SubmissionTable 
+            submissions={archived} 
+            emptyMessage="Tidak ada submission yang diarsipkan."
+            tabLabel="Archives"
+          />
         </TabsContent>
       </Tabs>
     </section>

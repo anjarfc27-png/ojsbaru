@@ -86,3 +86,47 @@ export const JOURNAL_ROLE_OPTIONS = [
 
 export type JournalRoleValue = (typeof JOURNAL_ROLE_OPTIONS)[number]["value"];
 
+// User Group types based on OJS PKP 3.3
+export type UserGroup = {
+  id: string;
+  context_id: string;
+  role_id: number;
+  is_default: boolean;
+  show_title: boolean;
+  permit_self_registration: boolean;
+  permit_metadata_edit: boolean;
+  recommend_only: boolean;
+  name?: string; // From user_group_settings
+  stages?: number[]; // From user_group_stage
+};
+
+export type UserGroupStage = {
+  context_id: string;
+  user_group_id: string;
+  stage_id: number;
+  created_at: string;
+};
+
+export type StageAssignment = {
+  id: string;
+  submission_id: string;
+  user_group_id: string;
+  user_id: string;
+  date_assigned: string;
+  recommend_only: boolean;
+  can_change_metadata: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+// Workflow stages constants based on OJS PKP 3.3
+export const WORKFLOW_STAGES = {
+  SUBMISSION: 1,
+  INTERNAL_REVIEW: 2,
+  EXTERNAL_REVIEW: 3,
+  COPYEDITING: 4,
+  PRODUCTION: 5,
+} as const;
+
+export type WorkflowStage = (typeof WORKFLOW_STAGES)[keyof typeof WORKFLOW_STAGES];
+

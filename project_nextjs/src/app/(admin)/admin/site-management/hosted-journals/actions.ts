@@ -262,24 +262,110 @@ export async function updateJournalSettingsSection(
   }
 }
 
+// Mapping role string to role_id based on OJS PKP 3.3
+const ROLE_TO_ROLE_ID: Record<string, number> = {
+  manager: 16,
+  editor: 16,
+  section_editor: 17,
+  guest_editor: 17,
+  reviewer: 4096,
+  author: 65536,
+  reader: 1048576,
+  copyeditor: 4097,
+  proofreader: 4097,
+  "layout-editor": 4097,
+};
+
+const ROLE_ID_TO_ROLE: Record<number, string> = {
+  16: "manager",
+  17: "section_editor",
+  4096: "reviewer",
+  65536: "author",
+  1048576: "reader",
+  4097: "copyeditor",
+};
+
 export async function listJournalUserRoles(journalId: string) {
   const supabase = getSupabaseAdminClient();
+  
+  // Get users with their user groups for this journal
   const { data, error } = await supabase
-    .from("journal_user_roles")
-    .select("user_id, role, assigned_at")
-    .eq("journal_id", journalId)
-    .order("user_id", { ascending: true });
+    .from("user_user_groups")
+    .select(`
+      user_id,
+      created_at,
+      user_groups!inner(
+        id,
+        role_id,
+        context_id
+      )
+    `)
+    .eq("user_groups.context_id", journalId);
+
   if (error || !data) {
     return [];
   }
-  return data;
+
+  // Transform to match old format
+  return data.map((row: any) => ({
+    user_id: row.user_id,
+    role: ROLE_ID_TO_ROLE[row.user_groups.role_id] || "unknown",
+    assigned_at: row.created_at,
+  }));
 }
 
 export async function addJournalUserRole(journalId: string, userId: string, role: string) {
   const supabase = getSupabaseAdminClient();
+  
+  // Get role_id from role string
+  const roleId = ROLE_TO_ROLE_ID[role];
+  if (!roleId) {
+    return { success: false, message: `Role "${role}" tidak valid.` };
+  }
+
+  // Find or create user_group for this journal and role_id
+  let { data: userGroup, error: userGroupError } = await supabase
+    .from("user_groups")
+    .select("id")
+    .eq("context_id", journalId)
+    .eq("role_id", roleId)
+    .single();
+
+  if (userGroupError && userGroupError.code === "PGRST116") {
+    // User group doesn't exist, create it
+    const { data: newUserGroup, error: createError } = await supabase
+      .from("user_groups")
+      .insert({
+        context_id: journalId,
+        role_id: roleId,
+        is_default: false,
+        show_title: roleId === 16 || roleId === 17,
+        permit_self_registration: roleId === 65536 || roleId === 4096 || roleId === 1048576,
+        permit_metadata_edit: roleId === 16 || roleId === 17 || roleId === 65536 || roleId === 4097,
+        recommend_only: roleId === 17,
+      })
+      .select("id")
+      .single();
+
+    if (createError) {
+      return { success: false, message: "Tidak dapat membuat user group." };
+    }
+    userGroup = newUserGroup;
+  } else if (userGroupError) {
+    return { success: false, message: "Tidak dapat menemukan user group." };
+  }
+
+  // Add user to user_group
   const { error } = await supabase
-    .from("journal_user_roles")
-    .upsert({ journal_id: journalId, user_id: userId, role }, { onConflict: "journal_id,user_id,role" });
+    .from("user_user_groups")
+    .upsert(
+      {
+        user_id: userId,
+        user_group_id: userGroup!.id,
+      },
+      { onConflict: "user_id,user_group_id" }
+    );
+
   if (error) {
     return { success: false, message: "Tidak dapat menambahkan peran pengguna." };
   }
@@ -288,12 +374,32 @@ export async function addJournalUserRole(journalId: string, userId: string, role
 
 export async function removeJournalUserRole(journalId: string, userId: string, role: string) {
   const supabase = getSupabaseAdminClient();
+  
+  // Get role_id from role string
+  const roleId = ROLE_TO_ROLE_ID[role];
+  if (!roleId) {
+    return { success: false, message: `Role "${role}" tidak valid.` };
+  }
+
+  // Find user_group for this journal and role_id
+  const { data: userGroup, error: userGroupError } = await supabase
+    .from("user_groups")
+    .select("id")
+    .eq("context_id", journalId)
+    .eq("role_id", roleId)
+    .single();
+
+  if (userGroupError || !userGroup) {
+    return { success: false, message: "User group tidak ditemukan." };
+  }
+
+  // Remove user from user_group
   const { error } = await supabase
-    .from("journal_user_roles")
+    .from("user_user_groups")
     .delete()
-    .eq("journal_id", journalId)
     .eq("user_id", userId)
-    .eq("role", role);
+    .eq("user_group_id", userGroup.id);
+
   if (error) {
     return { success: false, message: "Tidak dapat menghapus peran pengguna." };
   }

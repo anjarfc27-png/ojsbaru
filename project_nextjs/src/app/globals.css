@@ -359,3 +359,163 @@ a:hover {
   margin: 0 0.5rem;
   color: #9ca3af;
 }
+
+/* Hide scrollbar but keep scrolling functionality */
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* OJS 3.3 Tab Styling */
+.pkp_tab_trigger {
+  position: relative;
+}
+
+.pkp_tab_trigger[data-state="active"],
+.pkp_tab_trigger.pkp_tab_active {
+  background-color: #ffffff !important; /* White background for active tab */
+  color: rgba(0, 0, 0, 0.84) !important; /* text-light-rgba - dark grey text */
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: 2px solid #006798 !important; /* primary (blue) underline at bottom */
+  border-left: none !important;
+  margin-bottom: 0 !important;
+  position: relative;
+  z-index: 1;
+}
+
+.pkp_tab_trigger:hover:not([data-state="active"]):not(.pkp_tab_active) {
+  border-bottom: 2px solid #a0d3e8 !important; /* primary-lift on hover */
+  margin-bottom: -2px !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.pkp_tab_trigger:focus {
+  outline: none;
+}
+
+/* OJS 3.3 Table/Card Styling */
+.pkp_controllers_grid {
+  position: relative;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.pkp_controllers_grid .header {
+  position: relative;
+  padding: 0 0.5rem 0 1rem;
+  border-bottom: 1px solid #eee;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 3rem;
+  line-height: 3rem;
+}
+
+.pkp_controllers_grid .header h4 {
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  line-height: 2rem;
+  font-weight: 400;
+}
+
+.pkp_controllers_grid .header .actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  list-style: none;
+  margin: 0;
+}
+
+.pkp_controllers_grid table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.pkp_controllers_grid_table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.pkp_controllers_grid .gridRow:not(:first-child),
+.pkp_controllers_grid_table .gridRow:not(:first-child) {
+  border-top: 1px solid #eee;
+}
+
+.pkp_controllers_grid thead,
+.pkp_controllers_grid_table thead {
+  font-size: 0.75rem;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.pkp_controllers_grid thead th,
+.pkp_controllers_grid_table thead th {
+  padding: 0.5rem 1rem;
+  vertical-align: top;
+  font-weight: 400;
+  text-align: left;
+  box-shadow: inset 0 -1px 0 #eee;
+}
+
+.pkp_controllers_grid td,
+.pkp_controllers_grid_table td {
+  padding: 0.5rem 1rem;
+  vertical-align: top;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  position: relative;
+}
+
+.pkp_controllers_grid .empty,
+.pkp_controllers_grid_table .empty {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.54);
+  font-style: italic;
+}
+
+/* Link actions styling */
+.pkp_linkaction {
+  color: #006798;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.pkp_linkaction:hover {
+  color: #005a87;
+  text-decoration: underline;
+}
+
+/* Button link styling */
+.pkp_button_link {
+  color: #006798;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  transition: opacity 0.2s ease;
+}
+
+.pkp_button_link:hover {
+  color: #005a87;
+  opacity: 0.8;
+}

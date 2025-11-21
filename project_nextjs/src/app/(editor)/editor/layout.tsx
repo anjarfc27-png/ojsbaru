@@ -82,7 +82,7 @@ export default function EditorLayout({ children }: Props) {
   }, [user, loading, router]);
 
   if (authorized === null) {
-    return <div className="min-h-screen bg-[var(--surface-muted)]" />;
+    return <div className="min-h-screen bg-[#eaedee]" />;
   }
 
   if (!authorized) {
@@ -95,17 +95,38 @@ export default function EditorLayout({ children }: Props) {
   }
 
   return (
-    <div className="pkp_structure_page" style={{minHeight: '100vh', backgroundColor: '#eaedee'}}>
-      {/* Top Bar - Dark Blue */}
-      <header className="bg-[#002C40] text-white" style={{backgroundColor: '#002C40'}}>
-        <div className="px-6 py-4 flex items-center justify-between" style={{padding: '1rem 1.5rem'}}>
+    <div className="pkp_structure_page" style={{
+      minHeight: '100vh', 
+      backgroundColor: '#eaedee',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      {/* Top Header Bar - Dark Blue */}
+      <header 
+        className="bg-[#002C40] text-white" 
+        style={{
+          backgroundColor: '#002C40',
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+        }}
+      >
+        <div 
+          className="flex items-center justify-between" 
+          style={{
+            padding: '0.875rem 1.5rem',
+            maxWidth: '100%',
+          }}
+        >
           {/* Left: Open Journal Systems */}
           <div className="flex items-center gap-6">
             <Dropdown
               button={
                 <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                  <span className="text-white text-base font-medium" style={{fontSize: '1rem'}}>Open Journal Systems</span>
-                  <ChevronDown className="h-4 w-4 text-white" />
+                  <span className="text-white text-base font-medium" style={{fontSize: '0.9375rem', fontWeight: '500'}}>
+                    Open Journal Systems
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white" style={{width: '16px', height: '16px'}} />
                 </div>
               }
               align="left"
@@ -137,7 +158,7 @@ export default function EditorLayout({ children }: Props) {
             <Dropdown
               button={
                 <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity relative">
-                  <Bell className="h-5 w-5 text-white" />
+                  <Bell className="h-5 w-5 text-white" style={{width: '20px', height: '20px'}} />
                 </div>
               }
               align="right"
@@ -153,7 +174,7 @@ export default function EditorLayout({ children }: Props) {
             <Dropdown
               button={
                 <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                  <User className="h-5 w-5 text-white" />
+                  <User className="h-5 w-5 text-white" style={{width: '20px', height: '20px'}} />
                 </div>
               }
               align="right"
@@ -183,18 +204,42 @@ export default function EditorLayout({ children }: Props) {
         </div>
       </header>
       
-      
-      {/* Main Content Area - Single sidebar only */}
-      <div className="pkp_structure_content_wrapper" style={{display: 'flex', minHeight: 'calc(100vh - 120px)'}}>
-        {/* Single Sidebar - Left side */}
-        <div className="pkp_structure_sidebar left" style={{width: '300px', backgroundColor: '#002C40', color: 'white', borderRight: '1px solid rgba(255,255,255,0.1)'}}>
-          {/* Sidebar Header */}
-          <div style={{padding: '1.5rem 1.25rem', borderBottom: '1px solid rgba(255,255,255,0.1)'}}>
-            {/* iamJOS Logo - Smaller */}
-            <div className="mb-4" style={{marginBottom: '1rem'}}>
-              <div className="flex items-baseline gap-1.5">
+      {/* Main Content Area - Flex Layout */}
+      <div 
+        className="pkp_structure_content_wrapper" 
+        style={{
+          display: 'flex',
+          flex: 1,
+          minHeight: 0,
+        }}
+      >
+        {/* Fixed Left Sidebar */}
+        <aside 
+          className="pkp_structure_sidebar left hide-scrollbar" 
+          style={{
+            width: '280px',
+            backgroundColor: '#002C40',
+            color: 'white',
+            position: 'fixed',
+            left: 0,
+            top: '57px',
+            bottom: 0,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            zIndex: 90,
+            scrollbarWidth: 'none', /* Firefox */
+            msOverflowStyle: 'none', /* IE and Edge */
+          }}
+        >
+          {/* Sidebar Header with Logo */}
+          <div style={{
+            padding: '1.5rem 1.25rem',
+          }}>
+            {/* iamJOS Logo - Matching Admin Style */}
+            <div style={{ marginBottom: '1rem' }}>
+              <div className="flex items-baseline gap-2" style={{ marginBottom: '0.5rem' }}>
                 <span className="text-white font-bold" style={{
-                  fontSize: '1.75rem',
+                  fontSize: '2.5rem',
                   lineHeight: '1',
                   fontWeight: 'bold',
                   letterSpacing: '-0.02em'
@@ -202,7 +247,7 @@ export default function EditorLayout({ children }: Props) {
                   iam
                 </span>
                 <span className="text-white font-bold" style={{
-                  fontSize: '2rem',
+                  fontSize: '3rem',
                   lineHeight: '1',
                   fontWeight: 'bold',
                   letterSpacing: '-0.02em'
@@ -210,24 +255,47 @@ export default function EditorLayout({ children }: Props) {
                   JOS
                 </span>
               </div>
+              <div className="text-white uppercase tracking-wider opacity-85" style={{
+                fontSize: '0.65rem',
+                letterSpacing: '0.2em',
+                lineHeight: '1.5',
+                fontWeight: '500',
+                marginTop: '0.5rem'
+              }}>
+                INTEGRATED ACADEMIC MANAGEMENT
+              </div>
+              <div className="text-white uppercase tracking-wider opacity-85" style={{
+                fontSize: '0.65rem',
+                letterSpacing: '0.2em',
+                lineHeight: '1.5',
+                fontWeight: '500'
+              }}>
+                OPEN JOURNAL SYSTEMS
+              </div>
             </div>
           </div>
+          
+          {/* Navigation */}
           <EditorSideNav />
-        </div>
+        </aside>
         
-        {/* Main Content */}
-        <main className="pkp_structure_main" style={{
-          flex: 1, 
-          backgroundColor: '#ffffff', 
-          padding: '2.5rem',
-          color: '#333333',
-          fontSize: '1rem',
-          lineHeight: '1.6'
-        }}>
+        {/* Main Content Area */}
+        <main 
+          className="pkp_structure_main" 
+          style={{
+            flex: 1,
+            marginLeft: '280px',
+            backgroundColor: '#ffffff',
+            padding: '2rem 2.5rem',
+            color: '#333333',
+            fontSize: '1rem',
+            lineHeight: '1.6',
+            minHeight: 'calc(100vh - 57px)',
+          }}
+        >
           {children}
         </main>
       </div>
-      
     </div>
   );
 }

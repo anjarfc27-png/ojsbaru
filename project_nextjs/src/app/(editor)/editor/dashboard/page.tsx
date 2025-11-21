@@ -1,125 +1,351 @@
 "use client";
 
 import Link from "next/link";
-import { FileText, Users, BookOpen, BarChart3, Settings } from "lucide-react";
+import { FileText, Users, BookOpen, BarChart3, Settings, LayoutDashboard, Inbox } from "lucide-react";
 
 export default function EditorDashboardPage() {
-  const dashboardCards = [
-    {
-      title: "Submissions",
-      description: "View and manage manuscript submissions",
-      href: "/editor/submissions",
-      icon: FileText,
-    },
-    {
-      title: "Review Process",
-      description: "Manage peer review assignments and decisions",
-      href: "/editor/submissions?stage=review",
-      icon: Users,
-    },
-    {
-      title: "Issues",
-      description: "Create and manage journal issues",
-      href: "/editor/issues",
-      icon: BookOpen,
-    },
-    {
-      title: "Statistics",
-      description: "View submission and review statistics",
-      href: "/editor/statistics",
-      icon: BarChart3,
-    },
-    {
-      title: "Editorial Settings",
-      description: "Configure editorial workflow settings",
-      href: "/editor/settings/workflow",
-      icon: Settings,
-    },
-  ];
-
   return (
-    <section className="space-y-10" style={{ gap: '2.5rem' }}>
+    <div style={{
+      maxWidth: '100%',
+    }}>
       {/* Page Header */}
-      <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 className="app__pageHeading" style={{
-          fontSize: '2rem',
-          fontWeight: 'bold',
+      <div style={{
+        marginBottom: '2rem',
+        paddingBottom: '1rem',
+        borderBottom: '2px solid #e5e7eb',
+      }}>
+        <h1 style={{
+          fontSize: '1.75rem',
+          fontWeight: '600',
           marginBottom: '0.5rem',
-          color: '#002C40'
+          color: '#002C40',
+          lineHeight: '1.2',
         }}>
-          Editor Dashboard
+          Dashboard
         </h1>
         <p style={{
-          fontSize: '1.125rem',
+          fontSize: '0.9375rem',
           color: '#666666',
-          marginTop: '0.5rem'
+          margin: 0,
         }}>
-          Kelola alur editorial dan naskah
+          Welcome to the Editorial Dashboard. Manage your submissions and editorial workflow.
         </p>
       </div>
 
-      {/* Dashboard Cards Grid */}
-      <div className="grid grid-cols-3 gap-6" style={{
+      {/* Quick Stats Grid */}
+      <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '1.5rem',
-        maxWidth: '1200px',
-        margin: '0 auto'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        gap: '1.25rem',
+        marginBottom: '2.5rem',
       }}>
-        {dashboardCards.map((card) => {
-          const Icon = card.icon;
-          return (
-            <Link
-              key={card.href}
-              href={card.href}
-              className="block"
-              style={{
-                textDecoration: 'none',
-                color: 'inherit'
-              }}
-            >
-              <div style={{
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
-                borderRadius: '8px',
-                padding: '2rem',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-                transition: 'all 0.2s',
-                cursor: 'pointer',
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-              className="hover:shadow-lg hover:-translate-y-1 transition-all"
-              >
-                <div style={{
-                  marginBottom: '1rem',
-                  color: '#006798'
-                }}>
-                  <Icon className="h-8 w-8" />
-                </div>
-                <h2 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 'bold',
-                  color: '#002C40',
-                  marginBottom: '0.5rem'
-                }}>
-                  {card.title}
-                </h2>
-                <p style={{
-                  fontSize: '0.875rem',
-                  color: '#666666',
-                  lineHeight: '1.5',
-                  margin: 0
-                }}>
-                  {card.description}
-                </p>
-              </div>
-            </Link>
-          );
-        })}
+        <div style={{
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #e5e7eb',
+          borderRadius: '6px',
+          padding: '1.25rem',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '0.5rem',
+          }}>
+            <span style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              fontWeight: '500',
+            }}>
+              My Queue
+            </span>
+            <Inbox className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+          </div>
+          <div style={{
+            fontSize: '1.875rem',
+            fontWeight: '600',
+            color: '#002C40',
+          }}>
+            --
+          </div>
+        </div>
+
+        <div style={{
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #e5e7eb',
+          borderRadius: '6px',
+          padding: '1.25rem',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '0.5rem',
+          }}>
+            <span style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              fontWeight: '500',
+            }}>
+              Unassigned
+            </span>
+            <FileText className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+          </div>
+          <div style={{
+            fontSize: '1.875rem',
+            fontWeight: '600',
+            color: '#002C40',
+          }}>
+            --
+          </div>
+        </div>
+
+        <div style={{
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #e5e7eb',
+          borderRadius: '6px',
+          padding: '1.25rem',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '0.5rem',
+          }}>
+            <span style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              fontWeight: '500',
+            }}>
+              In Review
+            </span>
+            <Users className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+          </div>
+          <div style={{
+            fontSize: '1.875rem',
+            fontWeight: '600',
+            color: '#002C40',
+          }}>
+            --
+          </div>
+        </div>
+
+        <div style={{
+          backgroundColor: '#f8f9fa',
+          border: '1px solid #e5e7eb',
+          borderRadius: '6px',
+          padding: '1.25rem',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginBottom: '0.5rem',
+          }}>
+            <span style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              fontWeight: '500',
+            }}>
+              All Active
+            </span>
+            <LayoutDashboard className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+          </div>
+          <div style={{
+            fontSize: '1.875rem',
+            fontWeight: '600',
+            color: '#002C40',
+          }}>
+            --
+          </div>
+        </div>
       </div>
-    </section>
+
+      {/* Quick Actions */}
+      <div style={{
+        marginBottom: '2.5rem',
+      }}>
+        <h2 style={{
+          fontSize: '1.125rem',
+          fontWeight: '600',
+          marginBottom: '1rem',
+          color: '#002C40',
+        }}>
+          Quick Actions
+        </h2>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1rem',
+        }}>
+          <Link
+            href="/editor/submissions"
+            style={{
+              display: 'block',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e5e7eb',
+              borderRadius: '6px',
+              padding: '1.25rem',
+              textDecoration: 'none',
+              color: 'inherit',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#006798';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#e5e7eb';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '0.5rem',
+            }}>
+              <FileText className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+              <h3 style={{
+                fontSize: '1rem',
+                fontWeight: '500',
+                color: '#002C40',
+                margin: 0,
+              }}>
+                Submissions
+              </h3>
+            </div>
+            <p style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              margin: 0,
+              lineHeight: '1.5',
+            }}>
+              View and manage manuscript submissions
+            </p>
+          </Link>
+
+          <Link
+            href="/editor/submissions?stage=review"
+            style={{
+              display: 'block',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e5e7eb',
+              borderRadius: '6px',
+              padding: '1.25rem',
+              textDecoration: 'none',
+              color: 'inherit',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#006798';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#e5e7eb';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '0.5rem',
+            }}>
+              <Users className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+              <h3 style={{
+                fontSize: '1rem',
+                fontWeight: '500',
+                color: '#002C40',
+                margin: 0,
+              }}>
+                Review
+              </h3>
+            </div>
+            <p style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              margin: 0,
+              lineHeight: '1.5',
+            }}>
+              Manage peer review assignments
+            </p>
+          </Link>
+
+          <Link
+            href="/editor/issues"
+            style={{
+              display: 'block',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e5e7eb',
+              borderRadius: '6px',
+              padding: '1.25rem',
+              textDecoration: 'none',
+              color: 'inherit',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = '#006798';
+              e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = '#e5e7eb';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              marginBottom: '0.5rem',
+            }}>
+              <BookOpen className="h-5 w-5" style={{color: '#006798', width: '20px', height: '20px'}} />
+              <h3 style={{
+                fontSize: '1rem',
+                fontWeight: '500',
+                color: '#002C40',
+                margin: 0,
+              }}>
+                Issues
+              </h3>
+            </div>
+            <p style={{
+              fontSize: '0.875rem',
+              color: '#666666',
+              margin: 0,
+              lineHeight: '1.5',
+            }}>
+              Create and manage journal issues
+            </p>
+          </Link>
+        </div>
+      </div>
+
+      {/* Recent Activity Placeholder */}
+      <div>
+        <h2 style={{
+          fontSize: '1.125rem',
+          fontWeight: '600',
+          marginBottom: '1rem',
+          color: '#002C40',
+        }}>
+          Recent Activity
+        </h2>
+        <div style={{
+          backgroundColor: '#ffffff',
+          border: '1px solid #e5e7eb',
+          borderRadius: '6px',
+          padding: '2rem',
+          textAlign: 'center',
+          color: '#666666',
+        }}>
+          <p style={{
+            fontSize: '0.9375rem',
+            margin: 0,
+          }}>
+            No recent activity to display.
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
-

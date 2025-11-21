@@ -15,6 +15,7 @@ type RouteParams = {
 // Editorial decisions mapping based on OJS workflow
 const EDITORIAL_DECISIONS = {
   send_to_review: { nextStage: "review" as SubmissionStage, status: "in_review" as SubmissionStatus },
+  send_to_copyediting: { nextStage: "copyediting" as SubmissionStage, status: "accepted" as SubmissionStatus },
   decline_submission: { status: "declined" as SubmissionStatus },
   accept: { nextStage: "copyediting" as SubmissionStage, status: "accepted" as SubmissionStatus },
   pending_revisions: { status: "in_review" as SubmissionStatus },
@@ -77,6 +78,7 @@ async function getSubmissionJournalId(submissionId: string): Promise<string> {
 function getDecisionMessage(action: string, targetStage?: string, status?: string): string {
   const actionMessages: Record<string, string> = {
     send_to_review: "Submission sent to review stage",
+    send_to_copyediting: "Submission sent to copyediting stage",
     decline_submission: "Submission declined at initial stage",
     accept: "Submission accepted",
     pending_revisions: "Revisions requested from author",

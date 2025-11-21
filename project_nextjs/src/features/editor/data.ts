@@ -15,6 +15,11 @@ import type {
   SubmissionVersion,
   SubmissionReviewRound,
 } from "./types";
+import {
+  calculateDashboardStats as calculateDummyStats,
+  getFilteredSubmissions,
+  DUMMY_SUBMISSIONS,
+} from "./dummy-helpers";
 
 type ListSubmissionsParams = {
   queue?: "my" | "unassigned" | "all" | "archived";
@@ -77,7 +82,9 @@ export async function getEditorDashboardStats(editorId?: string | null): Promise
       tasks,
     };
   } catch {
-    return FALLBACK_STATS;
+    // Fallback to dummy data stats calculation using helper functions
+    const userId = editorId || "current-user-id";
+    return calculateDummyStats(userId);
   }
 }
 
@@ -152,8 +159,29 @@ export async function listSubmissions(params: ListSubmissionsParams = {}): Promi
       assignees: [],
     }));
   } catch {
-    // Return dummy data for demonstration
-    return getDummySubmissions(params);
+    // Return dummy data for demonstration using helper functions
+    const userId = editorId || "current-user-id";
+    let filtered = getFilteredSubmissions(
+      queue === "my" ? "my" : queue === "unassigned" ? "unassigned" : queue === "archived" ? "archived" : "all",
+      queue === "my" ? userId : undefined
+    );
+
+    // Filter by stage if provided
+    if (stage) {
+      filtered = filtered.filter((s) => s.stage === stage);
+    }
+
+    // Filter by search if provided
+    if (search) {
+      const searchLower = search.toLowerCase();
+      filtered = filtered.filter(
+        (s) =>
+          s.title.toLowerCase().includes(searchLower) ||
+          s.author_name?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    return filtered.slice(offset, offset + limit);
   }
 }
 
@@ -423,145 +451,6 @@ async function getAssignedSubmissionIdsForRoles() {
   }
 }
 
-function getDummySubmissions(params: ListSubmissionsParams): SubmissionSummary[] {
-  const { queue = "all", stage, limit = 20 } = params;
-  
-  const dummyData: SubmissionSummary[] = [
-    {
-      id: "1",
-      title: "Pemanfaatan Machine Learning untuk Prediksi Cuaca di Daerah Tropis",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "review",
-      current_stage: "review",
-      status: "in_review",
-      isArchived: false,
-      submittedAt: "2024-01-15T08:00:00Z",
-      updatedAt: "2024-01-20T10:30:00Z",
-      author_name: "Dr. Andi Wijaya, M.Kom",
-      assignees: [],
-    },
-    {
-      id: "2",
-      title: "Analisis Sentimen Terhadap Kebijakan Pemerintah Menggunakan Deep Learning",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "copyediting",
-      current_stage: "copyediting",
-      status: "queued",
-      isArchived: false,
-      submittedAt: "2024-01-10T09:15:00Z",
-      updatedAt: "2024-01-18T14:20:00Z",
-      author_name: "Siti Nurhaliza, S.T., M.T.",
-      assignees: [],
-    },
-    {
-      id: "3",
-      title: "Perancangan Sistem Informasi Manajemen Perpustakaan Berbasis Web",
-      journalId: "2",
-      journalTitle: "Jurnal Sistem Informasi",
-      stage: "production",
-      current_stage: "production",
-      status: "accepted",
-      isArchived: false,
-      submittedAt: "2024-01-05T07:30:00Z",
-      updatedAt: "2024-01-22T16:45:00Z",
-      author_name: "Bambang Suryadi, S.Kom., M.Kom.",
-      assignees: [],
-    },
-    {
-      id: "4",
-      title: "Implementasi Blockchain untuk Keamanan Data Kesehatan",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "submission",
-      current_stage: "submission",
-      status: "queued",
-      isArchived: false,
-      submittedAt: "2024-01-20T11:00:00Z",
-      updatedAt: "2024-01-21T09:15:00Z",
-      author_name: "Dr. Ratih Pratiwi, M.Kom.",
-      assignees: [],
-    },
-    {
-      id: "5",
-      title: "Kajian Perbandingan Metode Klasifikasi untuk Diagnosis Penyakit Jantung",
-      journalId: "3",
-      journalTitle: "Jurnal Kesehatan Digital",
-      stage: "review",
-      current_stage: "review",
-      status: "in_review",
-      isArchived: false,
-      submittedAt: "2023-12-20T10:00:00Z",
-      updatedAt: "2024-01-12T13:30:00Z",
-      author_name: "Prof. Dr. Ahmad Rahman, M.Biomed.",
-      assignees: [],
-    },
-    {
-      id: "6",
-      title: "Pengembangan Aplikasi Mobile untuk Monitoring Kualitas Udara",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "copyediting",
-      current_stage: "copyediting",
-      status: "in_review",
-      isArchived: false,
-      submittedAt: "2024-01-12T14:00:00Z",
-      updatedAt: "2024-01-19T11:20:00Z",
-      author_name: "Diana Putri, S.T., M.T.",
-      assignees: [],
-    },
-    {
-      id: "7",
-      title: "Optimasi Algoritma Genetika untuk Penjadwalan Kuliah Otomatis",
-      journalId: "2",
-      journalTitle: "Jurnal Sistem Informasi",
-      stage: "submission",
-      current_stage: "submission",
-      status: "queued",
-      isArchived: false,
-      submittedAt: "2024-01-18T09:30:00Z",
-      updatedAt: "2024-01-18T09:30:00Z",
-      author_name: "Ir. Muhammad Faisal, M.Kom.",
-      assignees: [],
-    },
-    {
-      id: "8",
-      title: "Analisis Kinerja Sistem Terdistribusi pada Lingkungan Cloud Computing",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "production",
-      current_stage: "production",
-      status: "accepted",
-      isArchived: false,
-      submittedAt: "2023-12-15T08:15:00Z",
-      updatedAt: "2024-01-23T15:00:00Z",
-      author_name: "Dr. Citra Kusuma, M.Sc.",
-      assignees: [],
-    },
-  ];
-
-  // Filter data based on parameters
-  let filteredData = dummyData;
-  
-  if (queue === "my") {
-    filteredData = dummyData.filter(item => 
-      ["1", "2", "5", "6"].includes(item.id) // Simulate assigned submissions
-    );
-  } else if (queue === "unassigned") {
-    // Unassigned submissions are those with no assignees
-    filteredData = dummyData.filter(item => item.assignees.length === 0);
-  } else if (queue === "archived") {
-    filteredData = dummyData.filter(item => item.isArchived);
-  } else if (queue === "all") {
-    // "all" means all active (non-archived) submissions
-    filteredData = dummyData.filter(item => !item.isArchived);
-  }
-  
-  if (stage) {
-    filteredData = filteredData.filter(item => item.stage === stage);
-  }
-  
-  return filteredData.slice(0, limit);
-}
+// Function removed - now using dummy-helpers.ts functions
+// getDummySubmissions is now replaced by getFilteredSubmissions from dummy-helpers.ts
 
