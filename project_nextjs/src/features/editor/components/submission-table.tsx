@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, MessageSquare, UserPlus, FileText, Calendar, User, Search, Filter, X, ChevronDown, MoreVertical } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { PkpInput } from "@/components/ui/pkp-input";
+import { PkpButton } from "@/components/ui/pkp-button";
+import { PkpTable, PkpTableHeader, PkpTableRow, PkpTableHead, PkpTableCell } from "@/components/ui/pkp-table";
+import { PkpSelect } from "@/components/ui/pkp-select";
 
 import { StageBadge } from "./stage-badge";
 import { StatusBadge } from "./status-badge";
@@ -54,100 +56,22 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
 
   // Render table component - Simplified format: Number, Author(s), Title, Status, Dropdown
   const table = (
-    <table className="pkp_controllers_grid_table" style={{
-      width: '100%',
-      borderCollapse: 'collapse',
-      tableLayout: 'auto'
-    }}>
-      <thead>
-        <tr>
-          <th style={{
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-            textAlign: 'left',
-            fontSize: '0.75rem',
-            lineHeight: '16px',
-            fontWeight: 400,
-            color: 'rgba(0, 0, 0, 0.54)',
-            boxShadow: 'inset 0 -1px 0 #eee',
-            verticalAlign: 'top',
-            width: '60px'
-          }}></th>
-          <th style={{
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-            textAlign: 'left',
-            fontSize: '0.75rem',
-            lineHeight: '16px',
-            fontWeight: 400,
-            color: 'rgba(0, 0, 0, 0.54)',
-            boxShadow: 'inset 0 -1px 0 #eee',
-            verticalAlign: 'top'
-          }}></th>
-          <th style={{
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-            textAlign: 'left',
-            fontSize: '0.75rem',
-            lineHeight: '16px',
-            fontWeight: 400,
-            color: 'rgba(0, 0, 0, 0.54)',
-            boxShadow: 'inset 0 -1px 0 #eee',
-            verticalAlign: 'top',
-            width: '120px'
-          }}></th>
-          <th style={{
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-            textAlign: 'left',
-            fontSize: '0.75rem',
-            lineHeight: '16px',
-            fontWeight: 400,
-            color: 'rgba(0, 0, 0, 0.54)',
-            boxShadow: 'inset 0 -1px 0 #eee',
-            verticalAlign: 'top',
-            width: '60px'
-          }}></th>
-        </tr>
-      </thead>
+    <PkpTable>
+      <PkpTableHeader>
+        <PkpTableRow isHeader>
+          <PkpTableHead style={{ width: '60px' }}></PkpTableHead>
+          <PkpTableHead></PkpTableHead>
+          <PkpTableHead style={{ width: '120px' }}></PkpTableHead>
+          <PkpTableHead style={{ width: '60px' }}></PkpTableHead>
+        </PkpTableRow>
+      </PkpTableHeader>
       <tbody>
         {filteredSubmissions.map((submission, index) => (
-          <tr key={submission.id} className="gridRow" style={{
-            borderTop: index > 0 ? '1px solid #eee' : 'none',
-            position: 'static',
-            backgroundColor: 'transparent'
-          }}>
-            <td style={{
-              paddingTop: '0.5rem',
-              paddingBottom: 'calc(0.5rem - 1px)',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              fontSize: '0.875rem',
-              color: 'rgba(0, 0, 0, 0.54)',
-              verticalAlign: 'top',
-              lineHeight: '1.5rem',
-              width: '60px',
-              position: 'relative'
-            }}>
+          <PkpTableRow key={submission.id}>
+            <PkpTableCell style={{ width: '60px' }}>
               <span className="label">{submission.id}</span>
-            </td>
-            <td style={{
-              paddingTop: '0.5rem',
-              paddingBottom: 'calc(0.5rem - 1px)',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              verticalAlign: 'top',
-              lineHeight: '1.5rem',
-              position: 'relative'
-            }}>
+            </PkpTableCell>
+            <PkpTableCell>
               <div style={{ fontSize: '0.875rem', color: 'rgba(0, 0, 0, 0.54)', marginBottom: '0.125rem' }}>
                 {submission.author_name || "Author not specified"}
               </div>
@@ -160,31 +84,11 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
                   {submission.title}
                 </Link>
               </div>
-            </td>
-            <td style={{
-              paddingTop: '0.5rem',
-              paddingBottom: 'calc(0.5rem - 1px)',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              verticalAlign: 'top',
-              lineHeight: '1.5rem',
-              width: '120px',
-              position: 'relative'
-            }}>
+            </PkpTableCell>
+            <PkpTableCell style={{ width: '120px' }}>
               <StageBadge stage={submission.stage} />
-            </td>
-            <td style={{
-              paddingTop: '0.5rem',
-              paddingBottom: 'calc(0.5rem - 1px)',
-              paddingLeft: '1rem',
-              paddingRight: '1rem',
-              fontSize: '0.875rem',
-              verticalAlign: 'top',
-              lineHeight: '1.5rem',
-              textAlign: 'right',
-              width: '60px',
-              position: 'relative'
-            }}>
+            </PkpTableCell>
+            <PkpTableCell style={{ textAlign: 'right', width: '60px' }}>
               <button
                 type="button"
                 title="Actions"
@@ -202,11 +106,11 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
               >
                 <ChevronDown className="h-4 w-4" style={{ width: '16px', height: '16px' }} />
               </button>
-            </td>
-          </tr>
+            </PkpTableCell>
+          </PkpTableRow>
         ))}
       </tbody>
-    </table>
+    </PkpTable>
   );
 
   if (bare) {
@@ -263,18 +167,24 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
   }
 
   return (
-    <div className="pkp_controllers_grid overflow-hidden bg-white shadow-sm" style={{
-      boxShadow: '0 1px 2px rgba(0,0,0,0.3)',
-      borderRadius: '2px',
-      position: 'relative'
-    }}>
-      {/* Header with Search and Filter */}
+    <div 
+      className="pkp_controllers_grid overflow-hidden bg-white shadow-sm" 
+      style={{
+        boxShadow: '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        borderRadius: '0',
+        position: 'relative',
+        width: '100%',
+        maxWidth: '100%',
+        overflowX: 'auto',
+        overflowY: 'visible',
+        margin: '0', // No margin - spacing dari parent
+      }}
+    >
+      {/* Header with Search and Filter - OJS 3.3 Exact Layout */}
       <div className="header" style={{
         position: 'relative',
-        padding: '0 0.5rem 0 1rem',
-        borderBottom: '1px solid #eee',
-        borderTopLeftRadius: '2px',
-        borderTopRightRadius: '2px',
+        padding: '0 1rem',
+        borderBottom: '1px solid #e5e5e5',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -287,7 +197,8 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
           margin: 0,
           padding: '0.5rem 0',
           lineHeight: '2rem',
-          fontWeight: 400
+          fontWeight: 400,
+          color: '#002C40'
         }}>{tabLabel}</h4>
         <div className="actions" style={{
           display: 'flex',
@@ -304,7 +215,7 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
               height: '16px',
               left: '10px'
             }} />
-            <Input
+            <PkpInput
               type="text"
               placeholder="Search"
               value={searchTerm}
@@ -312,11 +223,6 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
               style={{
                 paddingLeft: '2rem',
                 paddingRight: searchTerm ? '2rem' : '0.75rem',
-                paddingTop: '0.375rem',
-                paddingBottom: '0.375rem',
-                fontSize: '0.875rem',
-                border: '1px solid #ddd',
-                borderRadius: '2px',
                 width: '192px',
                 height: '32px'
               }}
@@ -344,8 +250,8 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
             )}
           </div>
           {/* Filter Button */}
-          <Button
-            variant="outline"
+          <PkpButton
+            variant="onclick"
             size="sm"
             onClick={() => setShowFilters(!showFilters)}
             style={{
@@ -362,7 +268,7 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
           >
             <Filter className="h-4 w-4" style={{ width: '16px', height: '16px' }} />
             Filter
-          </Button>
+          </PkpButton>
         </div>
       </div>
       
@@ -392,17 +298,9 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
               }}>
                 Stage
               </label>
-              <select
+              <PkpSelect
                 value={selectedStage}
                 onChange={(e) => setSelectedStage(e.target.value as SubmissionStage | "all")}
-                style={{
-                  width: '100%',
-                  fontSize: '0.875rem',
-                  border: '1px solid #ddd',
-                  borderRadius: '2px',
-                  padding: '0.375rem 0.5rem',
-                  lineHeight: '1.5rem'
-                }}
               >
                 <option value="all">All Stages</option>
                 {availableStages.map((stage) => (
@@ -410,7 +308,7 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
                     {stage.charAt(0).toUpperCase() + stage.slice(1)}
                   </option>
                 ))}
-              </select>
+              </PkpSelect>
             </div>
             
             {/* Status Filter */}
@@ -426,17 +324,9 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
               }}>
                 Status
               </label>
-              <select
+              <PkpSelect
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value as SubmissionStatus | "all")}
-                style={{
-                  width: '100%',
-                  fontSize: '0.875rem',
-                  border: '1px solid #ddd',
-                  borderRadius: '2px',
-                  padding: '0.375rem 0.5rem',
-                  lineHeight: '1.5rem'
-                }}
               >
                 <option value="all">All Status</option>
                 {availableStatuses.map((status) => (
@@ -444,7 +334,7 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
                     {status.replace("_", " ").charAt(0).toUpperCase() + status.replace("_", " ").slice(1)}
                   </option>
                 ))}
-              </select>
+              </PkpSelect>
             </div>
           </div>
           
@@ -570,16 +460,33 @@ export function SubmissionTable({ submissions, emptyMessage = "No submissions fo
         </div>
       )}
       
-      {/* Table */}
-      {filteredSubmissions.length === 0 ? (
-        <div className="empty px-6 py-10 text-center text-sm text-[var(--muted)] italic">
-          {searchTerm || selectedStage !== "all" || selectedStatus !== "all"
-            ? "No submissions found matching the filters."
-            : emptyMessage}
-        </div>
-      ) : (
-        table
-      )}
+      {/* Table - Modern Layout with Proper Spacing */}
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '100%',
+          overflowX: 'auto',
+          overflowY: 'visible',
+        }}
+      >
+        {filteredSubmissions.length === 0 ? (
+          <div
+            style={{
+              padding: '2.5rem 1.5rem',
+              textAlign: 'center',
+              fontSize: '0.875rem',
+              color: 'rgba(0, 0, 0, 0.54)',
+              fontStyle: 'italic',
+            }}
+          >
+            {searchTerm || selectedStage !== "all" || selectedStatus !== "all"
+              ? "No submissions found matching the filters."
+              : emptyMessage}
+          </div>
+        ) : (
+          table
+        )}
+      </div>
     </div>
   );
 }

@@ -293,7 +293,16 @@ export function HostedJournalsTable({ journals }: Props) {
             </Button>
           }
         >
-          <JournalSettingsWizard journal={modalState.journal} />
+          <JournalSettingsWizard 
+            journalId={modalState.journal.id} 
+            initialData={{
+              id: modalState.journal.id,
+              name: modalState.journal.name,
+              path: modalState.journal.path,
+              description: modalState.journal.description,
+              settings: [],
+            }}
+          />
         </Modal>
       )}
 

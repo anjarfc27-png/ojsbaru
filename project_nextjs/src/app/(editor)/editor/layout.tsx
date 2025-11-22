@@ -101,14 +101,17 @@ export default function EditorLayout({ children }: Props) {
       display: 'flex',
       flexDirection: 'column',
     }}>
-      {/* Top Header Bar - Dark Blue */}
+      {/* Top Header Bar - OJS 3.3 Exact Layout */}
       <header 
         className="bg-[#002C40] text-white" 
         style={{
           backgroundColor: '#002C40',
-          position: 'sticky',
+          position: 'fixed',
           top: 0,
+          left: 0,
+          right: 0,
           zIndex: 100,
+          height: '57px',
         }}
       >
         <div 
@@ -279,21 +282,38 @@ export default function EditorLayout({ children }: Props) {
           <EditorSideNav />
         </aside>
         
-        {/* Main Content Area */}
+        {/* Main Content Area - OJS 3.3 Exact Layout with Safe Area */}
         <main 
           className="pkp_structure_main" 
           style={{
             flex: 1,
-            marginLeft: '280px',
-            backgroundColor: '#ffffff',
-            padding: '2rem 2.5rem',
+            marginLeft: '280px', // Sidebar width
+            backgroundColor: '#eaedee',
+            padding: '0',
             color: '#333333',
             fontSize: '1rem',
             lineHeight: '1.6',
             minHeight: 'calc(100vh - 57px)',
+            position: 'relative',
+            marginTop: '57px', // Offset untuk fixed header
+            width: 'calc(100% - 280px)', // Safe width calculation
+            maxWidth: 'calc(100% - 280px)', // Prevent overflow
           }}
         >
-          {children}
+          {/* Content wrapper with Safe Area Padding */}
+          <div
+            className="pkp_structure_content"
+            style={{
+              padding: '1.5rem', // Safe area padding - tidak terlalu mojok
+              backgroundColor: '#eaedee',
+              minHeight: '100%',
+              width: '100%',
+              maxWidth: '100%',
+              overflowX: 'hidden', // Prevent horizontal scroll
+            }}
+          >
+            {children}
+          </div>
         </main>
       </div>
     </div>

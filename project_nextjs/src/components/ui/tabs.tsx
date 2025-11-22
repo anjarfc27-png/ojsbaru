@@ -42,15 +42,17 @@ function useTabsContext() {
 type TabsListProps = {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export function TabsList({ children, className }: TabsListProps) {
+export function TabsList({ children, className, style }: TabsListProps) {
   return (
     <div
       className={cn(
         "inline-flex h-10 items-center justify-center rounded-md bg-[var(--surface-muted)] p-1 text-[var(--muted)]",
         className,
       )}
+      style={style}
     >
       {children}
     </div>
@@ -61,9 +63,10 @@ type TabsTriggerProps = {
   value: string;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export function TabsTrigger({ value, children, className }: TabsTriggerProps) {
+export function TabsTrigger({ value, children, className, style }: TabsTriggerProps) {
   const { value: selectedValue, onValueChange } = useTabsContext();
   const isActive = selectedValue === value;
 
@@ -76,6 +79,7 @@ export function TabsTrigger({ value, children, className }: TabsTriggerProps) {
         isActive && "pkp_tab_active",
         className,
       )}
+      style={style}
       data-state={isActive ? "active" : "inactive"}
       data-value={value}
     >
@@ -88,14 +92,18 @@ type TabsContentProps = {
   value: string;
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export function TabsContent({ value, children, className }: TabsContentProps) {
+export function TabsContent({ value, children, className, style }: TabsContentProps) {
   const { value: selectedValue } = useTabsContext();
   if (selectedValue !== value) return null;
 
   return (
-    <div className={cn("mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2", className)}>
+    <div
+      className={cn("mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2", className)}
+      style={style}
+    >
       {children}
     </div>
   );

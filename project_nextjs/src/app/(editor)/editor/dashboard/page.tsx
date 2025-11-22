@@ -6,39 +6,63 @@ import { FileText, Users, BookOpen, BarChart3, Settings, LayoutDashboard, Inbox 
 export default function EditorDashboardPage() {
   return (
     <div style={{
-      maxWidth: '100%',
+      width: "100%",
+      maxWidth: "100%",
+      minHeight: "100%",
+      backgroundColor: "#eaedee",
+      padding: 0,
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.5rem",
     }}>
-      {/* Page Header */}
+      {/* Page Header - OJS 3.3 Style with Safe Area */}
       <div style={{
-        marginBottom: '2rem',
-        paddingBottom: '1rem',
-        borderBottom: '2px solid #e5e7eb',
+        backgroundColor: "#ffffff",
+        borderBottom: "2px solid #e5e5e5",
+        padding: "1.5rem 0", // Safe padding
       }}>
-        <h1 style={{
-          fontSize: '1.75rem',
-          fontWeight: '600',
-          marginBottom: '0.5rem',
-          color: '#002C40',
-          lineHeight: '1.2',
+        <div style={{
+          padding: "0 1.5rem", // Safe padding horizontal
         }}>
-          Dashboard
-        </h1>
-        <p style={{
-          fontSize: '0.9375rem',
-          color: '#666666',
-          margin: 0,
-        }}>
-          Welcome to the Editorial Dashboard. Manage your submissions and editorial workflow.
-        </p>
+          <h1 style={{
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            margin: 0,
+            padding: "0.5rem 0",
+            lineHeight: "2.25rem",
+            color: "#002C40",
+          }}>
+            Dashboard
+          </h1>
+          <p style={{
+            fontSize: "0.875rem",
+            color: "rgba(0, 0, 0, 0.54)",
+            marginTop: "0.5rem",
+            marginBottom: 0,
+          }}>
+            Welcome to the Editorial Dashboard. Manage your submissions and editorial workflow.
+          </p>
+        </div>
       </div>
 
-      {/* Quick Stats Grid */}
+      {/* Content - OJS 3.3 Style with Safe Area */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '1.25rem',
-        marginBottom: '2.5rem',
+        padding: "0 1.5rem", // Safe padding horizontal
+        width: "100%",
+        maxWidth: "100%",
+        overflowX: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        gap: "1.5rem",
       }}>
+        {/* Quick Stats Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: '1.25rem',
+          marginBottom: 0,
+        }}>
         <div style={{
           backgroundColor: '#f8f9fa',
           border: '1px solid #e5e7eb',
@@ -345,6 +369,7 @@ export default function EditorDashboardPage() {
             No recent activity to display.
           </p>
         </div>
+      </div>
       </div>
     </div>
   );

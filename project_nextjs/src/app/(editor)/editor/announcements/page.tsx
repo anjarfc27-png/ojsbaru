@@ -29,18 +29,58 @@ const dummyAnnouncements = [
 
 export default function AnnouncementsPage() {
   return (
-    <section className="space-y-10">
-      <PageHeader
-        title="Announcements"
-        subtitle="Kelola pengumuman untuk jurnal."
-        crumbs={[
-          { label: "HOME", href: "/editor/dashboard" },
-          { label: "EDITORIAL", href: "/editor/dashboard" },
-          { label: "ANNOUNCEMENTS" },
-        ]}
-      />
+    <section style={{
+      width: "100%",
+      maxWidth: "100%",
+      minHeight: "100%",
+      backgroundColor: "#eaedee",
+      padding: 0,
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.5rem",
+    }}>
+      {/* Page Header - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        backgroundColor: "#ffffff",
+        borderBottom: "2px solid #e5e5e5",
+        padding: "1.5rem 0", // Safe padding
+      }}>
+        <div style={{
+          padding: "0 1.5rem", // Safe padding horizontal
+        }}>
+          <h1 style={{
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            margin: 0,
+            padding: "0.5rem 0",
+            lineHeight: "2.25rem",
+            color: "#002C40",
+          }}>
+            Announcements
+          </h1>
+          <p style={{
+            fontSize: "0.875rem",
+            color: "rgba(0, 0, 0, 0.54)",
+            marginTop: "0.5rem",
+            marginBottom: 0,
+          }}>
+            Kelola pengumuman untuk jurnal.
+          </p>
+        </div>
+      </div>
 
-      <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-sm">
+      {/* Content - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        padding: "0 1.5rem", // Safe padding horizontal
+        width: "100%",
+        maxWidth: "100%",
+        overflowX: "hidden",
+      }}>
+        <div className="overflow-hidden rounded-lg border border-[var(--border)] bg-white shadow-sm" style={{
+          width: "100%",
+          maxWidth: "100%",
+        }}>
         <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-3">
           <strong className="text-sm text-[var(--foreground)]">Announcements</strong>
           <button className="px-3 py-1.5 text-sm bg-[var(--primary)] text-white rounded hover:bg-[var(--primary-dark)]">
@@ -92,6 +132,7 @@ export default function AnnouncementsPage() {
             </tbody>
           </table>
         </div>
+      </div>
       </div>
     </section>
   );

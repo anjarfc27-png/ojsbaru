@@ -110,5 +110,94 @@ export type SubmissionDetail = {
   files: SubmissionFile[];
   activity: SubmissionActivityLog[];
   reviewRounds: SubmissionReviewRound[];
+  queries?: Query[];
+};
+
+// Editor Decision Constants (matching OJS PKP 3.3)
+// Reference: classes/workflow/EditorDecisionActionsManager.inc.php (lines 17-29)
+// Reference: lib/pkp/classes/workflow/PKPEditorDecisionActionsManager.inc.php (lines 16-22)
+export const SUBMISSION_EDITOR_DECISION_EXTERNAL_REVIEW = 8; // Submission stage decision
+export const SUBMISSION_EDITOR_DECISION_ACCEPT = 1; // Submission and review stages decision
+export const SUBMISSION_EDITOR_DECISION_DECLINE = 4; // Submission and review stages decision
+export const SUBMISSION_EDITOR_DECISION_INITIAL_DECLINE = 9; // PKP base decision
+export const SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS = 2; // Review stage decision
+export const SUBMISSION_EDITOR_DECISION_RESUBMIT = 3; // Review stage decision
+export const SUBMISSION_EDITOR_DECISION_SEND_TO_PRODUCTION = 7; // Editorial stage decision
+export const SUBMISSION_EDITOR_DECISION_REVERT_DECLINE = 17; // PKP base decision
+export const SUBMISSION_EDITOR_DECISION_NEW_ROUND = 16; // Review stage decision
+
+// Editor Recommendation Constants
+export const SUBMISSION_EDITOR_RECOMMEND_ACCEPT = 11;
+export const SUBMISSION_EDITOR_RECOMMEND_PENDING_REVISIONS = 12;
+export const SUBMISSION_EDITOR_RECOMMEND_RESUBMIT = 13;
+export const SUBMISSION_EDITOR_RECOMMEND_DECLINE = 14;
+
+export type EditorDecisionType =
+  | typeof SUBMISSION_EDITOR_DECISION_EXTERNAL_REVIEW
+  | typeof SUBMISSION_EDITOR_DECISION_ACCEPT
+  | typeof SUBMISSION_EDITOR_DECISION_DECLINE
+  | typeof SUBMISSION_EDITOR_DECISION_INITIAL_DECLINE
+  | typeof SUBMISSION_EDITOR_DECISION_PENDING_REVISIONS
+  | typeof SUBMISSION_EDITOR_DECISION_RESUBMIT
+  | typeof SUBMISSION_EDITOR_DECISION_SEND_TO_PRODUCTION
+  | typeof SUBMISSION_EDITOR_DECISION_REVERT_DECLINE
+  | typeof SUBMISSION_EDITOR_DECISION_NEW_ROUND;
+
+export type EditorRecommendationType =
+  | typeof SUBMISSION_EDITOR_RECOMMEND_ACCEPT
+  | typeof SUBMISSION_EDITOR_RECOMMEND_PENDING_REVISIONS
+  | typeof SUBMISSION_EDITOR_RECOMMEND_RESUBMIT
+  | typeof SUBMISSION_EDITOR_RECOMMEND_DECLINE;
+
+export type EditorDecision = {
+  decision: EditorDecisionType | EditorRecommendationType;
+  name: string;
+  operation: string;
+  title: string;
+  toStage?: string;
+  help?: string;
+  paymentType?: string;
+};
+
+export type EditorDecisionHistory = {
+  id: string;
+  submissionId: string;
+  decision: EditorDecisionType | EditorRecommendationType;
+  stage: SubmissionStage;
+  reviewRoundId?: string;
+  decisionDate: string;
+  editorId: string;
+  editorName: string;
+  notes?: string;
+  files?: string[];
+};
+
+// Query/Discussion Types
+export type QueryNote = {
+  id: string;
+  queryId: string;
+  userId: string;
+  userName: string;
+  title?: string | null;
+  contents: string;
+  dateCreated: string;
+  dateModified?: string | null;
+};
+
+export type Query = {
+  id: string;
+  submissionId: string;
+  stage: SubmissionStage;
+  stageId: number;
+  seq: number;
+  datePosted: string;
+  dateModified?: string | null;
+  closed: boolean;
+  participants: string[]; // User IDs
+  notes: QueryNote[];
+};
+
+export type SubmissionDetailWithQueries = SubmissionDetail & {
+  queries: Query[];
 };
 

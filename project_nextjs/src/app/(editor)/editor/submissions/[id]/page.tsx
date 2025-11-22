@@ -20,39 +20,8 @@ export default async function SubmissionDetailPage({ params, searchParams }: Pro
   const stage: SubmissionStage =
     stageParam && VALID_STAGES.includes(stageParam) ? stageParam : "submission";
 
-  // Use dummy data for demonstration
-  const detail = {
-    summary: {
-      id: id,
-      title: "Pemanfaatan Machine Learning untuk Prediksi Cuaca di Daerah Tropis",
-      journalId: "1",
-      journalTitle: "Jurnal Teknologi Informasi",
-      stage: "review" as const,
-      current_stage: "review" as const,
-      status: "in_review" as const,
-      isArchived: false,
-      submittedAt: "2024-01-15T08:00:00Z",
-      updatedAt: "2024-01-20T10:30:00Z",
-      author_name: "Dr. Andi Wijaya, M.Kom",
-      assignees: [],
-    },
-    metadata: {
-      authors: [
-        {
-          givenName: "Andi",
-          familyName: "Wijaya",
-          affiliation: "Universitas Indonesia",
-          email: "andi.wijaya@ui.ac.id",
-        }
-      ],
-      abstract: "Penelitian ini bertujuan untuk mengembangkan sistem prediksi cuaca menggunakan algoritma machine learning untuk daerah tropis di Indonesia."
-    },
-    versions: [],
-    participants: [],
-    files: [],
-    activity: [],
-    reviewRounds: [],
-  };
+  // Fetch submission detail using getSubmissionDetail function
+  const detail = await getSubmissionDetail(id);
 
   if (!detail) {
     notFound();
@@ -65,10 +34,29 @@ export default async function SubmissionDetailPage({ params, searchParams }: Pro
       : "—";
 
   return (
-    <div className="flex h-full flex-col overflow-hidden bg-[var(--surface-muted)]">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        overflow: "hidden",
+        backgroundColor: "#eaedee", // OJS 3.3 exact background color
+      }}
+    >
       <WorkflowHeader submission={detail.summary} authorName={authorName} />
       <WorkflowProgressBar submissionId={id} currentStage={stage} />
-      <div className="flex-1 overflow-y-auto p-6">
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          overflowX: "hidden",
+          padding: "1.5rem", // Safe area padding - tidak terlalu mojok
+          backgroundColor: "#eaedee",
+          width: "100%",
+          maxWidth: "100%",
+          minHeight: 0, // Prevent flex overflow
+        }}
+      >
         <WorkflowTabs submissionId={id} detail={detail} currentStage={stage} />
       </div>
     </div>

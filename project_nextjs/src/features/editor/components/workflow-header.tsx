@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { PkpButton } from "@/components/ui/pkp-button";
 import type { SubmissionSummary } from "../types";
 
 type Props = {
@@ -8,65 +8,156 @@ type Props = {
   authorName?: string;
 };
 
+/**
+ * Workflow Header
+ * Based on OJS PKP 3.3 workflow header
+ * Matches OJS 3.3 styling: pkpWorkflow__header, pkpWorkflow__identification
+ */
 export function WorkflowHeader({ submission, authorName = "—" }: Props) {
   const statusBadge = getStatusBadge(submission.status);
 
   return (
-    <div className="border-b-2 border-[var(--border)] bg-white px-6 py-4 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3 text-base">
+    <div
+      className="pkpWorkflow__header"
+      style={{
+        borderBottom: "2px solid #e5e5e5",
+        backgroundColor: "#ffffff",
+        padding: "1rem 1.5rem",
+        boxShadow: "none",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <h1
+          className="pkpWorkflow__identification"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            fontSize: "1rem",
+            lineHeight: "1.5",
+            margin: 0,
+            padding: 0,
+          }}
+        >
           {statusBadge && (
             <span
-              className={`rounded-full px-3 py-1 text-xs font-bold ${
-                statusBadge.variant === "success"
-                  ? "bg-green-100 text-green-800"
-                  : statusBadge.variant === "primary"
-                    ? "bg-blue-100 text-blue-800"
-                    : statusBadge.variant === "warning"
-                      ? "bg-yellow-100 text-yellow-800"
-                      : "bg-gray-100 text-gray-800"
-              }`}
+              className="pkpWorkflow__identificationStatus"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                borderRadius: "9999px",
+                padding: "0.25rem 0.75rem",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                backgroundColor:
+                  statusBadge.variant === "success"
+                    ? "#d4edda"
+                    : statusBadge.variant === "primary"
+                      ? "#cce5ff"
+                      : statusBadge.variant === "warning"
+                        ? "#fff3cd"
+                        : "#e9ecef",
+                color:
+                  statusBadge.variant === "success"
+                    ? "#155724"
+                    : statusBadge.variant === "primary"
+                      ? "#004085"
+                      : statusBadge.variant === "warning"
+                        ? "#856404"
+                        : "#495057",
+              }}
             >
               {statusBadge.label}
             </span>
           )}
-          <span className="font-bold text-[var(--foreground)]">{submission.id}</span>
-          <span className="text-[var(--muted)] font-normal">/</span>
-          <span className="text-[var(--foreground)]">{authorName}</span>
-          <span className="text-[var(--muted)] font-normal">/</span>
-          <span className="text-[var(--foreground)] font-medium">{submission.title}</span>
-        </div>
-        <div className="flex items-center gap-2">
+          <span
+            className="pkpWorkflow__identificationId"
+            style={{
+              fontWeight: 700,
+              color: "#002C40",
+            }}
+          >
+            {submission.id}
+          </span>
+          <span
+            className="pkpWorkflow__identificationDivider"
+            style={{
+              color: "rgba(0, 0, 0, 0.54)",
+              fontWeight: 400,
+            }}
+          >
+            /
+          </span>
+          <span
+            className="pkpWorkflow__identificationAuthor"
+            style={{
+              color: "#002C40",
+            }}
+          >
+            {authorName}
+          </span>
+          <span
+            className="pkpWorkflow__identificationDivider"
+            style={{
+              color: "rgba(0, 0, 0, 0.54)",
+              fontWeight: 400,
+            }}
+          >
+            /
+          </span>
+          <span
+            className="pkpWorkflow__identificationTitle"
+            style={{
+              color: "#002C40",
+              fontWeight: 500,
+            }}
+          >
+            {submission.title}
+          </span>
+        </h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
           {submission.status === "published" && (
-            <Link 
-              href={`/submissions/${submission.id}`} 
+            <PkpButton
+              variant="primary"
+              href={`/submissions/${submission.id}`}
               target="_blank"
-              className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               View
-            </Link>
+            </PkpButton>
           )}
           {submission.status !== "published" && submission.stage === "production" && (
-            <Link 
-              href={`/submissions/${submission.id}/preview`} 
+            <PkpButton
+              variant="primary"
+              href={`/submissions/${submission.id}/preview`}
               target="_blank"
-              className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
               Preview
-            </Link>
+            </PkpButton>
           )}
-          <Link 
+          <PkpButton
+            variant="onclick"
             href={`/editor/submissions/${submission.id}#activity`}
-            className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Activity Log
-          </Link>
-          <Link 
+          </PkpButton>
+          <PkpButton
+            variant="onclick"
             href={`/editor/submissions/${submission.id}/library`}
-            className="inline-flex items-center justify-center rounded-md border border-[var(--border)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface-muted)] h-9 px-4 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Submission Library
-          </Link>
+          </PkpButton>
         </div>
       </div>
     </div>

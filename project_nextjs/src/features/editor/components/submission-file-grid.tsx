@@ -3,10 +3,13 @@
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { PkpButton } from "@/components/ui/pkp-button";
 import { FormMessage } from "@/components/ui/form-message";
-import { Input } from "@/components/ui/input";
+import { PkpInput } from "@/components/ui/pkp-input";
+import { PkpSelect } from "@/components/ui/pkp-select";
+import { PkpCheckbox } from "@/components/ui/pkp-checkbox";
 import { useSupabase } from "@/providers/supabase-provider";
+import { FileCopyModal } from "./file-copy/file-copy-modal";
 
 import type { SubmissionFile, SubmissionStage } from "../types";
 
@@ -14,6 +17,7 @@ type Props = {
   submissionId: string;
   stage: SubmissionStage;
   files: SubmissionFile[];
+  allFiles?: SubmissionFile[]; // All files from all stages (for copying)
 };
 
 const KIND_OPTIONS = [
@@ -24,22 +28,25 @@ const KIND_OPTIONS = [
   { value: "supplemental", label: "Supplemental" },
 ];
 
-export function SubmissionFileGrid({ submissionId, stage, files }: Props) {
+export function SubmissionFileGrid({ submissionId, stage, files, allFiles }: Props) {
   const router = useRouter();
   const supabase = useSupabase();
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ tone: "success" | "error"; message: string } | null>(null);
   const [form, setForm] = useState({
     label: "",
-    storagePath: "",
+    file: null as File | null,
+    storagePath: "", // For manual entry (fallback)
     size: "",
     versionLabel: "",
     kind: "manuscript",
     round: "1",
     isVisibleToAuthors: false,
   });
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setCurrentUserId(user?.id ?? null));
@@ -120,91 +127,473 @@ export function SubmissionFileGrid({ submissionId, stage, files }: Props) {
   };
 
   return (
-    <div className="space-y-4">
-      <form className="grid gap-3 rounded-md border border-[var(--border)] bg-white p-4 shadow-inner md:grid-cols-2" onSubmit={handleSubmit}>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        width: "100%",
+        maxWidth: "100%",
+      }}
+    >
+      {/* Action Buttons */}
+      {allFiles && allFiles.length > 0 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "0.75rem",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setIsCopyModalOpen(true)}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "0.25rem",
+              border: "1px solid #006798",
+              backgroundColor: "transparent",
+              color: "#006798",
+              height: "2.25rem",
+              paddingLeft: "1rem",
+              paddingRight: "1rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = "#f0f8ff";
+              e.currentTarget.style.borderColor = "#005a82";
+              e.currentTarget.style.color = "#005a82";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = "transparent";
+              e.currentTarget.style.borderColor = "#006798";
+              e.currentTarget.style.color = "#006798";
+            }}
+          >
+            Copy Files from Other Stages
+          </button>
+        </div>
+      )}
+
+      {/* File Upload Form - OJS 3.3 Style */}
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "0.75rem",
+          borderRadius: "0.25rem",
+          border: "1px solid #e5e5e5",
+          backgroundColor: "#ffffff",
+          padding: "1rem",
+          boxShadow: "inset 0 1px 2px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
           Label
-          <Input value={form.label} onChange={(event) => setForm((prev) => ({ ...prev, label: event.target.value }))} className="mt-1" />
+          <PkpInput
+            type="text"
+            value={form.label}
+            onChange={(event) => setForm((prev) => ({ ...prev, label: event.target.value }))}
+            required
+            style={{ marginTop: "0.25rem" }}
+          />
         </label>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
-          Storage path
-          <Input value={form.storagePath} onChange={(event) => setForm((prev) => ({ ...prev, storagePath: event.target.value }))} className="mt-1" />
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
+          File
+          <input
+            type="file"
+            onChange={handleFileChange}
+            style={{
+              width: "100%",
+              marginTop: "0.25rem",
+              height: "2.5rem",
+              fontSize: "0.875rem",
+            }}
+          />
         </label>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
           File size (bytes)
-          <Input value={form.size} onChange={(event) => setForm((prev) => ({ ...prev, size: event.target.value }))} className="mt-1" />
+          <PkpInput
+            type="number"
+            value={form.size}
+            onChange={(event) => setForm((prev) => ({ ...prev, size: event.target.value }))}
+            readOnly
+            style={{ marginTop: "0.25rem" }}
+          />
         </label>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
           Version label
-          <Input value={form.versionLabel} onChange={(event) => setForm((prev) => ({ ...prev, versionLabel: event.target.value }))} className="mt-1" />
+          <PkpInput
+            type="text"
+            value={form.versionLabel}
+            onChange={(event) => setForm((prev) => ({ ...prev, versionLabel: event.target.value }))}
+            style={{ marginTop: "0.25rem" }}
+          />
         </label>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
           File kind
-          <select
-            className="mt-1 h-11 w-full rounded-md border border-[var(--border)] bg-white px-3 text-sm shadow-inner focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-muted)]"
+          <PkpSelect
             value={form.kind}
             onChange={(event) => setForm((prev) => ({ ...prev, kind: event.target.value }))}
+            style={{ marginTop: "0.25rem" }}
           >
             {KIND_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>
             ))}
-          </select>
+          </PkpSelect>
         </label>
-        <label className="text-sm font-semibold text-[var(--foreground)]">
+        <label
+          style={{
+            display: "block",
+            fontSize: "0.875rem",
+            fontWeight: 600,
+            color: "#002C40",
+          }}
+        >
           Round
-          <Input value={form.round} onChange={(event) => setForm((prev) => ({ ...prev, round: event.target.value }))} className="mt-1" />
+          <PkpInput
+            type="text"
+            value={form.round}
+            onChange={(event) => setForm((prev) => ({ ...prev, round: event.target.value }))}
+            style={{ marginTop: "0.25rem" }}
+          />
         </label>
-        <label className="flex items-center gap-2 text-sm text-[var(--foreground)]">
-          <input
-            type="checkbox"
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+            color: "#002C40",
+          }}
+        >
+          <PkpCheckbox
             checked={form.isVisibleToAuthors}
             onChange={(event) => setForm((prev) => ({ ...prev, isVisibleToAuthors: event.target.checked }))}
-            className="h-4 w-4 rounded border border-[var(--border)]"
           />
           Visible to authors
         </label>
-        <div className="flex items-end justify-end">
-          <Button type="submit" loading={isPending} disabled={isPending}>
-            Tambah File
-          </Button>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+          }}
+        >
+          <PkpButton
+            type="submit"
+            variant="primary"
+            disabled={isPending}
+            loading={isPending}
+          >
+            {isPending ? "Menambahkan..." : "Tambah File"}
+          </PkpButton>
         </div>
       </form>
 
-      {feedback && <FormMessage tone={feedback.tone}>{feedback.message}</FormMessage>}
+      {feedback && (
+        <div style={{ marginTop: "0.5rem" }}>
+          <FormMessage tone={feedback.tone}>{feedback.message}</FormMessage>
+        </div>
+      )}
 
-      <div className="overflow-hidden rounded-md border border-[var(--border)] bg-white">
+      {/* Files Table - OJS 3.3 Style with Modern Spacing */}
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '100%',
+          overflowX: 'auto',
+          overflowY: 'visible',
+          borderRadius: "0.25rem",
+          border: "1px solid #e5e5e5",
+          backgroundColor: "#ffffff",
+        }}
+      >
         {stageFiles.length === 0 ? (
-          <div className="px-4 py-6 text-center text-sm text-[var(--muted)]">Belum ada file pada tahap ini.</div>
+          <div
+            style={{
+              padding: "1.5rem",
+              textAlign: "center",
+              fontSize: "0.875rem",
+              color: "rgba(0, 0, 0, 0.54)",
+            }}
+          >
+            Belum ada file pada tahap ini.
+          </div>
         ) : (
-          <table className="min-w-full divide-y divide-[var(--border)] text-sm">
-            <thead className="bg-[var(--surface-muted)] text-[var(--muted)]">
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold">Label</th>
-                <th className="px-4 py-3 text-left font-semibold">Kind</th>
-                <th className="px-4 py-3 text-left font-semibold">Round</th>
-                <th className="px-4 py-3 text-left font-semibold">Size</th>
-                <th className="px-4 py-3 text-left font-semibold">Uploaded</th>
-                <th className="px-4 py-3" />
+          <table
+            className="pkpTable"
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              fontSize: "0.875rem",
+            }}
+          >
+            <thead>
+              <tr style={{ backgroundColor: "#f8f9fa" }}>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "left",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                >
+                  Label
+                </th>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "left",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                >
+                  Kind
+                </th>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "left",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                >
+                  Round
+                </th>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "left",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                >
+                  Size
+                </th>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "left",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                >
+                  Uploaded
+                </th>
+                <th
+                  style={{
+                    padding: "0.75rem 1rem",
+                    textAlign: "right",
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    color: "rgba(0, 0, 0, 0.54)",
+                    borderBottom: "1px solid #e5e5e5",
+                  }}
+                />
               </tr>
             </thead>
-            <tbody className="divide-y divide-[var(--border)]">
-              {stageFiles.map((file) => (
-                <tr key={file.id}>
-                  <td className="px-4 py-3 text-[var(--foreground)]">
-                    <div className="font-semibold">{file.label}</div>
-                    {file.versionLabel && <div className="text-xs text-[var(--muted)]">Version: {file.versionLabel}</div>}
-                    <div className="text-xs text-[var(--muted)] break-all">{file.storagePath}</div>
+            <tbody>
+              {stageFiles.map((file, index) => (
+                <tr
+                  key={file.id}
+                  style={{
+                    borderTop: index > 0 ? "1px solid #e5e5e5" : "none",
+                    backgroundColor: "transparent",
+                  }}
+                >
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      fontSize: "0.875rem",
+                      color: "#002C40",
+                    }}
+                  >
+                    <div style={{ fontWeight: 500, marginBottom: "0.25rem" }}>{file.label}</div>
+                    {file.versionLabel && (
+                      <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginBottom: "0.25rem" }}>
+                        Version: {file.versionLabel}
+                      </div>
+                    )}
+                    <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", wordBreak: "break-all" }}>
+                      {file.storagePath}
+                    </div>
                   </td>
-                  <td className="px-4 py-3 text-[var(--foreground)] capitalize">{file.kind}</td>
-                  <td className="px-4 py-3 text-[var(--foreground)]">{file.round}</td>
-                  <td className="px-4 py-3 text-[var(--muted)]">{formatSize(file.size)}</td>
-                  <td className="px-4 py-3 text-[var(--muted)]">{formatDate(file.uploadedAt)}</td>
-                  <td className="px-4 py-3 text-right">
-                    <Button size="sm" variant="ghost" onClick={() => handleDelete(file.id)} disabled={deletingId === file.id}>
-                      Hapus
-                    </Button>
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.84)",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {file.kind}
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.84)",
+                    }}
+                  >
+                    {file.round}
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.54)",
+                    }}
+                  >
+                    {formatSize(file.size)}
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.54)",
+                    }}
+                  >
+                    {formatDate(file.uploadedAt)}
+                  </td>
+                  <td
+                    style={{
+                      padding: "0.75rem 1rem",
+                      textAlign: "right",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-end",
+                        gap: "0.5rem",
+                      }}
+                    >
+                      {/* Download Button */}
+                      <a
+                        href={`/api/editor/submissions/${submissionId}/files/${file.id}/download`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: "0.25rem",
+                          border: "1px solid #e5e5e5",
+                          backgroundColor: "transparent",
+                          color: "#006798",
+                          height: "2rem",
+                          paddingLeft: "0.75rem",
+                          paddingRight: "0.75rem",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          textDecoration: "none",
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#f8f9fa";
+                          e.currentTarget.style.borderColor = "#d0d0d0";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "transparent";
+                          e.currentTarget.style.borderColor = "#e5e5e5";
+                        }}
+                      >
+                        Download
+                      </a>
+                      {/* Delete Button */}
+                      <button
+                        type="button"
+                        onClick={() => handleDelete(file.id)}
+                        disabled={deletingId === file.id}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: "0.25rem",
+                          border: "1px solid #e5e5e5",
+                          backgroundColor: "transparent",
+                          color: deletingId === file.id ? "rgba(0, 0, 0, 0.54)" : "#006798",
+                          height: "2rem",
+                          paddingLeft: "0.75rem",
+                          paddingRight: "0.75rem",
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          cursor: deletingId === file.id ? "not-allowed" : "pointer",
+                          transition: "all 0.2s ease",
+                          opacity: deletingId === file.id ? 0.5 : 1,
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!deletingId) {
+                            e.currentTarget.style.backgroundColor = "#f8f9fa";
+                            e.currentTarget.style.borderColor = "#d0d0d0";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!deletingId) {
+                            e.currentTarget.style.backgroundColor = "transparent";
+                            e.currentTarget.style.borderColor = "#e5e5e5";
+                          }
+                        }}
+                      >
+                        Hapus
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -212,6 +601,21 @@ export function SubmissionFileGrid({ submissionId, stage, files }: Props) {
           </table>
         )}
       </div>
+
+      {/* File Copy Modal */}
+      {isCopyModalOpen && allFiles && (
+        <FileCopyModal
+          open={isCopyModalOpen}
+          onClose={() => setIsCopyModalOpen(false)}
+          submissionId={submissionId}
+          targetStage={stage}
+          availableFiles={allFiles}
+          onFileCopied={() => {
+            setIsCopyModalOpen(false);
+            router.refresh();
+          }}
+        />
+      )}
     </div>
   );
 }

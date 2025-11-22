@@ -14,11 +14,11 @@ import type {
   SubmissionSummary,
   SubmissionVersion,
   SubmissionReviewRound,
+  Query,
 } from "./types";
 import {
   calculateDashboardStats as calculateDummyStats,
   getFilteredSubmissions,
-  DUMMY_SUBMISSIONS,
 } from "./dummy-helpers";
 
 type ListSubmissionsParams = {
@@ -188,7 +188,7 @@ export async function listSubmissions(params: ListSubmissionsParams = {}): Promi
 export async function getSubmissionDetail(id: string): Promise<SubmissionDetail | null> {
   try {
     const supabase = getSupabaseAdminClient();
-    const [{ data: submission }, { data: versions }, { data: participants }, { data: files }, { data: activity }, { data: reviewRoundsData }] =
+    const [{ data: submission }, { data: versions }, { data: participants }, { data: files }, { data: activity }, { data: reviewRoundsData }, { data: queriesData }] =
       await Promise.all([
         supabase
           .from("submissions")
@@ -253,6 +253,30 @@ export async function getSubmissionDetail(id: string): Promise<SubmissionDetail 
           )
           .eq("submission_id", id)
           .order("round", { ascending: true }),
+        supabase
+          .from("queries")
+          .select(
+            `
+            id,
+            stage_id,
+            seq,
+            date_posted,
+            date_modified,
+            closed,
+            query_participants (user_id),
+            notes:query_notes (
+              id,
+              user_id,
+              title,
+              contents,
+              date_created,
+              date_modified
+            )
+          `
+          )
+          .eq("assoc_type", 517) // ASSOC_TYPE_SUBMISSION
+          .eq("assoc_id", id)
+          .order("seq", { ascending: true }),
       ]);
 
     if (!submission) {
@@ -353,6 +377,35 @@ export async function getSubmissionDetail(id: string): Promise<SubmissionDetail 
           })) ?? [],
       })) ?? [];
 
+    const mappedQueries = queriesData?.map((query) => ({
+      id: query.id,
+      submissionId: id,
+      stage: submission.current_stage as SubmissionStage,
+      stageId: query.stage_id,
+      seq: query.seq,
+      datePosted: query.date_posted,
+      dateModified: query.date_modified ?? null,
+      closed: Boolean(query.closed),
+      participants: (query.query_participants as { user_id: string }[]).map((p) => p.user_id) ?? [],
+      notes: (query.notes as {
+        id: string;
+        user_id: string;
+        title?: string | null;
+        contents: string;
+        date_created: string;
+        date_modified?: string | null;
+      }[])?.map((note) => ({
+        id: note.id,
+        queryId: query.id,
+        userId: note.user_id,
+        userName: `User ${note.user_id}`, // TODO: Get actual user name
+        title: note.title ?? null,
+        contents: note.contents,
+        dateCreated: note.date_created,
+        dateModified: note.date_modified ?? null,
+      })) ?? [],
+    })) ?? [];
+
     return {
       summary,
       metadata: submission.metadata ?? {},
@@ -361,6 +414,7 @@ export async function getSubmissionDetail(id: string): Promise<SubmissionDetail 
       files: mappedFiles,
       activity: mappedActivity,
       reviewRounds,
+      queries: mappedQueries,
     };
   } catch {
     return null;

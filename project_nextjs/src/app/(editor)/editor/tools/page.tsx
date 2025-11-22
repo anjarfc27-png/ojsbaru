@@ -2,10 +2,69 @@ import { PageHeader } from "@/components/admin/page-header";
 
 export default async function ToolsPage() {
   return (
-    <section className="space-y-8">
-      <PageHeader title="Tools" subtitle="Perkakas editor sesuai OJS (placeholder)." showBreadcrumbs={false} />
-      <div className="rounded-lg border border-[var(--border)] bg-white p-6 shadow-sm">
-        <p className="text-sm text-[var(--muted)]">Placeholder Editor Tools. Contoh: impor/ekspor, laporan, utilitas workflow.</p>
+    <section style={{
+      width: "100%",
+      maxWidth: "100%",
+      minHeight: "100%",
+      backgroundColor: "#eaedee",
+      padding: 0,
+      margin: 0,
+      display: "flex",
+      flexDirection: "column",
+      gap: "1.5rem",
+    }}>
+      {/* Page Header - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        backgroundColor: "#ffffff",
+        borderBottom: "2px solid #e5e5e5",
+        padding: "1.5rem 0", // Safe padding
+      }}>
+        <div style={{
+          padding: "0 1.5rem", // Safe padding horizontal
+        }}>
+          <h1 style={{
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            margin: 0,
+            padding: "0.5rem 0",
+            lineHeight: "2.25rem",
+            color: "#002C40",
+          }}>
+            Tools
+          </h1>
+          <p style={{
+            fontSize: "0.875rem",
+            color: "rgba(0, 0, 0, 0.54)",
+            marginTop: "0.5rem",
+            marginBottom: 0,
+          }}>
+            Perkakas editor sesuai OJS (placeholder).
+          </p>
+        </div>
+      </div>
+
+      {/* Content - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        padding: "0 1.5rem", // Safe padding horizontal
+        width: "100%",
+        maxWidth: "100%",
+        overflowX: "hidden",
+      }}>
+        <div style={{
+          backgroundColor: "#ffffff",
+          border: "1px solid #e5e5e5",
+          padding: "1.5rem",
+          boxShadow: "none",
+          borderRadius: 0,
+        }}>
+          <p style={{
+            fontSize: "0.875rem",
+            color: "rgba(0, 0, 0, 0.54)",
+            margin: 0,
+          }}>
+            Placeholder Editor Tools. Contoh: impor/ekspor, laporan, utilitas workflow.
+          </p>
+        </div>
       </div>
     </section>
   );

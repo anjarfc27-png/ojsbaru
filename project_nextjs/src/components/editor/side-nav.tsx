@@ -19,13 +19,13 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Announcements", href: "/editor/announcements" },
   {
     label: "Settings",
-    href: "/editor/settings/workflow",
+    href: "/editor/settings/context",
     submenu: [
+      { label: "Context", href: "/editor/settings/context" },
+      { label: "Website", href: "/editor/settings/website" },
       { label: "Workflow", href: "/editor/settings/workflow" },
       { label: "Distribution", href: "/editor/settings/distribution" },
-      { label: "Website", href: "/editor/settings/website" },
       { label: "Access", href: "/editor/settings/access" },
-      { label: "Context", href: "/editor/settings/context" },
     ],
   },
   { label: "Users & Roles", href: "/editor/users-roles" },
@@ -58,11 +58,19 @@ export function EditorSideNav() {
     );
   };
 
-  // Auto-expand submenus that have active items
+  // Auto-expand submenus that have active items or when on any page in that section
   useEffect(() => {
     const initiallyOpen = new Set<string>();
     NAV_ITEMS.forEach(item => {
       if (item.submenu && shouldExpandSubmenu(item)) {
+        initiallyOpen.add(item.label);
+      }
+      // Auto-expand Settings submenu when on any settings page
+      if (item.label === "Settings" && pathname?.startsWith("/editor/settings")) {
+        initiallyOpen.add(item.label);
+      }
+      // Auto-expand Statistics submenu when on any statistics page
+      if (item.label === "Statistics" && pathname?.startsWith("/editor/statistics")) {
         initiallyOpen.add(item.label);
       }
     });
@@ -105,10 +113,12 @@ export function EditorSideNav() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 width: '100%',
-                padding: '0.75rem 1rem',
+                padding: '0.875rem 1rem', // Increased padding untuk lebih nyaman
+                marginBottom: '0.25rem', // Spacing antar items
+                borderRadius: '0.25rem', // Rounded corners
                 color: hasActiveSubmenu ? '#ffffff' : 'rgba(255,255,255,0.9)',
                 textDecoration: 'none',
-                fontSize: '0.9375rem',
+                fontSize: '1rem',
                 fontWeight: hasActiveSubmenu ? '600' : '400',
                 backgroundColor: hasActiveSubmenu ? 'rgba(255,255,255,0.15)' : 'transparent',
                 transition: 'all 0.15s ease',
@@ -158,10 +168,13 @@ export function EditorSideNav() {
                         className="pkp_nav_link"
                         style={{
                           display: 'block',
-                          padding: '0.625rem 1rem 0.625rem 2rem',
+                          padding: '0.75rem 1rem 0.75rem 2rem', // Increased padding
+                          marginLeft: '0.5rem', // Safe indentation
+                          marginBottom: '0.125rem', // Spacing antar submenu items
+                          borderRadius: '0.25rem', // Rounded corners
                           color: subActive ? '#ffffff' : 'rgba(255,255,255,0.85)',
                           textDecoration: 'none',
-                          fontSize: '0.875rem',
+                          fontSize: '0.9375rem',
                           fontWeight: subActive ? '600' : '400',
                           backgroundColor: subActive ? 'rgba(255,255,255,0.15)' : 'transparent',
                           transition: 'all 0.15s ease',
@@ -194,10 +207,12 @@ export function EditorSideNav() {
             className="pkp_nav_link"
             style={{
               display: 'block',
-              padding: '0.75rem 1rem',
+              padding: '0.875rem 1rem', // Increased padding
+              marginBottom: '0.25rem', // Spacing antar items
+              borderRadius: '0.25rem', // Rounded corners
               color: active ? '#ffffff' : 'rgba(255,255,255,0.9)',
               textDecoration: 'none',
-              fontSize: '0.9375rem',
+              fontSize: '1rem',
               fontWeight: active ? '600' : '400',
               backgroundColor: active ? 'rgba(255,255,255,0.15)' : 'transparent',
               transition: 'all 0.15s ease',
@@ -224,16 +239,18 @@ export function EditorSideNav() {
 
   return (
     <nav className="pkp_nav hide-scrollbar" style={{
-      padding: '0.5rem 0',
+      padding: '0.5rem 0', // Safe padding top dan bottom
       overflowY: 'auto',
-      height: 'calc(100vh - 140px)',
+      height: 'calc(100vh - 220px)', // Adjusted untuk logo header
+      width: '100%',
     }}>
       <ul
         className="pkp_nav_list"
         style={{
           listStyle: 'none',
           margin: 0,
-          padding: 0,
+          padding: '0 0.5rem', // Safe padding left dan right
+          width: '100%',
         }}
       >
         {NAV_ITEMS.map(renderNavItem)}
@@ -245,10 +262,13 @@ export function EditorSideNav() {
               className="pkp_nav_link"
               style={{
                 display: 'block',
-                padding: '0.75rem 1rem',
+                padding: '0.875rem 1rem', // Increased padding
+                marginTop: '0.5rem', // Spacing sebelum admin link
+                marginBottom: '0.25rem', // Spacing setelah admin link
+                borderRadius: '0.25rem', // Rounded corners
                 color: pathname?.startsWith('/admin') ? '#ffffff' : 'rgba(255,255,255,0.9)',
                 textDecoration: 'none',
-                fontSize: '0.9375rem',
+                fontSize: '1rem',
                 fontWeight: pathname?.startsWith('/admin') ? '600' : '400',
                 backgroundColor: pathname?.startsWith('/admin') ? 'rgba(255,255,255,0.15)' : 'transparent',
                 transition: 'all 0.15s ease',

@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
+import { PkpButton } from "@/components/ui/pkp-button";
+import { PkpTextarea } from "@/components/ui/pkp-textarea";
 import { FormMessage } from "@/components/ui/form-message";
 
 type Props = {
@@ -45,21 +46,54 @@ export function SubmissionActivityForm({ submissionId }: Props) {
   };
 
   return (
-    <form className="space-y-3" onSubmit={handleSubmit}>
-      <label className="block text-sm text-[var(--foreground)]">
-        <span className="mb-2 block font-semibold">Tambahkan Catatan</span>
-        <textarea
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.75rem",
+        marginTop: "1rem",
+        borderTop: "1px solid #e5e5e5",
+        paddingTop: "1rem",
+      }}
+    >
+      <label
+        style={{
+          display: "block",
+          fontSize: "0.875rem",
+          color: "#002C40",
+        }}
+      >
+        <span
+          style={{
+            display: "block",
+            marginBottom: "0.5rem",
+            fontWeight: 600,
+          }}
+        >
+          Tambahkan Catatan
+        </span>
+        <PkpTextarea
           rows={3}
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          className="w-full rounded-md border border-[var(--border)] bg-white px-3 py-2 text-sm shadow-inner focus-visible:border-[var(--primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-muted)]"
+          required
         />
       </label>
-      {feedback && <FormMessage tone={feedback.tone}>{feedback.message}</FormMessage>}
-      <div className="flex justify-end">
-        <Button type="submit" loading={isPending} disabled={isPending}>
-          Simpan Catatan
-        </Button>
+      {feedback && (
+        <div style={{ marginTop: "0.25rem" }}>
+          <FormMessage tone={feedback.tone}>{feedback.message}</FormMessage>
+        </div>
+      )}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <PkpButton
+          type="submit"
+          variant="primary"
+          disabled={isPending}
+          loading={isPending}
+        >
+          {isPending ? "Menyimpan..." : "Simpan Catatan"}
+        </PkpButton>
       </div>
     </form>
   );

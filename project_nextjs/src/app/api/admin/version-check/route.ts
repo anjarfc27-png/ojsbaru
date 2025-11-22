@@ -7,9 +7,9 @@ export async function GET(request: NextRequest) {
     await requireSiteAdmin();
 
     // Dummy data for now
-    const currentVersion = "3.3.0";
-    const latestVersion = "3.3.1";
-    const hasUpdate = currentVersion !== latestVersion;
+    const currentVersion: string = "3.3.0";
+    const latestVersion: string = "3.3.1";
+    const hasUpdate: boolean = currentVersion !== latestVersion;
 
     return NextResponse.json({
       currentVersion,

@@ -1,6 +1,7 @@
-import { withAuth } from '@/lib/auth-client'
+import { redirect } from 'next/navigation'
 import { USE_DUMMY } from '@/lib/dummy'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
+import { getSupabaseAdminClient } from '@/lib/supabase/admin'
 
 async function getReviewerStats(userId: string) {
   if (USE_DUMMY) {
@@ -36,14 +37,27 @@ async function ReviewerDashboardPage() {
   const supabase = await createSupabaseServerClient()
   const { data: { session } } = await supabase.auth.getSession()
   
-  let userId = null
-  
-  if (session?.user) {
-    // Get user ID from session
-    userId = session.user.id
+  // Check authentication
+  if (!session?.user) {
+    redirect('/login')
   }
 
-  const stats = userId ? await getReviewerStats(userId) : { pending: 0, inProgress: 0, completed: 0 }
+  // Check reviewer role (server-side)
+  const adminClient = getSupabaseAdminClient()
+  const { data: userRoles } = await adminClient
+    .from('user_roles')
+    .select('role_path')
+    .eq('user_id', session.user.id)
+    .single()
+
+  const hasReviewerRole = userRoles?.role_path === 'reviewer' || USE_DUMMY
+  
+  if (!hasReviewerRole) {
+    redirect('/dashboard')
+  }
+
+  const userId = session.user.id
+  const stats = await getReviewerStats(userId)
 
   return (
     <section className="space-y-6">
@@ -90,4 +104,4 @@ async function ReviewerDashboardPage() {
   )
 }
 
-export default withAuth(ReviewerDashboardPage, 'reviewer')
+export default ReviewerDashboardPage

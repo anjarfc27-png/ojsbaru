@@ -1,7 +1,7 @@
 "use client";
 
 import { SubmissionTable } from "@/features/editor/components/submission-table";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { PkpTabs, PkpTabsList, PkpTabsTrigger, PkpTabsContent } from "@/components/ui/pkp-tabs";
 import { useMemo, useEffect, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { HelpCircle } from "lucide-react";
@@ -116,69 +116,60 @@ export default function EditorPage() {
   }, []);
 
   return (
-    <section style={{ padding: 0 }}>
-      {/* Page Header - OJS 3.3 Style */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <h1 className="app__pageHeading" style={{
-          fontSize: '1.75rem',
-          fontWeight: 700,
-          margin: 0,
-          padding: 0,
-          lineHeight: '2.25rem',
-          color: '#002C40'
-        }}>
+    <section
+      className="pkp_submission_list"
+      style={{
+        padding: 0, // Padding di-handle di parent wrapper (layout.tsx)
+        backgroundColor: "#eaedee",
+        minHeight: "100%",
+        marginTop: 0, // Header sudah di-handle di page header
+        width: "100%",
+        maxWidth: "100%",
+      }}
+    >
+      {/* Page Header - OJS 3.3 Exact Layout with Safe Area */}
+      <div
+        className="pkp_page_header"
+        style={{
+          padding: "1.5rem 0 0 0", // Padding horizontal dihapus karena sudah di parent
+          backgroundColor: "#ffffff",
+          borderBottom: "2px solid #e5e5e5",
+        }}
+      >
+        <h1
+          className="app__pageHeading pkp_page_title"
+          style={{
+            fontSize: "1.75rem",
+            fontWeight: 700,
+            margin: 0,
+            padding: "0.5rem 0",
+            lineHeight: "2.25rem",
+            color: "#002C40",
+          }}
+        >
           Submissions
         </h1>
       </div>
 
       {/* Tabs - OJS 3.3 Style */}
-      <Tabs defaultValue="myQueue" className="w-full">
+      <PkpTabs defaultValue="myQueue" className="w-full">
         <div 
           ref={tabsContainerRef}
           style={{
-            borderBottom: '2px solid #e5e5e5',
-            marginBottom: '1.5rem',
-            background: '#ffffff',
-            padding: 0,
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end'
+            borderBottom: "2px solid #e5e5e5",
+            background: "#ffffff",
+            padding: "0", // Padding dihapus karena sudah di parent
+            position: "relative",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+            margin: 0,
           }}
         >
-          <TabsList className="bg-transparent p-0 h-auto" style={{
-            display: 'flex',
-            listStyle: 'none',
-            margin: 0,
-            padding: 0,
-            background: 'transparent',
-            alignItems: 'flex-end',
-            flex: 1,
-            gap: '0.25rem'
-          }}>
+          <div style={{ display: "flex", flex: 1, paddingLeft: "1.5rem" }}>
+            <PkpTabsList style={{ flex: 1 }}>
             {/* My Queue Tab */}
-              <TabsTrigger 
-                value="myQueue" 
-              className="pkp_tab_trigger"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '0 1rem',
-                lineHeight: '3rem',
-                height: '3rem',
-                fontSize: '0.875rem',
-                fontWeight: 700,
-                textDecoration: 'none',
-                color: 'rgba(0, 0, 0, 0.84)',
-                backgroundColor: 'transparent',
-                border: 'none',
-                borderBottom: '2px solid transparent',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                position: 'relative',
-                whiteSpace: 'nowrap'
-              }}
-              >
+              <PkpTabsTrigger value="myQueue">
                 My Queue
                 {stats?.myQueue > 0 && (
                   <span style={{
@@ -200,32 +191,11 @@ export default function EditorPage() {
                     {stats.myQueue}
                   </span>
                 )}
-              </TabsTrigger>
+              </PkpTabsTrigger>
             
             {/* Unassigned Tab - Only visible for Manager/Admin */}
             {(isManagerOrAdmin || showAllTabsForTesting) && (
-              <TabsTrigger 
-                value="unassigned"
-                className="pkp_tab_trigger"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  padding: '0 1rem',
-                  lineHeight: '3rem',
-                  height: '3rem',
-                  fontSize: '0.875rem',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  color: '#006798',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  borderBottom: '2px solid transparent',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  position: 'relative',
-                  whiteSpace: 'nowrap'
-                }}
-              >
+              <PkpTabsTrigger value="unassigned">
                 Unassigned
                 {stats?.unassigned > 0 && (
                   <span style={{
@@ -247,33 +217,12 @@ export default function EditorPage() {
                     {stats.unassigned}
                   </span>
                 )}
-              </TabsTrigger>
+              </PkpTabsTrigger>
             )}
             
             {/* All Active Tab - Only visible for Manager/Admin */}
             {(isManagerOrAdmin || showAllTabsForTesting) && (
-              <TabsTrigger 
-                value="active"
-                className="pkp_tab_trigger"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  padding: '0 1rem',
-                  lineHeight: '3rem',
-                  height: '3rem',
-                  fontSize: '0.875rem',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  color: '#006798',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                  borderBottom: '2px solid transparent',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  position: 'relative',
-                  whiteSpace: 'nowrap'
-                }}
-              >
+              <PkpTabsTrigger value="active">
                 All Active
                 {stats?.allActive > 0 && (
                   <span style={{
@@ -295,32 +244,11 @@ export default function EditorPage() {
                     {stats.allActive}
                   </span>
                 )}
-              </TabsTrigger>
+              </PkpTabsTrigger>
             )}
             
             {/* Archives Tab - Always visible for Editor */}
-              <TabsTrigger 
-                value="archive"
-              className="pkp_tab_trigger"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                padding: '0 1rem',
-                lineHeight: '3rem',
-                height: '3rem',
-                fontSize: '0.875rem',
-                fontWeight: 700,
-                textDecoration: 'none',
-                color: '#006798',
-                backgroundColor: 'transparent',
-                border: 'none',
-                borderBottom: '2px solid transparent',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                position: 'relative',
-                whiteSpace: 'nowrap'
-              }}
-            >
+              <PkpTabsTrigger value="archive">
               Archives
                 {stats?.archived > 0 && (
                   <span style={{
@@ -342,12 +270,13 @@ export default function EditorPage() {
                     {stats.archived}
                   </span>
                 )}
-              </TabsTrigger>
-          </TabsList>
+                 </PkpTabsTrigger>
+               </PkpTabsList>
+          </div>
           
           {/* Help Link - Right side of tabs */}
           <div style={{
-            padding: '0 1rem',
+            padding: '0 1.5rem 0 1rem', // Safe padding right
             display: 'flex',
             alignItems: 'center',
             height: '3rem'
@@ -392,44 +321,44 @@ export default function EditorPage() {
           </div>
         </div>
 
-        {/* Tab Contents - Role-based visibility */}
-        <TabsContent value="myQueue" style={{ position: 'relative' }}>
-          <SubmissionTable 
-            submissions={myQueue} 
-            emptyMessage="Tidak ada submission di My Queue."
-            tabLabel="My Assigned"
-          />
-        </TabsContent>
+              {/* Tab Contents - OJS 3.3 Exact Layout with Safe Area */}
+              <PkpTabsContent value="myQueue" style={{ position: "relative", padding: "1.5rem 0", backgroundColor: "#eaedee" }}>
+                <SubmissionTable 
+                  submissions={myQueue} 
+                  emptyMessage="Tidak ada submission di My Queue."
+                  tabLabel="My Assigned"
+                />
+              </PkpTabsContent>
 
-        {/* Unassigned and All Active only visible for Manager/Admin */}
-        {(isManagerOrAdmin || showAllTabsForTesting) && (
-          <>
-            <TabsContent value="unassigned" style={{ position: 'relative' }}>
-              <SubmissionTable 
-                submissions={unassigned} 
-                emptyMessage="Tidak ada submission yang belum ditugaskan."
-                tabLabel="Unassigned"
-              />
-            </TabsContent>
+              {/* Unassigned and All Active only visible for Manager/Admin */}
+              {(isManagerOrAdmin || showAllTabsForTesting) && (
+                <>
+                  <PkpTabsContent value="unassigned" style={{ position: "relative", padding: "1.5rem 0", backgroundColor: "#eaedee" }}>
+                    <SubmissionTable 
+                      submissions={unassigned} 
+                      emptyMessage="Tidak ada submission yang belum ditugaskan."
+                      tabLabel="Unassigned"
+                    />
+                  </PkpTabsContent>
 
-            <TabsContent value="active" style={{ position: 'relative' }}>
-              <SubmissionTable 
-                submissions={active} 
-                emptyMessage="Tidak ada submission aktif."
-                tabLabel="All Active"
-              />
-            </TabsContent>
-          </>
-        )}
+                  <PkpTabsContent value="active" style={{ position: "relative", padding: "1.5rem 0", backgroundColor: "#eaedee" }}>
+                    <SubmissionTable 
+                      submissions={active} 
+                      emptyMessage="Tidak ada submission aktif."
+                      tabLabel="All Active"
+                    />
+                  </PkpTabsContent>
+                </>
+              )}
 
-        <TabsContent value="archive" style={{ position: 'relative' }}>
-          <SubmissionTable 
-            submissions={archived} 
-            emptyMessage="Tidak ada submission yang diarsipkan."
-            tabLabel="Archives"
-          />
-        </TabsContent>
-      </Tabs>
+              <PkpTabsContent value="archive" style={{ position: "relative", padding: "1.5rem 0", backgroundColor: "#eaedee" }}>
+                <SubmissionTable 
+                  submissions={archived} 
+                  emptyMessage="Tidak ada submission yang diarsipkan."
+                  tabLabel="Archives"
+                />
+              </PkpTabsContent>
+      </PkpTabs>
     </section>
   );
 }

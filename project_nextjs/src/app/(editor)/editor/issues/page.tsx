@@ -53,26 +53,64 @@ const dummyIssues = [
 
 export default function IssuesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Issues</h1>
-                <p className="text-sm text-gray-600 mt-1">Kelola terbitan (volume, number, year, cover).</p>
-              </div>
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                Create Issue
-              </Button>
+    <div style={{
+      width: "100%",
+      maxWidth: "100%",
+      minHeight: "100%",
+      backgroundColor: "#eaedee",
+      padding: 0,
+      margin: 0,
+    }}>
+      {/* Header - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        backgroundColor: "#ffffff",
+        borderBottom: "2px solid #e5e5e5",
+        padding: "1.5rem 0", // Safe padding - horizontal di-handle parent
+      }}>
+        <div style={{
+          padding: "0 1.5rem", // Safe padding horizontal
+        }}>
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "1rem",
+          }}>
+            <div>
+              <h1 style={{
+                fontSize: "1.75rem",
+                fontWeight: 700,
+                margin: 0,
+                padding: "0.5rem 0",
+                lineHeight: "2.25rem",
+                color: "#002C40",
+              }}>
+                Issues
+              </h1>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginTop: "0.5rem",
+                marginBottom: 0,
+              }}>
+                Kelola terbitan (volume, number, year, cover).
+              </p>
             </div>
+            <Button className="bg-blue-600 hover:bg-blue-700">
+              Create Issue
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Content - OJS 3.3 Style with Safe Area */}
+      <div style={{
+        padding: "1.5rem", // Safe area padding
+        width: "100%",
+        maxWidth: "100%",
+        overflowX: "hidden",
+      }}>
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Back Issues</h2>
