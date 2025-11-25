@@ -260,3 +260,180 @@ export type ReviewForm = {
   updatedAt: string;
 };
 
+
+  dateModified?: string | null;
+};
+
+export type Query = {
+  id: string;
+  submissionId: string;
+  stage: SubmissionStage;
+  stageId: number;
+  seq: number;
+  datePosted: string;
+  dateModified?: string | null;
+  closed: boolean;
+  participants: string[]; // User IDs
+  notes: QueryNote[];
+};
+
+export type SubmissionDetailWithQueries = SubmissionDetail & {
+  queries: Query[];
+};
+
+export type SubmissionTask = {
+  id: string;
+  submissionId: string;
+  submissionTitle?: string | null;
+  stage: SubmissionStage;
+  title: string;
+  status: string;
+  assigneeId?: string | null;
+  dueDate?: string | null;
+  createdAt: string;
+};
+
+export type LibraryFile = {
+  id: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  displaySize: string;
+  stage: string;
+  description?: string | null;
+  remoteUrl?: string | null;
+  storagePath?: string | null;
+  source?: "upload" | "remote";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ReviewForm = {
+  id: string;
+  title: string;
+  description?: string | null;
+  seq: number;
+  isActive: boolean;
+  questions?: number | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+
+  dateModified?: string | null;
+};
+
+export type Query = {
+  id: string;
+  submissionId: string;
+  stage: SubmissionStage;
+  stageId: number;
+  seq: number;
+  datePosted: string;
+  dateModified?: string | null;
+  closed: boolean;
+  participants: string[]; // User IDs
+  notes: QueryNote[];
+};
+
+export type SubmissionDetailWithQueries = SubmissionDetail & {
+  queries: Query[];
+};
+
+export type SubmissionTask = {
+  id: string;
+  submissionId: string;
+  submissionTitle?: string | null;
+  stage: SubmissionStage;
+  title: string;
+  status: string;
+  assigneeId?: string | null;
+  dueDate?: string | null;
+  createdAt: string;
+};
+
+export type LibraryFile = {
+  id: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  displaySize: string;
+  stage: string;
+  description?: string | null;
+  remoteUrl?: string | null;
+  storagePath?: string | null;
+  source?: "upload" | "remote";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ReviewForm = {
+  id: string;
+  title: string;
+  description?: string | null;
+  seq: number;
+  isActive: boolean;
+  questions?: number | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+
+  dateModified?: string | null;
+};
+
+export type Query = {
+  id: string;
+  submissionId: string;
+  stage: SubmissionStage;
+  stageId: number;
+  seq: number;
+  datePosted: string;
+  dateModified?: string | null;
+  closed: boolean;
+  participants: string[]; // User IDs
+  notes: QueryNote[];
+};
+
+export type SubmissionDetailWithQueries = SubmissionDetail & {
+  queries: Query[];
+};
+
+export type SubmissionTask = {
+  id: string;
+  submissionId: string;
+  submissionTitle?: string | null;
+  stage: SubmissionStage;
+  title: string;
+  status: string;
+  assigneeId?: string | null;
+  dueDate?: string | null;
+  createdAt: string;
+};
+
+export type LibraryFile = {
+  id: string;
+  fileName: string;
+  fileType: string;
+  fileSize: number;
+  displaySize: string;
+  stage: string;
+  description?: string | null;
+  remoteUrl?: string | null;
+  storagePath?: string | null;
+  source?: "upload" | "remote";
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ReviewForm = {
+  id: string;
+  title: string;
+  description?: string | null;
+  seq: number;
+  isActive: boolean;
+  questions?: number | null;
+  createdAt: string;
+  updatedAt: string;
+};
+

@@ -417,3 +417,690 @@ function AuthorStatistics() {
 }
 
 export default withAuth(AuthorStatistics, 'author')
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Submissions vs Published (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={submissionData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="submissions" fill="#006798" name="Submissions" />
+              <Bar dataKey="published" fill="#00B24E" name="Published" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Citation Trend (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={citationData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="citations" stroke="#006798" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+        gap: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Current Submissions by Stage
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={stageDistribution}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {stageDistribution.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Performance Metrics
+            </h3>
+          </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Acceptance Rate</span>
+              <span style={{
+                backgroundColor: '#d4edda',
+                color: '#155724',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                38.5%
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Review Time</span>
+              <span style={{
+                backgroundColor: '#d1ecf1',
+                color: '#0c5460',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                8.2 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Time to Publication</span>
+              <span style={{
+                backgroundColor: '#fff3cd',
+                color: '#856404',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                45 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>H-Index</span>
+              <span style={{
+                backgroundColor: '#e7d4f8',
+                color: '#6f42c1',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                3
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>i10-Index</span>
+              <span style={{
+                backgroundColor: '#e2e3e5',
+                color: '#383d41',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AuthorStatistics, 'author')
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Submissions vs Published (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={submissionData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="submissions" fill="#006798" name="Submissions" />
+              <Bar dataKey="published" fill="#00B24E" name="Published" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Citation Trend (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={citationData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="citations" stroke="#006798" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+        gap: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Current Submissions by Stage
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={stageDistribution}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {stageDistribution.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Performance Metrics
+            </h3>
+          </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Acceptance Rate</span>
+              <span style={{
+                backgroundColor: '#d4edda',
+                color: '#155724',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                38.5%
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Review Time</span>
+              <span style={{
+                backgroundColor: '#d1ecf1',
+                color: '#0c5460',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                8.2 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Time to Publication</span>
+              <span style={{
+                backgroundColor: '#fff3cd',
+                color: '#856404',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                45 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>H-Index</span>
+              <span style={{
+                backgroundColor: '#e7d4f8',
+                color: '#6f42c1',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                3
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>i10-Index</span>
+              <span style={{
+                backgroundColor: '#e2e3e5',
+                color: '#383d41',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AuthorStatistics, 'author')
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Submissions vs Published (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={submissionData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="submissions" fill="#006798" name="Submissions" />
+              <Bar dataKey="published" fill="#00B24E" name="Published" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Citation Trend (6 Months)
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={citationData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="citations" stroke="#006798" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+        gap: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Current Submissions by Stage
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={stageDistribution}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, value }) => `${name}: ${value}`}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {stageDistribution.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            paddingBottom: '1rem',
+            marginBottom: '1rem',
+            borderBottom: '1px solid #e5e5e5'
+          }}>
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Performance Metrics
+            </h3>
+          </div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Acceptance Rate</span>
+              <span style={{
+                backgroundColor: '#d4edda',
+                color: '#155724',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                38.5%
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Review Time</span>
+              <span style={{
+                backgroundColor: '#d1ecf1',
+                color: '#0c5460',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                8.2 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>Average Time to Publication</span>
+              <span style={{
+                backgroundColor: '#fff3cd',
+                color: '#856404',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                45 days
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>H-Index</span>
+              <span style={{
+                backgroundColor: '#e7d4f8',
+                color: '#6f42c1',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                3
+              </span>
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 500, color: '#002C40' }}>i10-Index</span>
+              <span style={{
+                backgroundColor: '#e2e3e5',
+                color: '#383d41',
+                fontSize: '0.75rem',
+                padding: '0.125rem 0.5rem',
+                borderRadius: '4px',
+                fontWeight: 600
+              }}>
+                1
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AuthorStatistics, 'author')

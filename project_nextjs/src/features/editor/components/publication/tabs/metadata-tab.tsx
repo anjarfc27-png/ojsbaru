@@ -220,3 +220,60 @@ export function MetadataTab({ submissionId, detail, version, isPublished }: Prop
 
 
 
+
+      {!isPublished && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={isSaving}
+            className="rounded bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white disabled:bg-[var(--border)] disabled:text-[var(--muted)]"
+          >
+            {isSaving ? "Saving..." : "Save Metadata"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+      {!isPublished && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={isSaving}
+            className="rounded bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white disabled:bg-[var(--border)] disabled:text-[var(--muted)]"
+          >
+            {isSaving ? "Saving..." : "Save Metadata"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+
+
+      {!isPublished && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={isSaving}
+            className="rounded bg-[var(--primary)] px-4 py-2 text-sm font-semibold text-white disabled:bg-[var(--border)] disabled:text-[var(--muted)]"
+          >
+            {isSaving ? "Saving..." : "Save Metadata"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+

@@ -155,3 +155,75 @@ export function SystemInformationClient({ nodeVersion, osInfo, dbInfo, webServer
     </div>
   );
 }
+
+              ["general.locale", "id_ID"],
+              ["files.directory", "/srv/ojs/files"],
+              ["installed", "On"],
+              ["session.force_ssl", "Off"],
+              ["supabase.url", supabaseUrl],
+            ].map(([key, value]) => (
+              <tr key={key}>
+                <td className="px-4 py-2 font-semibold text-gray-900" style={{
+                  padding: '0.5rem 1rem'
+                }}>
+                  {key}
+                </td>
+                <td className="px-4 py-2 text-gray-600" style={{
+                  padding: '0.5rem 1rem'
+                }}>{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  );
+}
+
+              ["general.locale", "id_ID"],
+              ["files.directory", "/srv/ojs/files"],
+              ["installed", "On"],
+              ["session.force_ssl", "Off"],
+              ["supabase.url", supabaseUrl],
+            ].map(([key, value]) => (
+              <tr key={key}>
+                <td className="px-4 py-2 font-semibold text-gray-900" style={{
+                  padding: '0.5rem 1rem'
+                }}>
+                  {key}
+                </td>
+                <td className="px-4 py-2 text-gray-600" style={{
+                  padding: '0.5rem 1rem'
+                }}>{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  );
+}
+
+              ["general.locale", "id_ID"],
+              ["files.directory", "/srv/ojs/files"],
+              ["installed", "On"],
+              ["session.force_ssl", "Off"],
+              ["supabase.url", supabaseUrl],
+            ].map(([key, value]) => (
+              <tr key={key}>
+                <td className="px-4 py-2 font-semibold text-gray-900" style={{
+                  padding: '0.5rem 1rem'
+                }}>
+                  {key}
+                </td>
+                <td className="px-4 py-2 text-gray-600" style={{
+                  padding: '0.5rem 1rem'
+                }}>{value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  );
+}

@@ -244,3 +244,255 @@ export function QueryCard({
 
 
 
+
+                }}
+              >
+                {lastNote.contents}
+              </p>
+            )}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.35rem",
+                fontSize: "0.75rem",
+                color: "rgba(0, 0, 0, 0.54)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0.35rem",
+                }}
+              >
+                {participantBadges.length === 0 ? (
+                  <span>Participants: none</span>
+                ) : (
+                  participantBadges.map((badge) => (
+                    <span
+                      key={badge.userId}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.25rem",
+                        fontSize: "0.7rem",
+                        fontWeight: badge.userId === highlightedParticipant ? 700 : 500,
+                        color: badge.userId === highlightedParticipant ? "#002C40" : "#ffffff",
+                        backgroundColor:
+                          badge.userId === highlightedParticipant
+                            ? "#cde9f8"
+                            : badge.color ?? "rgba(0,0,0,0.45)",
+                        borderRadius: "999px",
+                        padding: "0.2rem 0.6rem",
+                        border:
+                          badge.userId === highlightedParticipant
+                            ? "1px solid #006798"
+                            : "1px solid transparent",
+                      }}
+                    >
+                      <span>{badge.name}</span>
+                      {badge.role && <span style={{ opacity: 0.8 }}>({badge.role})</span>}
+                    </span>
+                  ))
+                )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <span>{query.notes.length} {query.notes.length === 1 ? "message" : "messages"}</span>
+                <span>•</span>
+                <span>Updated {formatDate(lastActivityAt)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isOpen && (
+        <QueryDetailModal
+          open={true}
+          onClose={handleClose}
+          submissionId={submissionId}
+          query={query}
+          participants={participants}
+        />
+      )}
+    </>
+  );
+}
+
+
+
+
+                }}
+              >
+                {lastNote.contents}
+              </p>
+            )}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.35rem",
+                fontSize: "0.75rem",
+                color: "rgba(0, 0, 0, 0.54)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0.35rem",
+                }}
+              >
+                {participantBadges.length === 0 ? (
+                  <span>Participants: none</span>
+                ) : (
+                  participantBadges.map((badge) => (
+                    <span
+                      key={badge.userId}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.25rem",
+                        fontSize: "0.7rem",
+                        fontWeight: badge.userId === highlightedParticipant ? 700 : 500,
+                        color: badge.userId === highlightedParticipant ? "#002C40" : "#ffffff",
+                        backgroundColor:
+                          badge.userId === highlightedParticipant
+                            ? "#cde9f8"
+                            : badge.color ?? "rgba(0,0,0,0.45)",
+                        borderRadius: "999px",
+                        padding: "0.2rem 0.6rem",
+                        border:
+                          badge.userId === highlightedParticipant
+                            ? "1px solid #006798"
+                            : "1px solid transparent",
+                      }}
+                    >
+                      <span>{badge.name}</span>
+                      {badge.role && <span style={{ opacity: 0.8 }}>({badge.role})</span>}
+                    </span>
+                  ))
+                )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <span>{query.notes.length} {query.notes.length === 1 ? "message" : "messages"}</span>
+                <span>•</span>
+                <span>Updated {formatDate(lastActivityAt)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isOpen && (
+        <QueryDetailModal
+          open={true}
+          onClose={handleClose}
+          submissionId={submissionId}
+          query={query}
+          participants={participants}
+        />
+      )}
+    </>
+  );
+}
+
+
+
+
+                }}
+              >
+                {lastNote.contents}
+              </p>
+            )}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.35rem",
+                fontSize: "0.75rem",
+                color: "rgba(0, 0, 0, 0.54)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0.35rem",
+                }}
+              >
+                {participantBadges.length === 0 ? (
+                  <span>Participants: none</span>
+                ) : (
+                  participantBadges.map((badge) => (
+                    <span
+                      key={badge.userId}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.25rem",
+                        fontSize: "0.7rem",
+                        fontWeight: badge.userId === highlightedParticipant ? 700 : 500,
+                        color: badge.userId === highlightedParticipant ? "#002C40" : "#ffffff",
+                        backgroundColor:
+                          badge.userId === highlightedParticipant
+                            ? "#cde9f8"
+                            : badge.color ?? "rgba(0,0,0,0.45)",
+                        borderRadius: "999px",
+                        padding: "0.2rem 0.6rem",
+                        border:
+                          badge.userId === highlightedParticipant
+                            ? "1px solid #006798"
+                            : "1px solid transparent",
+                      }}
+                    >
+                      <span>{badge.name}</span>
+                      {badge.role && <span style={{ opacity: 0.8 }}>({badge.role})</span>}
+                    </span>
+                  ))
+                )}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                <span>{query.notes.length} {query.notes.length === 1 ? "message" : "messages"}</span>
+                <span>•</span>
+                <span>Updated {formatDate(lastActivityAt)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {isOpen && (
+        <QueryDetailModal
+          open={true}
+          onClose={handleClose}
+          submissionId={submissionId}
+          query={query}
+          participants={participants}
+        />
+      )}
+    </>
+  );
+}
+
+
+

@@ -394,3 +394,741 @@ function ReviewerSubmissionsPage() {
 }
 
 export default withAuth(ReviewerSubmissionsPage, 'reviewer')
+
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            textTransform: 'uppercase'
+          }}>
+            Assigned Submissions
+          </h2>
+        </div>
+        {loading ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            Loading assignments...
+          </div>
+        ) : submissions.length === 0 ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            No review assignments found.
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse'
+            }}>
+              <thead>
+                <tr style={{
+                  backgroundColor: '#f8f9fa',
+                  borderBottom: '1px solid #e5e5e5'
+                }}>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    ID
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Round
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Due Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Status
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((s, index) => {
+                  const statusStyle = getStatusBadgeStyle(s.status)
+                  return (
+                    <tr key={s.id} style={{
+                      borderBottom: index < submissions.length - 1 ? '1px solid #e5e5e5' : 'none',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        #{s.id.slice(0, 8)}...
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#002C40',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.title}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.journal}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        Round {s.round}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {formatDate(s.dueDate)}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '0.125rem 0.5rem',
+                          fontSize: '0.75rem',
+                          borderRadius: '4px',
+                          backgroundColor: statusStyle.backgroundColor,
+                          color: statusStyle.color,
+                          fontWeight: 600
+                        }}>
+                          {getStatusLabel(s.status)}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                            style={{
+                              padding: '0.25rem 0.75rem',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798'
+                            }}
+                          >
+                            View
+                          </button>
+                          {(s.status === 'pending' || s.status === 'accepted') && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                              style={{
+                                padding: '0.25rem 0.75rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 600,
+                                backgroundColor: '#006798',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                color: '#fff'
+                              }}
+                            >
+                              {s.status === 'pending' ? 'Start Review' : 'Continue'}
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default withAuth(ReviewerSubmissionsPage, 'reviewer')
+
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            textTransform: 'uppercase'
+          }}>
+            Assigned Submissions
+          </h2>
+        </div>
+        {loading ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            Loading assignments...
+          </div>
+        ) : submissions.length === 0 ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            No review assignments found.
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse'
+            }}>
+              <thead>
+                <tr style={{
+                  backgroundColor: '#f8f9fa',
+                  borderBottom: '1px solid #e5e5e5'
+                }}>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    ID
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Round
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Due Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Status
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((s, index) => {
+                  const statusStyle = getStatusBadgeStyle(s.status)
+                  return (
+                    <tr key={s.id} style={{
+                      borderBottom: index < submissions.length - 1 ? '1px solid #e5e5e5' : 'none',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        #{s.id.slice(0, 8)}...
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#002C40',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.title}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.journal}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        Round {s.round}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {formatDate(s.dueDate)}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '0.125rem 0.5rem',
+                          fontSize: '0.75rem',
+                          borderRadius: '4px',
+                          backgroundColor: statusStyle.backgroundColor,
+                          color: statusStyle.color,
+                          fontWeight: 600
+                        }}>
+                          {getStatusLabel(s.status)}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                            style={{
+                              padding: '0.25rem 0.75rem',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798'
+                            }}
+                          >
+                            View
+                          </button>
+                          {(s.status === 'pending' || s.status === 'accepted') && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                              style={{
+                                padding: '0.25rem 0.75rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 600,
+                                backgroundColor: '#006798',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                color: '#fff'
+                              }}
+                            >
+                              {s.status === 'pending' ? 'Start Review' : 'Continue'}
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default withAuth(ReviewerSubmissionsPage, 'reviewer')
+
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            textTransform: 'uppercase'
+          }}>
+            Assigned Submissions
+          </h2>
+        </div>
+        {loading ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            Loading assignments...
+          </div>
+        ) : submissions.length === 0 ? (
+          <div style={{
+            padding: '2rem',
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            No review assignments found.
+          </div>
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{
+              width: '100%',
+              borderCollapse: 'collapse'
+            }}>
+              <thead>
+                <tr style={{
+                  backgroundColor: '#f8f9fa',
+                  borderBottom: '1px solid #e5e5e5'
+                }}>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    ID
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Round
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Due Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Status
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((s, index) => {
+                  const statusStyle = getStatusBadgeStyle(s.status)
+                  return (
+                    <tr key={s.id} style={{
+                      borderBottom: index < submissions.length - 1 ? '1px solid #e5e5e5' : 'none',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        #{s.id.slice(0, 8)}...
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#002C40',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.title}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {s.journal}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        Round {s.round}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {formatDate(s.dueDate)}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          display: 'inline-block',
+                          padding: '0.125rem 0.5rem',
+                          fontSize: '0.75rem',
+                          borderRadius: '4px',
+                          backgroundColor: statusStyle.backgroundColor,
+                          color: statusStyle.color,
+                          fontWeight: 600
+                        }}>
+                          {getStatusLabel(s.status)}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                            style={{
+                              padding: '0.25rem 0.75rem',
+                              fontSize: '0.75rem',
+                              fontWeight: 600,
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798'
+                            }}
+                          >
+                            View
+                          </button>
+                          {(s.status === 'pending' || s.status === 'accepted') && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${s.id}`)}
+                              style={{
+                                padding: '0.25rem 0.75rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 600,
+                                backgroundColor: '#006798',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                color: '#fff'
+                              }}
+                            >
+                              {s.status === 'pending' ? 'Start Review' : 'Continue'}
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default withAuth(ReviewerSubmissionsPage, 'reviewer')

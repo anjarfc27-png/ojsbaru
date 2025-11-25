@@ -308,3 +308,612 @@ async function ReviewerDashboardPage() {
 }
 
 export default ReviewerDashboardPage
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending Assignments
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.pending}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              In Progress
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.inProgress}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Completed
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#00B24E' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#00B24E',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.completed}
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Assignments - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem'
+      }}>
+        <h2 style={{
+          fontSize: '1.125rem',
+          fontWeight: 700,
+          color: '#002C40',
+          margin: 0,
+          marginBottom: '1rem'
+        }}>
+          Recent Assignments
+        </h2>
+        {stats.recentAssignments.length === 0 ? (
+          <p style={{
+            textAlign: 'center',
+            padding: '2rem',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic',
+            margin: 0
+          }}>
+            No recent assignments
+          </p>
+        ) : (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem'
+          }}>
+            {stats.recentAssignments.map((assignment: any) => (
+              <Link
+                key={assignment.id}
+                href={`/reviewer/assignments/${assignment.id}`}
+                style={{
+                  display: 'block',
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'background-color 0.2s',
+                  backgroundColor: '#fff'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <h4 style={{
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  color: '#002C40',
+                  margin: 0,
+                  marginBottom: '0.5rem'
+                }}>
+                  {assignment.title}
+                </h4>
+                <p style={{
+                  fontSize: '0.75rem',
+                  color: '#666',
+                  margin: 0,
+                  marginBottom: '0.75rem'
+                }}>
+                  Assigned: {new Date(assignment.assignmentDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </p>
+                <span style={{
+                  display: 'inline-block',
+                  padding: '0.125rem 0.5rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '4px',
+                  fontWeight: 600,
+                  backgroundColor: assignment.status === 'pending' 
+                    ? '#fff3cd'
+                    : assignment.status === 'completed'
+                    ? '#d4edda'
+                    : '#d1ecf1',
+                  color: assignment.status === 'pending' 
+                    ? '#856404'
+                    : assignment.status === 'completed'
+                    ? '#155724'
+                    : '#0c5460'
+                }}>
+                  {assignment.status === 'pending' ? 'Pending Review' : 
+                   assignment.status === 'completed' ? 'Completed' : 
+                   'In Progress'}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default ReviewerDashboardPage
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending Assignments
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.pending}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              In Progress
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.inProgress}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Completed
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#00B24E' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#00B24E',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.completed}
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Assignments - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem'
+      }}>
+        <h2 style={{
+          fontSize: '1.125rem',
+          fontWeight: 700,
+          color: '#002C40',
+          margin: 0,
+          marginBottom: '1rem'
+        }}>
+          Recent Assignments
+        </h2>
+        {stats.recentAssignments.length === 0 ? (
+          <p style={{
+            textAlign: 'center',
+            padding: '2rem',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic',
+            margin: 0
+          }}>
+            No recent assignments
+          </p>
+        ) : (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem'
+          }}>
+            {stats.recentAssignments.map((assignment: any) => (
+              <Link
+                key={assignment.id}
+                href={`/reviewer/assignments/${assignment.id}`}
+                style={{
+                  display: 'block',
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'background-color 0.2s',
+                  backgroundColor: '#fff'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <h4 style={{
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  color: '#002C40',
+                  margin: 0,
+                  marginBottom: '0.5rem'
+                }}>
+                  {assignment.title}
+                </h4>
+                <p style={{
+                  fontSize: '0.75rem',
+                  color: '#666',
+                  margin: 0,
+                  marginBottom: '0.75rem'
+                }}>
+                  Assigned: {new Date(assignment.assignmentDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </p>
+                <span style={{
+                  display: 'inline-block',
+                  padding: '0.125rem 0.5rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '4px',
+                  fontWeight: 600,
+                  backgroundColor: assignment.status === 'pending' 
+                    ? '#fff3cd'
+                    : assignment.status === 'completed'
+                    ? '#d4edda'
+                    : '#d1ecf1',
+                  color: assignment.status === 'pending' 
+                    ? '#856404'
+                    : assignment.status === 'completed'
+                    ? '#155724'
+                    : '#0c5460'
+                }}>
+                  {assignment.status === 'pending' ? 'Pending Review' : 
+                   assignment.status === 'completed' ? 'Completed' : 
+                   'In Progress'}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default ReviewerDashboardPage
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending Assignments
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.pending}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              In Progress
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.inProgress}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Completed
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#00B24E' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#00B24E',
+            marginBottom: '0.25rem'
+          }}>
+            {stats.completed}
+          </div>
+        </div>
+      </div>
+
+      {/* Recent Assignments - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem'
+      }}>
+        <h2 style={{
+          fontSize: '1.125rem',
+          fontWeight: 700,
+          color: '#002C40',
+          margin: 0,
+          marginBottom: '1rem'
+        }}>
+          Recent Assignments
+        </h2>
+        {stats.recentAssignments.length === 0 ? (
+          <p style={{
+            textAlign: 'center',
+            padding: '2rem',
+            fontSize: '0.875rem',
+            color: '#666',
+            fontStyle: 'italic',
+            margin: 0
+          }}>
+            No recent assignments
+          </p>
+        ) : (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem'
+          }}>
+            {stats.recentAssignments.map((assignment: any) => (
+              <Link
+                key={assignment.id}
+                href={`/reviewer/assignments/${assignment.id}`}
+                style={{
+                  display: 'block',
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  transition: 'background-color 0.2s',
+                  backgroundColor: '#fff'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#f8f9fa';
+                  e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#fff';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
+                <h4 style={{
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  color: '#002C40',
+                  margin: 0,
+                  marginBottom: '0.5rem'
+                }}>
+                  {assignment.title}
+                </h4>
+                <p style={{
+                  fontSize: '0.75rem',
+                  color: '#666',
+                  margin: 0,
+                  marginBottom: '0.75rem'
+                }}>
+                  Assigned: {new Date(assignment.assignmentDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                  })}
+                </p>
+                <span style={{
+                  display: 'inline-block',
+                  padding: '0.125rem 0.5rem',
+                  fontSize: '0.75rem',
+                  borderRadius: '4px',
+                  fontWeight: 600,
+                  backgroundColor: assignment.status === 'pending' 
+                    ? '#fff3cd'
+                    : assignment.status === 'completed'
+                    ? '#d4edda'
+                    : '#d1ecf1',
+                  color: assignment.status === 'pending' 
+                    ? '#856404'
+                    : assignment.status === 'completed'
+                    ? '#155724'
+                    : '#0c5460'
+                }}>
+                  {assignment.status === 'pending' ? 'Pending Review' : 
+                   assignment.status === 'completed' ? 'Completed' : 
+                   'In Progress'}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default ReviewerDashboardPage

@@ -251,3 +251,150 @@ export function GalleyEditor({
     </Modal>
   );
 }
+
+            {fileOptions.length === 0 && (
+              <p className="text-xs text-[var(--muted)]">
+                Tidak ada file production yang tersedia untuk galley ini.
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Label htmlFor="remoteUrl">Remote URL *</Label>
+            <Input
+              id="remoteUrl"
+              name="remoteUrl"
+              type="url"
+              value={remoteUrl}
+              onChange={(e) => setRemoteUrl(e.target.value)}
+              placeholder="https://example.com/article.pdf"
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {error && (
+          <FormMessage tone="error">{error}</FormMessage>
+        )}
+
+        {/* Form Footer */}
+        <div className="flex justify-end gap-3 border-t border-[var(--border)] pt-4">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={handleClose}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            loading={isSubmitting}
+            disabled={isSubmitting || !label.trim()}
+          >
+            Save Changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+            {fileOptions.length === 0 && (
+              <p className="text-xs text-[var(--muted)]">
+                Tidak ada file production yang tersedia untuk galley ini.
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Label htmlFor="remoteUrl">Remote URL *</Label>
+            <Input
+              id="remoteUrl"
+              name="remoteUrl"
+              type="url"
+              value={remoteUrl}
+              onChange={(e) => setRemoteUrl(e.target.value)}
+              placeholder="https://example.com/article.pdf"
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {error && (
+          <FormMessage tone="error">{error}</FormMessage>
+        )}
+
+        {/* Form Footer */}
+        <div className="flex justify-end gap-3 border-t border-[var(--border)] pt-4">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={handleClose}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            loading={isSubmitting}
+            disabled={isSubmitting || !label.trim()}
+          >
+            Save Changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+            {fileOptions.length === 0 && (
+              <p className="text-xs text-[var(--muted)]">
+                Tidak ada file production yang tersedia untuk galley ini.
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            <Label htmlFor="remoteUrl">Remote URL *</Label>
+            <Input
+              id="remoteUrl"
+              name="remoteUrl"
+              type="url"
+              value={remoteUrl}
+              onChange={(e) => setRemoteUrl(e.target.value)}
+              placeholder="https://example.com/article.pdf"
+              className="w-full"
+            />
+          </div>
+        )}
+
+        {error && (
+          <FormMessage tone="error">{error}</FormMessage>
+        )}
+
+        {/* Form Footer */}
+        <div className="flex justify-end gap-3 border-t border-[var(--border)] pt-4">
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={handleClose}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            loading={isSubmitting}
+            disabled={isSubmitting || !label.trim()}
+          >
+            Save Changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}

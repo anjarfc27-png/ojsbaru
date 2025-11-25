@@ -122,3 +122,51 @@ export async function withAuth(
     }
   }
 }
+      const user = await getCurrentUser(request)
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+
+      if (requiredRole && !hasRole(user, requiredRole)) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      }
+
+      return await handler(request, user)
+    } catch (error) {
+      console.error('Auth middleware error:', error)
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+  }
+}
+      const user = await getCurrentUser(request)
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+
+      if (requiredRole && !hasRole(user, requiredRole)) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      }
+
+      return await handler(request, user)
+    } catch (error) {
+      console.error('Auth middleware error:', error)
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+  }
+}
+      const user = await getCurrentUser(request)
+      if (!user) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+
+      if (requiredRole && !hasRole(user, requiredRole)) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      }
+
+      return await handler(request, user)
+    } catch (error) {
+      console.error('Auth middleware error:', error)
+      return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    }
+  }
+}

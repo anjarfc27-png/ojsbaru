@@ -260,3 +260,252 @@ export default async function AppearanceSetupPage() {
     </div>
   );
 }
+
+                  value={option.value}
+                  defaultChecked={setup.sidebar.includes(option.value)}
+                  style={{
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <span style={{
+                  fontSize: "0.875rem",
+                  color: '#002C40'
+                }}>
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Custom Stylesheet */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem'
+        }}>
+          <label
+            htmlFor="styleSheet"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Custom stylesheet
+          </label>
+          <input
+            id="styleSheet"
+            name="styleSheet"
+            type="text"
+            defaultValue={setup.styleSheet || ""}
+            placeholder="Enter stylesheet URL or path (file upload will be implemented)"
+            style={{
+              maxWidth: '28rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            URL or path to a custom CSS file to override default styles. In OJS 3.3 this is a FieldUpload that accepts .css files only.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+                  value={option.value}
+                  defaultChecked={setup.sidebar.includes(option.value)}
+                  style={{
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <span style={{
+                  fontSize: "0.875rem",
+                  color: '#002C40'
+                }}>
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Custom Stylesheet */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem'
+        }}>
+          <label
+            htmlFor="styleSheet"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Custom stylesheet
+          </label>
+          <input
+            id="styleSheet"
+            name="styleSheet"
+            type="text"
+            defaultValue={setup.styleSheet || ""}
+            placeholder="Enter stylesheet URL or path (file upload will be implemented)"
+            style={{
+              maxWidth: '28rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            URL or path to a custom CSS file to override default styles. In OJS 3.3 this is a FieldUpload that accepts .css files only.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+                  value={option.value}
+                  defaultChecked={setup.sidebar.includes(option.value)}
+                  style={{
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                />
+                <span style={{
+                  fontSize: "0.875rem",
+                  color: '#002C40'
+                }}>
+                  {option.label}
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Custom Stylesheet */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.75rem'
+        }}>
+          <label
+            htmlFor="styleSheet"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Custom stylesheet
+          </label>
+          <input
+            id="styleSheet"
+            name="styleSheet"
+            type="text"
+            defaultValue={setup.styleSheet || ""}
+            placeholder="Enter stylesheet URL or path (file upload will be implemented)"
+            style={{
+              maxWidth: '28rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            URL or path to a custom CSS file to override default styles. In OJS 3.3 this is a FieldUpload that accepts .css files only.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

@@ -311,3 +311,309 @@ export function QueriesPanel({ submissionId, stage, queries, participants }: Pro
 
 
 
+
+            backgroundColor: "#f8f9fa",
+            borderRadius: "0.25rem",
+            border: "1px solid #e5e5e5",
+          }}
+        >
+          No queries yet. Create a query to start a discussion.
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          {/* Open Queries */}
+          {openQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Open Queries ({openQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {openQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Closed Queries */}
+          {closedQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Closed Queries ({closedQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {closedQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {isCreating && (
+        <CreateQueryModal
+          open={true}
+          onClose={handleCloseModal}
+          submissionId={submissionId}
+          stage={stage}
+          participants={participants}
+          onQueryCreated={handleQueryCreated}
+        />
+      )}
+    </div>
+  );
+}
+
+
+
+
+            backgroundColor: "#f8f9fa",
+            borderRadius: "0.25rem",
+            border: "1px solid #e5e5e5",
+          }}
+        >
+          No queries yet. Create a query to start a discussion.
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          {/* Open Queries */}
+          {openQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Open Queries ({openQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {openQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Closed Queries */}
+          {closedQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Closed Queries ({closedQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {closedQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {isCreating && (
+        <CreateQueryModal
+          open={true}
+          onClose={handleCloseModal}
+          submissionId={submissionId}
+          stage={stage}
+          participants={participants}
+          onQueryCreated={handleQueryCreated}
+        />
+      )}
+    </div>
+  );
+}
+
+
+
+
+            backgroundColor: "#f8f9fa",
+            borderRadius: "0.25rem",
+            border: "1px solid #e5e5e5",
+          }}
+        >
+          No queries yet. Create a query to start a discussion.
+        </div>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "1rem",
+          }}
+        >
+          {/* Open Queries */}
+          {openQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Open Queries ({openQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {openQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Closed Queries */}
+          {closedQueries.length > 0 && (
+            <div>
+              <h3
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  color: "#002C40",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Closed Queries ({closedQueries.length})
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {closedQueries.map((query) => (
+                  <QueryCard
+                    key={query.id}
+                    submissionId={submissionId}
+                    query={query}
+                    participants={participants}
+                    participantColors={participantColorMap}
+                    highlightedParticipant={participantFilter === "all" ? undefined : participantFilter}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {isCreating && (
+        <CreateQueryModal
+          open={true}
+          onClose={handleCloseModal}
+          submissionId={submissionId}
+          stage={stage}
+          participants={participants}
+          onQueryCreated={handleQueryCreated}
+        />
+      )}
+    </div>
+  );
+}
+
+
+

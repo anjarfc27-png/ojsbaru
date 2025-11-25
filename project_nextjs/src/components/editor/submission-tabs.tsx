@@ -58,3 +58,6 @@ export function SubmissionTabs({ tabs, emptyMessage = "No submissions found." }:
     </div>
   );
 }
+}
+}
+}

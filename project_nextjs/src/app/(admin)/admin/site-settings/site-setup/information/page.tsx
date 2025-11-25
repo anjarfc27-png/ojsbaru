@@ -214,3 +214,348 @@ export default async function SiteSetupInformationPage() {
     </div>
   );
 }
+
+              </label>
+              <input
+                id="contactName"
+                name="contactName"
+                type="text"
+                defaultValue={initial.contactName || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem'
+            }}>
+              <label
+                htmlFor="contactEmail"
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "500",
+                  color: '#002C40'
+                }}
+              >
+                Contact email <span style={{ color: '#d32f2f' }}>*</span>
+              </label>
+              <input
+                id="contactEmail"
+                name="contactEmail"
+                type="email"
+                defaultValue={initial.contactEmail || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Privacy Statement */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          <label
+            htmlFor="privacyStatement"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Privacy statement
+          </label>
+          <textarea
+            id="privacyStatement"
+            name="privacyStatement"
+            rows={8}
+            defaultValue={initial.privacyStatement || ""}
+            placeholder="Enter privacy statement"
+            style={{
+              maxWidth: '42rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit',
+              resize: 'vertical'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            A statement describing the privacy policy for this installation.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+              </label>
+              <input
+                id="contactName"
+                name="contactName"
+                type="text"
+                defaultValue={initial.contactName || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem'
+            }}>
+              <label
+                htmlFor="contactEmail"
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "500",
+                  color: '#002C40'
+                }}
+              >
+                Contact email <span style={{ color: '#d32f2f' }}>*</span>
+              </label>
+              <input
+                id="contactEmail"
+                name="contactEmail"
+                type="email"
+                defaultValue={initial.contactEmail || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Privacy Statement */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          <label
+            htmlFor="privacyStatement"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Privacy statement
+          </label>
+          <textarea
+            id="privacyStatement"
+            name="privacyStatement"
+            rows={8}
+            defaultValue={initial.privacyStatement || ""}
+            placeholder="Enter privacy statement"
+            style={{
+              maxWidth: '42rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit',
+              resize: 'vertical'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            A statement describing the privacy policy for this installation.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+              </label>
+              <input
+                id="contactName"
+                name="contactName"
+                type="text"
+                defaultValue={initial.contactName || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem'
+            }}>
+              <label
+                htmlFor="contactEmail"
+                style={{
+                  fontSize: "0.875rem",
+                  fontWeight: "500",
+                  color: '#002C40'
+                }}
+              >
+                Contact email <span style={{ color: '#d32f2f' }}>*</span>
+              </label>
+              <input
+                id="contactEmail"
+                name="contactEmail"
+                type="email"
+                defaultValue={initial.contactEmail || ""}
+                required
+                style={{
+                  fontSize: "0.875rem",
+                  padding: "0.5rem 0.75rem",
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Privacy Statement */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          <label
+            htmlFor="privacyStatement"
+            style={{
+              fontSize: "0.875rem",
+              fontWeight: "500",
+              color: '#002C40'
+            }}
+          >
+            Privacy statement
+          </label>
+          <textarea
+            id="privacyStatement"
+            name="privacyStatement"
+            rows={8}
+            defaultValue={initial.privacyStatement || ""}
+            placeholder="Enter privacy statement"
+            style={{
+              maxWidth: '42rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit',
+              resize: 'vertical'
+            }}
+          />
+          <p style={{
+            fontSize: "0.875rem",
+            color: '#666',
+            margin: 0
+          }}>
+            A statement describing the privacy policy for this installation.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

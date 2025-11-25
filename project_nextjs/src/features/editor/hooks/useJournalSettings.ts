@@ -202,3 +202,21 @@ export function useMigrateLocalStorageToDatabase(
   return { migrate, migrating, migrated };
 }
 
+
+  }, [localStorageKeys, settings, saveSettings, migrated]);
+
+  return { migrate, migrating, migrated };
+}
+
+
+  }, [localStorageKeys, settings, saveSettings, migrated]);
+
+  return { migrate, migrating, migrated };
+}
+
+
+  }, [localStorageKeys, settings, saveSettings, migrated]);
+
+  return { migrate, migrating, migrated };
+}
+

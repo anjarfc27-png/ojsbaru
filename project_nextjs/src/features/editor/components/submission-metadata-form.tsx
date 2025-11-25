@@ -88,3 +88,12 @@ export function SubmissionMetadataForm({ submissionId, initialTitle, initialAbst
     </form>
   );
 }
+    </form>
+  );
+}
+    </form>
+  );
+}
+    </form>
+  );
+}

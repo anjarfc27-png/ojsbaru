@@ -304,3 +304,192 @@ export function TitleAbstractTab({ submissionId, detail, version, isPublished }:
 
 
 
+
+              padding: "0.5rem 0.75rem",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              resize: "vertical",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.5rem",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                border: "1px solid #006798",
+                backgroundColor: "#006798",
+                color: "#ffffff",
+                height: "2rem",
+                paddingLeft: "0.75rem",
+                paddingRight: "0.75rem",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#005a82";
+                  e.currentTarget.style.borderColor = "#005a82";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#006798";
+                  e.currentTarget.style.borderColor = "#006798";
+                }
+              }}
+            >
+              {isSaving ? "Saving..." : "Save"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+
+
+
+              padding: "0.5rem 0.75rem",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              resize: "vertical",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.5rem",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                border: "1px solid #006798",
+                backgroundColor: "#006798",
+                color: "#ffffff",
+                height: "2rem",
+                paddingLeft: "0.75rem",
+                paddingRight: "0.75rem",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#005a82";
+                  e.currentTarget.style.borderColor = "#005a82";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#006798";
+                  e.currentTarget.style.borderColor = "#006798";
+                }
+              }}
+            >
+              {isSaving ? "Saving..." : "Save"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+
+
+
+              padding: "0.5rem 0.75rem",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              resize: "vertical",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "0.5rem",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: "0.25rem",
+                border: "1px solid #006798",
+                backgroundColor: "#006798",
+                color: "#ffffff",
+                height: "2rem",
+                paddingLeft: "0.75rem",
+                paddingRight: "0.75rem",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#005a82";
+                  e.currentTarget.style.borderColor = "#005a82";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSaving) {
+                  e.currentTarget.style.backgroundColor = "#006798";
+                  e.currentTarget.style.borderColor = "#006798";
+                }
+              }}
+            >
+              {isSaving ? "Saving..." : "Save"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+
+

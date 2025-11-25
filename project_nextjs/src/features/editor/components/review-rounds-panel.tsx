@@ -384,3 +384,306 @@ export function ReviewRoundsPanel({ submissionId, rounds, journalId }: Props) {
     </>
   );
 }
+
+              {selectedRound ? (
+                <div
+                  key={selectedRound.id}
+                  style={{
+                    borderRadius: "0.25rem",
+                    border: "1px solid #e5e5e5",
+                    backgroundColor: "#ffffff",
+                    padding: "1rem",
+                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      paddingBottom: "0.75rem",
+                      borderBottom: "1px solid #e5e5e5",
+                    }}
+                  >
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          color: "#002C40",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {selectedRound.stage} · Round {selectedRound.round}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "rgba(0, 0, 0, 0.54)",
+                        }}
+                      >
+                        Status: {selectedRound.status}
+                      </p>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: "rgba(0, 0, 0, 0.54)",
+                      }}
+                    >
+                      {formatDate(selectedRound.startedAt)}
+                      {selectedRound.closedAt && ` · Closed ${formatDate(selectedRound.closedAt)}`}
+                    </p>
+                  </div>
+
+                  {selectedRound.notes && (
+                    <p
+                      style={{
+                        marginTop: "0.5rem",
+                        marginBottom: "0.75rem",
+                        fontSize: "0.875rem",
+                        color: "rgba(0, 0, 0, 0.84)",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      {selectedRound.notes}
+                    </p>
+                  )}
+
+                  <div style={{ marginTop: "1rem" }}>
+                    <ReviewerAssignmentList
+                      submissionId={submissionId}
+                      stage={selectedRound.stage}
+                      reviewRoundId={selectedRound.id}
+                      journalId={journalId}
+                      reviews={selectedRound.reviews}
+                      onAddReviewer={handleAddReviewer}
+                      onRemoveReview={handleRemoveReviewer}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* New Review Round Modal */}
+      {openNewRoundModal && (
+        <NewReviewRoundForm
+          open={openNewRoundModal}
+          onClose={() => setOpenNewRoundModal(false)}
+          submissionId={submissionId}
+          stage="review"
+          reviewRoundId={currentReviewRound?.id}
+          onSubmit={handleCreateRound}
+        />
+      )}
+    </>
+  );
+}
+
+              {selectedRound ? (
+                <div
+                  key={selectedRound.id}
+                  style={{
+                    borderRadius: "0.25rem",
+                    border: "1px solid #e5e5e5",
+                    backgroundColor: "#ffffff",
+                    padding: "1rem",
+                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      paddingBottom: "0.75rem",
+                      borderBottom: "1px solid #e5e5e5",
+                    }}
+                  >
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          color: "#002C40",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {selectedRound.stage} · Round {selectedRound.round}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "rgba(0, 0, 0, 0.54)",
+                        }}
+                      >
+                        Status: {selectedRound.status}
+                      </p>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: "rgba(0, 0, 0, 0.54)",
+                      }}
+                    >
+                      {formatDate(selectedRound.startedAt)}
+                      {selectedRound.closedAt && ` · Closed ${formatDate(selectedRound.closedAt)}`}
+                    </p>
+                  </div>
+
+                  {selectedRound.notes && (
+                    <p
+                      style={{
+                        marginTop: "0.5rem",
+                        marginBottom: "0.75rem",
+                        fontSize: "0.875rem",
+                        color: "rgba(0, 0, 0, 0.84)",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      {selectedRound.notes}
+                    </p>
+                  )}
+
+                  <div style={{ marginTop: "1rem" }}>
+                    <ReviewerAssignmentList
+                      submissionId={submissionId}
+                      stage={selectedRound.stage}
+                      reviewRoundId={selectedRound.id}
+                      journalId={journalId}
+                      reviews={selectedRound.reviews}
+                      onAddReviewer={handleAddReviewer}
+                      onRemoveReview={handleRemoveReviewer}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* New Review Round Modal */}
+      {openNewRoundModal && (
+        <NewReviewRoundForm
+          open={openNewRoundModal}
+          onClose={() => setOpenNewRoundModal(false)}
+          submissionId={submissionId}
+          stage="review"
+          reviewRoundId={currentReviewRound?.id}
+          onSubmit={handleCreateRound}
+        />
+      )}
+    </>
+  );
+}
+
+              {selectedRound ? (
+                <div
+                  key={selectedRound.id}
+                  style={{
+                    borderRadius: "0.25rem",
+                    border: "1px solid #e5e5e5",
+                    backgroundColor: "#ffffff",
+                    padding: "1rem",
+                    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                      paddingBottom: "0.75rem",
+                      borderBottom: "1px solid #e5e5e5",
+                    }}
+                  >
+                    <div>
+                      <p
+                        style={{
+                          fontSize: "0.875rem",
+                          fontWeight: 600,
+                          color: "#002C40",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {selectedRound.stage} · Round {selectedRound.round}
+                      </p>
+                      <p
+                        style={{
+                          fontSize: "0.75rem",
+                          color: "rgba(0, 0, 0, 0.54)",
+                        }}
+                      >
+                        Status: {selectedRound.status}
+                      </p>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: "0.75rem",
+                        color: "rgba(0, 0, 0, 0.54)",
+                      }}
+                    >
+                      {formatDate(selectedRound.startedAt)}
+                      {selectedRound.closedAt && ` · Closed ${formatDate(selectedRound.closedAt)}`}
+                    </p>
+                  </div>
+
+                  {selectedRound.notes && (
+                    <p
+                      style={{
+                        marginTop: "0.5rem",
+                        marginBottom: "0.75rem",
+                        fontSize: "0.875rem",
+                        color: "rgba(0, 0, 0, 0.84)",
+                        lineHeight: "1.5",
+                      }}
+                    >
+                      {selectedRound.notes}
+                    </p>
+                  )}
+
+                  <div style={{ marginTop: "1rem" }}>
+                    <ReviewerAssignmentList
+                      submissionId={submissionId}
+                      stage={selectedRound.stage}
+                      reviewRoundId={selectedRound.id}
+                      journalId={journalId}
+                      reviews={selectedRound.reviews}
+                      onAddReviewer={handleAddReviewer}
+                      onRemoveReview={handleRemoveReviewer}
+                    />
+                  </div>
+                </div>
+              ) : null}
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* New Review Round Modal */}
+      {openNewRoundModal && (
+        <NewReviewRoundForm
+          open={openNewRoundModal}
+          onClose={() => setOpenNewRoundModal(false)}
+          submissionId={submissionId}
+          stage="review"
+          reviewRoundId={currentReviewRound?.id}
+          onSubmit={handleCreateRound}
+        />
+      )}
+    </>
+  );
+}

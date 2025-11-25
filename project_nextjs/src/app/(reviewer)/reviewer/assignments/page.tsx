@@ -729,3 +729,1608 @@ function ReviewerAssignments() {
 }
 
 export default withAuth(ReviewerAssignments, 'reviewer')
+
+            border: 'none',
+            borderBottom: filter === 'active' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'active' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Active ({activeCount})
+        </button>
+        <button
+          onClick={() => setFilter('completed')}
+          style={{
+            padding: '0.75rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: filter === 'completed' ? 600 : 400,
+            color: filter === 'completed' ? '#002C40' : '#006798',
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderBottom: filter === 'completed' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'completed' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Completed ({completedCount})
+        </button>
+      </div>
+
+      {/* Summary Cards - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: '1rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Total Assignments
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#666' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {assignments.length}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {pendingCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Active
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {activeCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Overdue
+            </h3>
+            <XCircle style={{ width: '1rem', height: '1rem', color: '#dc3545' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#dc3545',
+            marginBottom: '0.25rem'
+          }}>
+            {overdueCount}
+          </div>
+        </div>
+      </div>
+
+      {/* Error State */}
+      {error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dc3545',
+          borderRadius: '4px',
+          padding: '1rem',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          <AlertCircle style={{ width: '1.25rem', height: '1.25rem', color: '#dc3545' }} />
+          <p style={{ margin: 0, color: '#dc3545', fontSize: '0.875rem' }}>{error}</p>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '2rem',
+          textAlign: 'center',
+          color: '#666',
+          fontSize: '0.875rem'
+        }}>
+          Loading assignments...
+        </div>
+      )}
+
+      {/* Assignments List - OJS PKP 3.3 Style */}
+      {!loading && !error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            padding: '1rem 1.5rem',
+            borderBottom: '1px solid #e5e5e5',
+            backgroundColor: '#f8f9fa'
+          }}>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Review Assignments
+            </h2>
+          </div>
+          <div style={{ padding: '1.5rem' }}>
+            {assignments.length === 0 ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '2rem',
+                fontSize: '0.875rem',
+                color: '#666',
+                fontStyle: 'italic'
+              }}>
+                No review assignments found.
+              </div>
+            ) : (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}>
+                {assignments.map((assignment) => {
+                  const daysRemaining = calculateDaysRemaining(assignment.dueDate);
+                  const isOverdue = daysRemaining !== null && daysRemaining < 0 && (assignment.status === 'pending' || assignment.status === 'accepted');
+                  const statusColors = getStatusColor(assignment.status);
+                  const daysColors = getDaysColor(daysRemaining);
+                  
+                  return (
+                    <div 
+                      key={assignment.id} 
+                      style={{
+                        border: '1px solid #dee2e6',
+                        borderRadius: '4px',
+                        padding: '1.25rem',
+                        backgroundColor: '#fff',
+                        transition: 'box-shadow 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginBottom: '1rem'
+                      }}>
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{
+                            fontWeight: 600,
+                            fontSize: '1.125rem',
+                            color: '#002C40',
+                            margin: 0,
+                            marginBottom: '0.5rem'
+                          }}>
+                            {assignment.submissionTitle}
+                          </h3>
+                          {assignment.authorNames && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0,
+                              marginBottom: '0.25rem'
+                            }}>
+                              Authors: {assignment.authorNames}
+                            </p>
+                          )}
+                          {assignment.journalTitle && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0
+                            }}>
+                              Journal: {assignment.journalTitle}
+                            </p>
+                          )}
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-end',
+                          gap: '0.5rem'
+                        }}>
+                          <span style={{
+                            backgroundColor: statusColors.bg,
+                            color: statusColors.color,
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            {getStatusLabel(assignment.status)}
+                          </span>
+                          {isOverdue && (
+                            <span style={{
+                              backgroundColor: '#f8d7da',
+                              color: '#721c24',
+                              fontSize: '0.75rem',
+                              padding: '0.125rem 0.5rem',
+                              borderRadius: '4px',
+                              fontWeight: 600,
+                              display: 'inline-block'
+                            }}>
+                              Overdue
+                            </span>
+                          )}
+                          <span style={{
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            color: '#666',
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            Round {assignment.round}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '1rem',
+                        paddingBottom: '1rem',
+                        borderBottom: '1px solid #e5e5e5'
+                      }}>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Submission Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.submittedAtSubmission)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Due Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.dueDate)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Days Remaining:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: daysColors.color,
+                            margin: 0
+                          }}>
+                            {daysRemaining === null
+                              ? 'N/A'
+                              : daysRemaining > 0
+                              ? `${daysRemaining} days`
+                              : `${Math.abs(daysRemaining)} days overdue`}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Assignment ID:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            #{assignment.id.slice(0, 8)}...
+                          </p>
+                        </div>
+                      </div>
+
+                      {assignment.abstract && (
+                        <div style={{
+                          marginBottom: '1rem',
+                          paddingBottom: '1rem',
+                          borderBottom: '1px solid #e5e5e5'
+                        }}>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Abstract:
+                          </span>
+                          <p style={{
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {assignment.abstract}
+                          </p>
+                        </div>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingTop: '0.75rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                            style={{
+                              fontSize: '0.875rem',
+                              padding: '0.5rem 1rem',
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798',
+                              fontWeight: 600,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.5rem'
+                            }}
+                          >
+                            <Eye style={{ width: '1rem', height: '1rem' }} />
+                            View Details
+                          </button>
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          {(assignment.status === 'pending' || assignment.status === 'accepted') && !assignment.submittedAt && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                              style={{
+                                backgroundColor: '#006798',
+                                color: '#fff',
+                                fontSize: '0.875rem',
+                                fontWeight: 600,
+                                padding: '0.5rem 1rem',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {assignment.status === 'pending' ? 'Start Review' : 'Continue Review'}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerAssignments, 'reviewer')
+
+            border: 'none',
+            borderBottom: filter === 'active' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'active' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Active ({activeCount})
+        </button>
+        <button
+          onClick={() => setFilter('completed')}
+          style={{
+            padding: '0.75rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: filter === 'completed' ? 600 : 400,
+            color: filter === 'completed' ? '#002C40' : '#006798',
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderBottom: filter === 'completed' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'completed' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Completed ({completedCount})
+        </button>
+      </div>
+
+      {/* Summary Cards - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: '1rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Total Assignments
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#666' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {assignments.length}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {pendingCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Active
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {activeCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Overdue
+            </h3>
+            <XCircle style={{ width: '1rem', height: '1rem', color: '#dc3545' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#dc3545',
+            marginBottom: '0.25rem'
+          }}>
+            {overdueCount}
+          </div>
+        </div>
+      </div>
+
+      {/* Error State */}
+      {error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dc3545',
+          borderRadius: '4px',
+          padding: '1rem',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          <AlertCircle style={{ width: '1.25rem', height: '1.25rem', color: '#dc3545' }} />
+          <p style={{ margin: 0, color: '#dc3545', fontSize: '0.875rem' }}>{error}</p>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '2rem',
+          textAlign: 'center',
+          color: '#666',
+          fontSize: '0.875rem'
+        }}>
+          Loading assignments...
+        </div>
+      )}
+
+      {/* Assignments List - OJS PKP 3.3 Style */}
+      {!loading && !error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            padding: '1rem 1.5rem',
+            borderBottom: '1px solid #e5e5e5',
+            backgroundColor: '#f8f9fa'
+          }}>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Review Assignments
+            </h2>
+          </div>
+          <div style={{ padding: '1.5rem' }}>
+            {assignments.length === 0 ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '2rem',
+                fontSize: '0.875rem',
+                color: '#666',
+                fontStyle: 'italic'
+              }}>
+                No review assignments found.
+              </div>
+            ) : (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}>
+                {assignments.map((assignment) => {
+                  const daysRemaining = calculateDaysRemaining(assignment.dueDate);
+                  const isOverdue = daysRemaining !== null && daysRemaining < 0 && (assignment.status === 'pending' || assignment.status === 'accepted');
+                  const statusColors = getStatusColor(assignment.status);
+                  const daysColors = getDaysColor(daysRemaining);
+                  
+                  return (
+                    <div 
+                      key={assignment.id} 
+                      style={{
+                        border: '1px solid #dee2e6',
+                        borderRadius: '4px',
+                        padding: '1.25rem',
+                        backgroundColor: '#fff',
+                        transition: 'box-shadow 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginBottom: '1rem'
+                      }}>
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{
+                            fontWeight: 600,
+                            fontSize: '1.125rem',
+                            color: '#002C40',
+                            margin: 0,
+                            marginBottom: '0.5rem'
+                          }}>
+                            {assignment.submissionTitle}
+                          </h3>
+                          {assignment.authorNames && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0,
+                              marginBottom: '0.25rem'
+                            }}>
+                              Authors: {assignment.authorNames}
+                            </p>
+                          )}
+                          {assignment.journalTitle && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0
+                            }}>
+                              Journal: {assignment.journalTitle}
+                            </p>
+                          )}
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-end',
+                          gap: '0.5rem'
+                        }}>
+                          <span style={{
+                            backgroundColor: statusColors.bg,
+                            color: statusColors.color,
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            {getStatusLabel(assignment.status)}
+                          </span>
+                          {isOverdue && (
+                            <span style={{
+                              backgroundColor: '#f8d7da',
+                              color: '#721c24',
+                              fontSize: '0.75rem',
+                              padding: '0.125rem 0.5rem',
+                              borderRadius: '4px',
+                              fontWeight: 600,
+                              display: 'inline-block'
+                            }}>
+                              Overdue
+                            </span>
+                          )}
+                          <span style={{
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            color: '#666',
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            Round {assignment.round}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '1rem',
+                        paddingBottom: '1rem',
+                        borderBottom: '1px solid #e5e5e5'
+                      }}>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Submission Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.submittedAtSubmission)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Due Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.dueDate)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Days Remaining:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: daysColors.color,
+                            margin: 0
+                          }}>
+                            {daysRemaining === null
+                              ? 'N/A'
+                              : daysRemaining > 0
+                              ? `${daysRemaining} days`
+                              : `${Math.abs(daysRemaining)} days overdue`}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Assignment ID:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            #{assignment.id.slice(0, 8)}...
+                          </p>
+                        </div>
+                      </div>
+
+                      {assignment.abstract && (
+                        <div style={{
+                          marginBottom: '1rem',
+                          paddingBottom: '1rem',
+                          borderBottom: '1px solid #e5e5e5'
+                        }}>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Abstract:
+                          </span>
+                          <p style={{
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {assignment.abstract}
+                          </p>
+                        </div>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingTop: '0.75rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                            style={{
+                              fontSize: '0.875rem',
+                              padding: '0.5rem 1rem',
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798',
+                              fontWeight: 600,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.5rem'
+                            }}
+                          >
+                            <Eye style={{ width: '1rem', height: '1rem' }} />
+                            View Details
+                          </button>
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          {(assignment.status === 'pending' || assignment.status === 'accepted') && !assignment.submittedAt && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                              style={{
+                                backgroundColor: '#006798',
+                                color: '#fff',
+                                fontSize: '0.875rem',
+                                fontWeight: 600,
+                                padding: '0.5rem 1rem',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {assignment.status === 'pending' ? 'Start Review' : 'Continue Review'}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerAssignments, 'reviewer')
+
+            border: 'none',
+            borderBottom: filter === 'active' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'active' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'active') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Active ({activeCount})
+        </button>
+        <button
+          onClick={() => setFilter('completed')}
+          style={{
+            padding: '0.75rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: filter === 'completed' ? 600 : 400,
+            color: filter === 'completed' ? '#002C40' : '#006798',
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderBottom: filter === 'completed' ? '2px solid #006798' : '2px solid transparent',
+            cursor: 'pointer',
+            marginBottom: filter === 'completed' ? '-2px' : '0'
+          }}
+          onMouseEnter={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#002C40';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (filter !== 'completed') {
+              e.currentTarget.style.color = '#006798';
+            }
+          }}
+        >
+          Completed ({completedCount})
+        </button>
+      </div>
+
+      {/* Summary Cards - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+        gap: '1rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Total Assignments
+            </h3>
+            <FileText style={{ width: '1rem', height: '1rem', color: '#666' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {assignments.length}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Pending
+            </h3>
+            <Clock style={{ width: '1rem', height: '1rem', color: '#ff9800' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#ff9800',
+            marginBottom: '0.25rem'
+          }}>
+            {pendingCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Active
+            </h3>
+            <CheckCircle style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#006798',
+            marginBottom: '0.25rem'
+          }}>
+            {activeCount}
+          </div>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Overdue
+            </h3>
+            <XCircle style={{ width: '1rem', height: '1rem', color: '#dc3545' }} />
+          </div>
+          <div style={{
+            fontSize: '2rem',
+            fontWeight: 700,
+            color: '#dc3545',
+            marginBottom: '0.25rem'
+          }}>
+            {overdueCount}
+          </div>
+        </div>
+      </div>
+
+      {/* Error State */}
+      {error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dc3545',
+          borderRadius: '4px',
+          padding: '1rem',
+          marginBottom: '1.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
+          <AlertCircle style={{ width: '1.25rem', height: '1.25rem', color: '#dc3545' }} />
+          <p style={{ margin: 0, color: '#dc3545', fontSize: '0.875rem' }}>{error}</p>
+        </div>
+      )}
+
+      {/* Loading State */}
+      {loading && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '2rem',
+          textAlign: 'center',
+          color: '#666',
+          fontSize: '0.875rem'
+        }}>
+          Loading assignments...
+        </div>
+      )}
+
+      {/* Assignments List - OJS PKP 3.3 Style */}
+      {!loading && !error && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          overflow: 'hidden'
+        }}>
+          <div style={{
+            padding: '1rem 1.5rem',
+            borderBottom: '1px solid #e5e5e5',
+            backgroundColor: '#f8f9fa'
+          }}>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Review Assignments
+            </h2>
+          </div>
+          <div style={{ padding: '1.5rem' }}>
+            {assignments.length === 0 ? (
+              <div style={{
+                textAlign: 'center',
+                padding: '2rem',
+                fontSize: '0.875rem',
+                color: '#666',
+                fontStyle: 'italic'
+              }}>
+                No review assignments found.
+              </div>
+            ) : (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}>
+                {assignments.map((assignment) => {
+                  const daysRemaining = calculateDaysRemaining(assignment.dueDate);
+                  const isOverdue = daysRemaining !== null && daysRemaining < 0 && (assignment.status === 'pending' || assignment.status === 'accepted');
+                  const statusColors = getStatusColor(assignment.status);
+                  const daysColors = getDaysColor(daysRemaining);
+                  
+                  return (
+                    <div 
+                      key={assignment.id} 
+                      style={{
+                        border: '1px solid #dee2e6',
+                        borderRadius: '4px',
+                        padding: '1.25rem',
+                        backgroundColor: '#fff',
+                        transition: 'box-shadow 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginBottom: '1rem'
+                      }}>
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{
+                            fontWeight: 600,
+                            fontSize: '1.125rem',
+                            color: '#002C40',
+                            margin: 0,
+                            marginBottom: '0.5rem'
+                          }}>
+                            {assignment.submissionTitle}
+                          </h3>
+                          {assignment.authorNames && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0,
+                              marginBottom: '0.25rem'
+                            }}>
+                              Authors: {assignment.authorNames}
+                            </p>
+                          )}
+                          {assignment.journalTitle && (
+                            <p style={{
+                              fontSize: '0.875rem',
+                              color: '#666',
+                              margin: 0
+                            }}>
+                              Journal: {assignment.journalTitle}
+                            </p>
+                          )}
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-end',
+                          gap: '0.5rem'
+                        }}>
+                          <span style={{
+                            backgroundColor: statusColors.bg,
+                            color: statusColors.color,
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            {getStatusLabel(assignment.status)}
+                          </span>
+                          {isOverdue && (
+                            <span style={{
+                              backgroundColor: '#f8d7da',
+                              color: '#721c24',
+                              fontSize: '0.75rem',
+                              padding: '0.125rem 0.5rem',
+                              borderRadius: '4px',
+                              fontWeight: 600,
+                              display: 'inline-block'
+                            }}>
+                              Overdue
+                            </span>
+                          )}
+                          <span style={{
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            color: '#666',
+                            fontSize: '0.75rem',
+                            padding: '0.125rem 0.5rem',
+                            borderRadius: '4px',
+                            fontWeight: 600,
+                            display: 'inline-block'
+                          }}>
+                            Round {assignment.round}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                        gap: '1rem',
+                        marginBottom: '1rem',
+                        paddingBottom: '1rem',
+                        borderBottom: '1px solid #e5e5e5'
+                      }}>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Submission Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.submittedAtSubmission)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Due Date:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            {formatDate(assignment.dueDate)}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Days Remaining:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: daysColors.color,
+                            margin: 0
+                          }}>
+                            {daysRemaining === null
+                              ? 'N/A'
+                              : daysRemaining > 0
+                              ? `${daysRemaining} days`
+                              : `${Math.abs(daysRemaining)} days overdue`}
+                          </p>
+                        </div>
+                        <div>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Assignment ID:
+                          </span>
+                          <p style={{
+                            fontWeight: 500,
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0
+                          }}>
+                            #{assignment.id.slice(0, 8)}...
+                          </p>
+                        </div>
+                      </div>
+
+                      {assignment.abstract && (
+                        <div style={{
+                          marginBottom: '1rem',
+                          paddingBottom: '1rem',
+                          borderBottom: '1px solid #e5e5e5'
+                        }}>
+                          <span style={{
+                            fontSize: '0.75rem',
+                            color: '#666',
+                            display: 'block',
+                            marginBottom: '0.25rem'
+                          }}>
+                            Abstract:
+                          </span>
+                          <p style={{
+                            fontSize: '0.875rem',
+                            color: '#333',
+                            margin: 0,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden'
+                          }}>
+                            {assignment.abstract}
+                          </p>
+                        </div>
+                      )}
+
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        paddingTop: '0.75rem'
+                      }}>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          <button
+                            onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                            style={{
+                              fontSize: '0.875rem',
+                              padding: '0.5rem 1rem',
+                              backgroundColor: 'transparent',
+                              border: '1px solid #d5d5d5',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              color: '#006798',
+                              fontWeight: 600,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.5rem'
+                            }}
+                          >
+                            <Eye style={{ width: '1rem', height: '1rem' }} />
+                            View Details
+                          </button>
+                        </div>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem'
+                        }}>
+                          {(assignment.status === 'pending' || assignment.status === 'accepted') && !assignment.submittedAt && (
+                            <button
+                              onClick={() => router.push(`/reviewer/assignments/${assignment.id}`)}
+                              style={{
+                                backgroundColor: '#006798',
+                                color: '#fff',
+                                fontSize: '0.875rem',
+                                fontWeight: 600,
+                                padding: '0.5rem 1rem',
+                                border: 'none',
+                                borderRadius: '4px',
+                                cursor: 'pointer'
+                              }}
+                            >
+                              {assignment.status === 'pending' ? 'Start Review' : 'Continue Review'}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerAssignments, 'reviewer')

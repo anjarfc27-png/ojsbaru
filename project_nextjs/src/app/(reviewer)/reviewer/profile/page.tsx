@@ -828,3 +828,1509 @@ function ReviewerProfile() {
 }
 
 export default withAuth(ReviewerProfile, 'reviewer')
+
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="department" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Department
+              </label>
+              <input
+                id="department"
+                type="text"
+                value={profile.department}
+                onChange={(e) => setProfile({...profile, department: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="position" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Position
+              </label>
+              <input
+                id="position"
+                type="text"
+                value={profile.position}
+                onChange={(e) => setProfile({...profile, position: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="country" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Country
+              </label>
+              <input
+                id="country"
+                type="text"
+                value={profile.country}
+                onChange={(e) => setProfile({...profile, country: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="website" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Website
+              </label>
+              <input
+                id="website"
+                type="url"
+                value={profile.website}
+                onChange={(e) => setProfile({...profile, website: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="bio" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Biography
+              </label>
+              <textarea
+                id="bio"
+                rows={4}
+                value={profile.bio}
+                onChange={(e) => setProfile({...profile, bio: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed',
+                  fontFamily: 'inherit',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="research_interests" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Research Interests
+              </label>
+              <input
+                id="research_interests"
+                type="text"
+                value={profile.research_interests}
+                onChange={(e) => setProfile({...profile, research_interests: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="expertise" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Areas of Expertise
+              </label>
+              <input
+                id="expertise"
+                type="text"
+                value={profile.expertise}
+                onChange={(e) => setProfile({...profile, expertise: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'expertise' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem'
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Review Expertise Areas
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              {expertiseAreas.map((area) => (
+                <div key={area.id} style={{
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: '0.75rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      color: '#002C40',
+                      margin: 0
+                    }}>
+                      {area.area}
+                    </h3>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '0.125rem 0.5rem',
+                      fontSize: '0.75rem',
+                      borderRadius: '4px',
+                      backgroundColor: area.level === 'Expert' ? '#d4edda' : '#d1ecf1',
+                      color: area.level === 'Expert' ? '#155724' : '#0c5460',
+                      fontWeight: 600
+                    }}>
+                      {area.level}
+                    </span>
+                  </div>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '1rem'
+                  }}>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Experience
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.experience}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Reviews Completed
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.reviews_completed}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Avg. Rating
+                      </p>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem'
+                      }}>
+                        <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+                        <span style={{
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          color: '#333'
+                        }}>
+                          4.8
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Specializations
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.5rem'
+            }}>
+              {profile.specializations.map((spec, index) => (
+                <span key={index} style={{
+                  display: 'inline-block',
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.875rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#e9ecef',
+                  color: '#495057',
+                  border: '1px solid #dee2e6'
+                }}>
+                  {spec}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'metrics' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            marginBottom: '1.5rem'
+          }}>
+            Review Metrics
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Total Reviews
+                </h3>
+                <Eye style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#002C40',
+                marginBottom: '0.25rem'
+              }}>
+                {profile.review_count}
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                {profile.review_experience} experience
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Accept Rate
+                </h3>
+                <Award style={{ width: '1rem', height: '1rem', color: '#10b981' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#10b981',
+                marginBottom: '0.25rem'
+              }}>
+                34.5%
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Balanced reviewer
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Reviewer Rating
+                </h3>
+                <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#f59e0b',
+                marginBottom: '0.25rem'
+              }}>
+                4.8
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Out of 5 stars
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerProfile, 'reviewer')
+
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="department" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Department
+              </label>
+              <input
+                id="department"
+                type="text"
+                value={profile.department}
+                onChange={(e) => setProfile({...profile, department: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="position" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Position
+              </label>
+              <input
+                id="position"
+                type="text"
+                value={profile.position}
+                onChange={(e) => setProfile({...profile, position: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="country" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Country
+              </label>
+              <input
+                id="country"
+                type="text"
+                value={profile.country}
+                onChange={(e) => setProfile({...profile, country: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="website" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Website
+              </label>
+              <input
+                id="website"
+                type="url"
+                value={profile.website}
+                onChange={(e) => setProfile({...profile, website: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="bio" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Biography
+              </label>
+              <textarea
+                id="bio"
+                rows={4}
+                value={profile.bio}
+                onChange={(e) => setProfile({...profile, bio: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed',
+                  fontFamily: 'inherit',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="research_interests" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Research Interests
+              </label>
+              <input
+                id="research_interests"
+                type="text"
+                value={profile.research_interests}
+                onChange={(e) => setProfile({...profile, research_interests: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="expertise" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Areas of Expertise
+              </label>
+              <input
+                id="expertise"
+                type="text"
+                value={profile.expertise}
+                onChange={(e) => setProfile({...profile, expertise: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'expertise' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem'
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Review Expertise Areas
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              {expertiseAreas.map((area) => (
+                <div key={area.id} style={{
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: '0.75rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      color: '#002C40',
+                      margin: 0
+                    }}>
+                      {area.area}
+                    </h3>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '0.125rem 0.5rem',
+                      fontSize: '0.75rem',
+                      borderRadius: '4px',
+                      backgroundColor: area.level === 'Expert' ? '#d4edda' : '#d1ecf1',
+                      color: area.level === 'Expert' ? '#155724' : '#0c5460',
+                      fontWeight: 600
+                    }}>
+                      {area.level}
+                    </span>
+                  </div>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '1rem'
+                  }}>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Experience
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.experience}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Reviews Completed
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.reviews_completed}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Avg. Rating
+                      </p>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem'
+                      }}>
+                        <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+                        <span style={{
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          color: '#333'
+                        }}>
+                          4.8
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Specializations
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.5rem'
+            }}>
+              {profile.specializations.map((spec, index) => (
+                <span key={index} style={{
+                  display: 'inline-block',
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.875rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#e9ecef',
+                  color: '#495057',
+                  border: '1px solid #dee2e6'
+                }}>
+                  {spec}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'metrics' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            marginBottom: '1.5rem'
+          }}>
+            Review Metrics
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Total Reviews
+                </h3>
+                <Eye style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#002C40',
+                marginBottom: '0.25rem'
+              }}>
+                {profile.review_count}
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                {profile.review_experience} experience
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Accept Rate
+                </h3>
+                <Award style={{ width: '1rem', height: '1rem', color: '#10b981' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#10b981',
+                marginBottom: '0.25rem'
+              }}>
+                34.5%
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Balanced reviewer
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Reviewer Rating
+                </h3>
+                <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#f59e0b',
+                marginBottom: '0.25rem'
+              }}>
+                4.8
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Out of 5 stars
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerProfile, 'reviewer')
+
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="department" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Department
+              </label>
+              <input
+                id="department"
+                type="text"
+                value={profile.department}
+                onChange={(e) => setProfile({...profile, department: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="position" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Position
+              </label>
+              <input
+                id="position"
+                type="text"
+                value={profile.position}
+                onChange={(e) => setProfile({...profile, position: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="country" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Country
+              </label>
+              <input
+                id="country"
+                type="text"
+                value={profile.country}
+                onChange={(e) => setProfile({...profile, country: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="website" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Website
+              </label>
+              <input
+                id="website"
+                type="url"
+                value={profile.website}
+                onChange={(e) => setProfile({...profile, website: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="bio" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Biography
+              </label>
+              <textarea
+                id="bio"
+                rows={4}
+                value={profile.bio}
+                onChange={(e) => setProfile({...profile, bio: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed',
+                  fontFamily: 'inherit',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="research_interests" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Research Interests
+              </label>
+              <input
+                id="research_interests"
+                type="text"
+                value={profile.research_interests}
+                onChange={(e) => setProfile({...profile, research_interests: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label htmlFor="expertise" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Areas of Expertise
+              </label>
+              <input
+                id="expertise"
+                type="text"
+                value={profile.expertise}
+                onChange={(e) => setProfile({...profile, expertise: e.target.value})}
+                disabled={!isEditing}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: isEditing ? '#fff' : '#f8f9fa',
+                  cursor: isEditing ? 'text' : 'not-allowed'
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'expertise' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1.5rem'
+        }}>
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Review Expertise Areas
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              {expertiseAreas.map((area) => (
+                <div key={area.id} style={{
+                  border: '1px solid #dee2e6',
+                  borderRadius: '4px',
+                  padding: '1rem'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start',
+                    marginBottom: '0.75rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      color: '#002C40',
+                      margin: 0
+                    }}>
+                      {area.area}
+                    </h3>
+                    <span style={{
+                      display: 'inline-block',
+                      padding: '0.125rem 0.5rem',
+                      fontSize: '0.75rem',
+                      borderRadius: '4px',
+                      backgroundColor: area.level === 'Expert' ? '#d4edda' : '#d1ecf1',
+                      color: area.level === 'Expert' ? '#155724' : '#0c5460',
+                      fontWeight: 600
+                    }}>
+                      {area.level}
+                    </span>
+                  </div>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '1rem'
+                  }}>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Experience
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.experience}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Reviews Completed
+                      </p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                        color: '#333',
+                        margin: 0
+                      }}>
+                        {area.reviews_completed}
+                      </p>
+                    </div>
+                    <div>
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        margin: '0 0 0.25rem 0'
+                      }}>
+                        Avg. Rating
+                      </p>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.25rem'
+                      }}>
+                        <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+                        <span style={{
+                          fontSize: '0.875rem',
+                          fontWeight: 500,
+                          color: '#333'
+                        }}>
+                          4.8
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 style={{
+              fontSize: '1.125rem',
+              fontWeight: 700,
+              color: '#002C40',
+              margin: 0,
+              marginBottom: '1rem'
+            }}>
+              Specializations
+            </h2>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '0.5rem'
+            }}>
+              {profile.specializations.map((spec, index) => (
+                <span key={index} style={{
+                  display: 'inline-block',
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.875rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#e9ecef',
+                  color: '#495057',
+                  border: '1px solid #dee2e6'
+                }}>
+                  {spec}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'metrics' && (
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0,
+            marginBottom: '1.5rem'
+          }}>
+            Review Metrics
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+            gap: '1rem'
+          }}>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Total Reviews
+                </h3>
+                <Eye style={{ width: '1rem', height: '1rem', color: '#006798' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#002C40',
+                marginBottom: '0.25rem'
+              }}>
+                {profile.review_count}
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                {profile.review_experience} experience
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Accept Rate
+                </h3>
+                <Award style={{ width: '1rem', height: '1rem', color: '#10b981' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#10b981',
+                marginBottom: '0.25rem'
+              }}>
+                34.5%
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Balanced reviewer
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: '#f8f9fa',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              padding: '1.25rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <h3 style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  margin: 0
+                }}>
+                  Reviewer Rating
+                </h3>
+                <Star style={{ width: '1rem', height: '1rem', color: '#f59e0b', fill: '#f59e0b' }} />
+              </div>
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 700,
+                color: '#f59e0b',
+                marginBottom: '0.25rem'
+              }}>
+                4.8
+              </div>
+              <p style={{
+                fontSize: '0.75rem',
+                color: '#666',
+                margin: 0
+              }}>
+                Out of 5 stars
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default withAuth(ReviewerProfile, 'reviewer')

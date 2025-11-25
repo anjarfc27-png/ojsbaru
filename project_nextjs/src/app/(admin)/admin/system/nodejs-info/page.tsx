@@ -226,3 +226,48 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
+
+      </div>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3">
+      <span className="font-semibold text-gray-900">{label}</span>
+      <span className="text-gray-600">{value}</span>
+    </div>
+  );
+}
+
+
+      </div>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3">
+      <span className="font-semibold text-gray-900">{label}</span>
+      <span className="text-gray-600">{value}</span>
+    </div>
+  );
+}
+
+
+      </div>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between rounded-md border border-gray-200 bg-white px-4 py-3">
+      <span className="font-semibold text-gray-900">{label}</span>
+      <span className="text-gray-600">{value}</span>
+    </div>
+  );
+}
+

@@ -392,3 +392,105 @@ export default function AdminLayout({
     </div>
   );
 }
+
+                </div>
+              )}
+              
+              {/* Administrative Functions Submenu */}
+              {pathname.startsWith("/admin/system") && (
+                <div className="ml-8 mt-2 space-y-1">
+                  {administrativeFunctionsSubmenu.map((subItem) => (
+                    <Link
+                      key={subItem.name}
+                      href={subItem.href}
+                      className={`block px-3 py-2 rounded-md text-sm transition-colors ${
+                        pathname === subItem.href
+                          ? 'bg-white bg-opacity-15 text-white'
+                          : 'text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white'
+                      }`}
+                    >
+                      {subItem.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 bg-white min-h-screen">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+                </div>
+              )}
+              
+              {/* Administrative Functions Submenu */}
+              {pathname.startsWith("/admin/system") && (
+                <div className="ml-8 mt-2 space-y-1">
+                  {administrativeFunctionsSubmenu.map((subItem) => (
+                    <Link
+                      key={subItem.name}
+                      href={subItem.href}
+                      className={`block px-3 py-2 rounded-md text-sm transition-colors ${
+                        pathname === subItem.href
+                          ? 'bg-white bg-opacity-15 text-white'
+                          : 'text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white'
+                      }`}
+                    >
+                      {subItem.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 bg-white min-h-screen">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+                </div>
+              )}
+              
+              {/* Administrative Functions Submenu */}
+              {pathname.startsWith("/admin/system") && (
+                <div className="ml-8 mt-2 space-y-1">
+                  {administrativeFunctionsSubmenu.map((subItem) => (
+                    <Link
+                      key={subItem.name}
+                      href={subItem.href}
+                      className={`block px-3 py-2 rounded-md text-sm transition-colors ${
+                        pathname === subItem.href
+                          ? 'bg-white bg-opacity-15 text-white'
+                          : 'text-gray-300 hover:bg-white hover:bg-opacity-10 hover:text-white'
+                      }`}
+                    >
+                      {subItem.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 bg-white min-h-screen">
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}

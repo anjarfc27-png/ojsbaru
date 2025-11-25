@@ -87,3 +87,117 @@ export default async function ManagerDashboardPage() {
 
   return <ManagerDashboardClient stats={stats} />;
 }
+
+      recentSubmissions: recentSubmissions ?? [],
+    };
+  } catch (error) {
+    console.error("Error loading manager stats:", error);
+    return {
+      totalSubmissions: 0,
+      inReview: 0,
+      inCopyediting: 0,
+      inProduction: 0,
+      published: 0,
+      declined: 0,
+      totalUsers: 0,
+      recentSubmissions: [],
+    };
+  }
+}
+
+export default async function ManagerDashboardPage() {
+  const user = await getCurrentUserServer();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const hasManagerRole = user.roles?.some((r) => {
+    const rolePath = r.role_path?.toLowerCase();
+    return rolePath === "manager" || rolePath === "admin";
+  });
+
+  if (!hasManagerRole) {
+    redirect("/dashboard");
+  }
+
+  const stats = await getManagerStats();
+
+  return <ManagerDashboardClient stats={stats} />;
+}
+
+      recentSubmissions: recentSubmissions ?? [],
+    };
+  } catch (error) {
+    console.error("Error loading manager stats:", error);
+    return {
+      totalSubmissions: 0,
+      inReview: 0,
+      inCopyediting: 0,
+      inProduction: 0,
+      published: 0,
+      declined: 0,
+      totalUsers: 0,
+      recentSubmissions: [],
+    };
+  }
+}
+
+export default async function ManagerDashboardPage() {
+  const user = await getCurrentUserServer();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const hasManagerRole = user.roles?.some((r) => {
+    const rolePath = r.role_path?.toLowerCase();
+    return rolePath === "manager" || rolePath === "admin";
+  });
+
+  if (!hasManagerRole) {
+    redirect("/dashboard");
+  }
+
+  const stats = await getManagerStats();
+
+  return <ManagerDashboardClient stats={stats} />;
+}
+
+      recentSubmissions: recentSubmissions ?? [],
+    };
+  } catch (error) {
+    console.error("Error loading manager stats:", error);
+    return {
+      totalSubmissions: 0,
+      inReview: 0,
+      inCopyediting: 0,
+      inProduction: 0,
+      published: 0,
+      declined: 0,
+      totalUsers: 0,
+      recentSubmissions: [],
+    };
+  }
+}
+
+export default async function ManagerDashboardPage() {
+  const user = await getCurrentUserServer();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const hasManagerRole = user.roles?.some((r) => {
+    const rolePath = r.role_path?.toLowerCase();
+    return rolePath === "manager" || rolePath === "admin";
+  });
+
+  if (!hasManagerRole) {
+    redirect("/dashboard");
+  }
+
+  const stats = await getManagerStats();
+
+  return <ManagerDashboardClient stats={stats} />;
+}

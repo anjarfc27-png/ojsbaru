@@ -2093,3 +2093,321 @@ export default function WebsiteSettingsPage() {
     </div>
   );
 }
+
+                            ) : (
+                              <tr>
+                                <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins found." : "Plugins grid will be implemented here with enable/disable and configure functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Plugin Gallery */}
+                {activePluginsSubTab === "pluginGallery" && (
+                  <div>
+                    <h2 style={{
+                      fontSize: "1.125rem",
+                      fontWeight: 600,
+                      marginBottom: "1rem",
+                      color: "#002C40",
+                    }}>
+                      Plugin Gallery
+                    </h2>
+                    <p style={{
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.54)",
+                      marginBottom: "1.5rem",
+                    }}>
+                      Browse and install additional plugins from the Plugin Gallery.
+                    </p>
+                    <div style={{
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e5e5",
+                      padding: "1.5rem",
+                    }}>
+                      {/* Search */}
+                      <div style={{ marginBottom: "1.5rem" }}>
+                        <PkpInput
+                          type="search"
+                          placeholder="Search plugins..."
+                          style={{ width: "100%", maxWidth: "400px" }}
+                        />
+                      </div>
+
+                      {/* Plugin Gallery Grid Placeholder */}
+                      <div style={{
+                        border: "1px solid #e5e5e5",
+                        borderRadius: "4px",
+                        overflow: "hidden",
+                      }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                          <thead style={{ backgroundColor: "#f8f9fa" }}>
+                            <tr>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Plugin
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Description
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "center", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {USE_DUMMY && DUMMY_PLUGINS.length > 0 ? (
+                              DUMMY_PLUGINS.map((plugin) => (
+                                <tr key={plugin.id}>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5" }}>
+                                    <div style={{ fontWeight: 500, fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>{plugin.name}</div>
+                                    <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                      Version: {plugin.version} • Category: {plugin.category}
+                                    </div>
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5", fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>
+                                    {plugin.description}
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", textAlign: "center", borderBottom: "1px solid #e5e5e5" }}>
+                                    <PkpButton variant="primary" size="sm">Install</PkpButton>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan={3} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins available." : "Plugin gallery grid will be implemented here with browse and install functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}
+
+                            ) : (
+                              <tr>
+                                <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins found." : "Plugins grid will be implemented here with enable/disable and configure functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Plugin Gallery */}
+                {activePluginsSubTab === "pluginGallery" && (
+                  <div>
+                    <h2 style={{
+                      fontSize: "1.125rem",
+                      fontWeight: 600,
+                      marginBottom: "1rem",
+                      color: "#002C40",
+                    }}>
+                      Plugin Gallery
+                    </h2>
+                    <p style={{
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.54)",
+                      marginBottom: "1.5rem",
+                    }}>
+                      Browse and install additional plugins from the Plugin Gallery.
+                    </p>
+                    <div style={{
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e5e5",
+                      padding: "1.5rem",
+                    }}>
+                      {/* Search */}
+                      <div style={{ marginBottom: "1.5rem" }}>
+                        <PkpInput
+                          type="search"
+                          placeholder="Search plugins..."
+                          style={{ width: "100%", maxWidth: "400px" }}
+                        />
+                      </div>
+
+                      {/* Plugin Gallery Grid Placeholder */}
+                      <div style={{
+                        border: "1px solid #e5e5e5",
+                        borderRadius: "4px",
+                        overflow: "hidden",
+                      }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                          <thead style={{ backgroundColor: "#f8f9fa" }}>
+                            <tr>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Plugin
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Description
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "center", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {USE_DUMMY && DUMMY_PLUGINS.length > 0 ? (
+                              DUMMY_PLUGINS.map((plugin) => (
+                                <tr key={plugin.id}>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5" }}>
+                                    <div style={{ fontWeight: 500, fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>{plugin.name}</div>
+                                    <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                      Version: {plugin.version} • Category: {plugin.category}
+                                    </div>
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5", fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>
+                                    {plugin.description}
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", textAlign: "center", borderBottom: "1px solid #e5e5e5" }}>
+                                    <PkpButton variant="primary" size="sm">Install</PkpButton>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan={3} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins available." : "Plugin gallery grid will be implemented here with browse and install functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}
+
+                            ) : (
+                              <tr>
+                                <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins found." : "Plugins grid will be implemented here with enable/disable and configure functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Plugin Gallery */}
+                {activePluginsSubTab === "pluginGallery" && (
+                  <div>
+                    <h2 style={{
+                      fontSize: "1.125rem",
+                      fontWeight: 600,
+                      marginBottom: "1rem",
+                      color: "#002C40",
+                    }}>
+                      Plugin Gallery
+                    </h2>
+                    <p style={{
+                      fontSize: "0.875rem",
+                      color: "rgba(0, 0, 0, 0.54)",
+                      marginBottom: "1.5rem",
+                    }}>
+                      Browse and install additional plugins from the Plugin Gallery.
+                    </p>
+                    <div style={{
+                      backgroundColor: "#ffffff",
+                      border: "1px solid #e5e5e5",
+                      padding: "1.5rem",
+                    }}>
+                      {/* Search */}
+                      <div style={{ marginBottom: "1.5rem" }}>
+                        <PkpInput
+                          type="search"
+                          placeholder="Search plugins..."
+                          style={{ width: "100%", maxWidth: "400px" }}
+                        />
+                      </div>
+
+                      {/* Plugin Gallery Grid Placeholder */}
+                      <div style={{
+                        border: "1px solid #e5e5e5",
+                        borderRadius: "4px",
+                        overflow: "hidden",
+                      }}>
+                        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                          <thead style={{ backgroundColor: "#f8f9fa" }}>
+                            <tr>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Plugin
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "left", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Description
+                              </th>
+                              <th style={{ padding: "0.75rem 1rem", textAlign: "center", fontSize: "0.875rem", fontWeight: 600, color: "#002C40", borderBottom: "1px solid #e5e5e5" }}>
+                                Actions
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {USE_DUMMY && DUMMY_PLUGINS.length > 0 ? (
+                              DUMMY_PLUGINS.map((plugin) => (
+                                <tr key={plugin.id}>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5" }}>
+                                    <div style={{ fontWeight: 500, fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>{plugin.name}</div>
+                                    <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                      Version: {plugin.version} • Category: {plugin.category}
+                                    </div>
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", borderBottom: "1px solid #e5e5e5", fontSize: "0.875rem", color: "rgba(0, 0, 0, 0.84)" }}>
+                                    {plugin.description}
+                                  </td>
+                                  <td style={{ padding: "0.75rem 1rem", textAlign: "center", borderBottom: "1px solid #e5e5e5" }}>
+                                    <PkpButton variant="primary" size="sm">Install</PkpButton>
+                                  </td>
+                                </tr>
+                              ))
+                            ) : (
+                              <tr>
+                                <td colSpan={3} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                                  {USE_DUMMY ? "No plugins available." : "Plugin gallery grid will be implemented here with browse and install functionality."}
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}

@@ -420,3 +420,57 @@ export function WorkflowStageActions({
   );
 }
 
+
+        />
+      )}
+
+      {openModal?.type === "NewReviewRound" && (
+        <NewReviewRoundForm
+          open={true}
+          onClose={() => setOpenModal(null)}
+          submissionId={submissionId}
+          stage={currentStage}
+          reviewRoundId={reviewRoundId}
+          onSubmit={handleModalSubmit}
+        />
+      )}
+    </>
+  );
+}
+
+
+        />
+      )}
+
+      {openModal?.type === "NewReviewRound" && (
+        <NewReviewRoundForm
+          open={true}
+          onClose={() => setOpenModal(null)}
+          submissionId={submissionId}
+          stage={currentStage}
+          reviewRoundId={reviewRoundId}
+          onSubmit={handleModalSubmit}
+        />
+      )}
+    </>
+  );
+}
+
+
+        />
+      )}
+
+      {openModal?.type === "NewReviewRound" && (
+        <NewReviewRoundForm
+          open={true}
+          onClose={() => setOpenModal(null)}
+          submissionId={submissionId}
+          stage={currentStage}
+          reviewRoundId={reviewRoundId}
+          onSubmit={handleModalSubmit}
+        />
+      )}
+    </>
+  );
+}
+

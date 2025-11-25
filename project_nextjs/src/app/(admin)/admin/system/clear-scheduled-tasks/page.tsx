@@ -150,3 +150,129 @@ export default function ClearScheduledTaskLogsPage() {
   );
 }
 
+
+          <button
+            type="submit"
+            disabled={pending}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: pending ? '#ccc' : '#d32f2f',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            {pending ? 'Processing...' : 'Clear Logs'}
+          </button>
+        </form>
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = "/api/admin/download-task-log";
+          }}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: '#f8f9fa',
+            color: '#006798',
+            border: '1px solid #dee2e6',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Download Log File
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+          <button
+            type="submit"
+            disabled={pending}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: pending ? '#ccc' : '#d32f2f',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            {pending ? 'Processing...' : 'Clear Logs'}
+          </button>
+        </form>
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = "/api/admin/download-task-log";
+          }}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: '#f8f9fa',
+            color: '#006798',
+            border: '1px solid #dee2e6',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Download Log File
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
+          <button
+            type="submit"
+            disabled={pending}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: pending ? '#ccc' : '#d32f2f',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            {pending ? 'Processing...' : 'Clear Logs'}
+          </button>
+        </form>
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = "/api/admin/download-task-log";
+          }}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: '#f8f9fa',
+            color: '#006798',
+            border: '1px solid #dee2e6',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Download Log File
+        </button>
+      </div>
+    </div>
+  );
+}
+

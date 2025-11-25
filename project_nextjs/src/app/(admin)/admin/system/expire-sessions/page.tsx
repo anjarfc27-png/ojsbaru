@@ -116,3 +116,138 @@ export default function ExpireSessionsPage() {
   );
 }
 
+
+        }}>
+          <form action={formAction} style={{ display: 'contents' }}>
+            <button
+              type="submit"
+              disabled={pending}
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                padding: '0.5rem 1rem',
+                backgroundColor: pending ? '#ccc' : '#d32f2f',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: pending ? 'not-allowed' : 'pointer',
+                opacity: pending ? 0.6 : 1
+              }}
+            >
+              {pending ? 'Processing...' : 'Expire semua sesi sekarang'}
+            </button>
+          </form>
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => location.reload()}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#f8f9fa',
+              color: '#006798',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            Muat ulang
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+        }}>
+          <form action={formAction} style={{ display: 'contents' }}>
+            <button
+              type="submit"
+              disabled={pending}
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                padding: '0.5rem 1rem',
+                backgroundColor: pending ? '#ccc' : '#d32f2f',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: pending ? 'not-allowed' : 'pointer',
+                opacity: pending ? 0.6 : 1
+              }}
+            >
+              {pending ? 'Processing...' : 'Expire semua sesi sekarang'}
+            </button>
+          </form>
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => location.reload()}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#f8f9fa',
+              color: '#006798',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            Muat ulang
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+        }}>
+          <form action={formAction} style={{ display: 'contents' }}>
+            <button
+              type="submit"
+              disabled={pending}
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                padding: '0.5rem 1rem',
+                backgroundColor: pending ? '#ccc' : '#d32f2f',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: pending ? 'not-allowed' : 'pointer',
+                opacity: pending ? 0.6 : 1
+              }}
+            >
+              {pending ? 'Processing...' : 'Expire semua sesi sekarang'}
+            </button>
+          </form>
+          <button
+            type="button"
+            disabled={pending}
+            onClick={() => location.reload()}
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#f8f9fa',
+              color: '#006798',
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              cursor: pending ? 'not-allowed' : 'pointer',
+              opacity: pending ? 0.6 : 1
+            }}
+          >
+            Muat ulang
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+

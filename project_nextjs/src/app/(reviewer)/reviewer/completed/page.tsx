@@ -469,3 +469,615 @@ function ReviewerCompleted() {
 }
 
 export default withAuth(ReviewerCompleted, 'reviewer')
+
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Authors
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Completion Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Decision
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Review Time
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedReviews.map((review) => {
+                  const decisionColors = getDecisionColor(review.recommendation);
+                  return (
+                    <tr key={review.id} style={{
+                      borderBottom: '1px solid #e5e5e5',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '300px'
+                      }}>
+                        <Link
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{ 
+                            color: '#006798', 
+                            textDecoration: 'none', 
+                            fontWeight: 500 
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                          {review.title}
+                        </Link>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '200px'
+                      }}>
+                        {review.authors}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #dee2e6',
+                          color: '#666',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.journal}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {review.completionDate}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: decisionColors.bg,
+                          color: decisionColors.color,
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.recommendation}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: '#d1ecf1',
+                          color: '#0c5460',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.reviewTime} days
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <Link 
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.75rem',
+                            padding: '0.25rem 0.5rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #d5d5d5',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <Eye style={{ width: '1rem', height: '1rem' }} />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerCompleted, 'reviewer')
+
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Authors
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Completion Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Decision
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Review Time
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedReviews.map((review) => {
+                  const decisionColors = getDecisionColor(review.recommendation);
+                  return (
+                    <tr key={review.id} style={{
+                      borderBottom: '1px solid #e5e5e5',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '300px'
+                      }}>
+                        <Link
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{ 
+                            color: '#006798', 
+                            textDecoration: 'none', 
+                            fontWeight: 500 
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                          {review.title}
+                        </Link>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '200px'
+                      }}>
+                        {review.authors}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #dee2e6',
+                          color: '#666',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.journal}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {review.completionDate}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: decisionColors.bg,
+                          color: decisionColors.color,
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.recommendation}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: '#d1ecf1',
+                          color: '#0c5460',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.reviewTime} days
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <Link 
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.75rem',
+                            padding: '0.25rem 0.5rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #d5d5d5',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <Eye style={{ width: '1rem', height: '1rem' }} />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerCompleted, 'reviewer')
+
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Title
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Authors
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Journal
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Completion Date
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Decision
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40',
+                    borderRight: '1px solid #e5e5e5'
+                  }}>
+                    Review Time
+                  </th>
+                  <th style={{
+                    padding: '0.75rem 1rem',
+                    textAlign: 'left',
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: '#002C40'
+                  }}>
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {completedReviews.map((review) => {
+                  const decisionColors = getDecisionColor(review.recommendation);
+                  return (
+                    <tr key={review.id} style={{
+                      borderBottom: '1px solid #e5e5e5',
+                      backgroundColor: '#fff'
+                    }}>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '300px'
+                      }}>
+                        <Link
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{ 
+                            color: '#006798', 
+                            textDecoration: 'none', 
+                            fontWeight: 500 
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.textDecoration = 'underline'}
+                          onMouseLeave={(e) => e.currentTarget.style.textDecoration = 'none'}
+                        >
+                          {review.title}
+                        </Link>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5',
+                        maxWidth: '200px'
+                      }}>
+                        {review.authors}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: 'transparent',
+                          border: '1px solid #dee2e6',
+                          color: '#666',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.journal}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        color: '#333',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        {review.completionDate}
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: decisionColors.bg,
+                          color: decisionColors.color,
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.recommendation}
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem',
+                        borderRight: '1px solid #e5e5e5'
+                      }}>
+                        <span style={{
+                          backgroundColor: '#d1ecf1',
+                          color: '#0c5460',
+                          fontSize: '0.75rem',
+                          padding: '0.125rem 0.5rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          display: 'inline-block'
+                        }}>
+                          {review.reviewTime} days
+                        </span>
+                      </td>
+                      <td style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.875rem'
+                      }}>
+                        <Link 
+                          href={`/reviewer/assignments/${review.id}`}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '0.75rem',
+                            padding: '0.25rem 0.5rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #d5d5d5',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            textDecoration: 'none'
+                          }}
+                        >
+                          <Eye style={{ width: '1rem', height: '1rem' }} />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerCompleted, 'reviewer')

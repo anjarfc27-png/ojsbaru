@@ -14,3 +14,6 @@ function AuthorHomePage() {
 }
 
 export default withAuth(AuthorHomePage, 'author')
+export default withAuth(AuthorHomePage, 'author')
+export default withAuth(AuthorHomePage, 'author')
+export default withAuth(AuthorHomePage, 'author')

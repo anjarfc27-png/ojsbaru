@@ -740,3 +740,1137 @@ export default function EditorPage() {
     </section>
   );
 }
+                    justifyContent: 'center'
+                  }}>
+                    {stats.tasks}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            {/* My Queue Tab */}
+              <PkpTabsTrigger value="myQueue">
+                My Queue
+                {stats?.myQueue > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: 'rgba(0, 0, 0, 0.54)',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.myQueue}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            
+            {/* Unassigned Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="unassigned">
+                Unassigned
+                {stats?.unassigned > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.unassigned}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* All Active Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="active">
+                All Active
+                {stats?.allActive > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.allActive}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* Archives Tab - Always visible for Editor */}
+              <PkpTabsTrigger value="archive">
+              Archives
+                {stats?.archived > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: '#006798',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.archived}
+                  </span>
+                )}
+                 </PkpTabsTrigger>
+               </PkpTabsList>
+          </div>
+          
+          {/* Help Link - Right side of tabs */}
+          <div style={{
+            padding: '0 0 0 1rem', // Padding left untuk spacing dari tabs
+            display: 'flex',
+            alignItems: 'center',
+            height: '3rem'
+          }}>
+            <a
+              href="#"
+              title="Help"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                textDecoration: 'none',
+                color: 'inherit',
+                fontSize: '0.875rem'
+              }}
+              className="hover:opacity-80"
+            >
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: '#00B24E', /* OJS green */
+                color: 'white',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                lineHeight: '1',
+                flexShrink: 0
+              }}>
+                i
+              </span>
+              <span style={{
+                color: '#006798',
+                fontSize: '0.875rem',
+                fontWeight: 400
+              }}>
+                Help
+              </span>
+            </a>
+          </div>
+        </div>
+
+              {/* Tab Contents - OJS 3.3 Exact Layout with Safe Area */}
+              <PkpTabsContent value="tasks" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {tasksLoading ? (
+                  <p className="text-sm text-[var(--muted)]">Loading tasks…</p>
+                ) : tasksError ? (
+                  <p className="text-sm text-red-500">{tasksError}</p>
+                ) : tasks.length === 0 ? (
+                  <div className="rounded-md border border-dashed border-[var(--border)] bg-[var(--surface-muted)] px-4 py-6 text-center text-sm text-[var(--muted)]">
+                    No outstanding tasks.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <label className="text-sm font-medium text-[var(--foreground)]">Filter:</label>
+                      <select
+                        value={tasksFilter}
+                        onChange={(e) => setTasksFilter(e.target.value as typeof tasksFilter)}
+                        className="border border-[var(--border)] rounded px-2 py-1 text-sm"
+                      >
+                        <option value="open">Open</option>
+                        <option value="completed">Completed</option>
+                        <option value="all">All</option>
+                      </select>
+                    </div>
+                    {taskActionError && (
+                      <div className="rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
+                        {taskActionError}
+                      </div>
+                    )}
+                    {tasks.map((task) => (
+                      <div
+                        key={task.id}
+                        className="rounded-md border border-[var(--border)] bg-white px-4 py-3 flex flex-col gap-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold text-sm text-[var(--foreground)]">
+                            {task.title}
+                          </div>
+                          <span className="text-xs font-semibold uppercase text-[var(--muted)]">
+                            {task.stage}
+                          </span>
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Submission: {task.submissionTitle ?? task.submissionId}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Assignee: {task.assigneeId ? (task.assigneeId === currentUserId ? "You" : task.assigneeId) : "Unassigned"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Due: {task.dueDate ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(task.dueDate)) : "—"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Status: {task.status}
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {(isManagerOrAdmin || task.assigneeId === currentUserId) && (
+                            <button
+                              type="button"
+                              onClick={() => openTaskEditor(task)}
+                              className="text-xs font-semibold rounded border border-slate-400 px-2 py-1 text-slate-700 hover:bg-slate-50"
+                            >
+                              Edit
+                            </button>
+                          )}
+                          {task.status !== "completed" ? (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "complete")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-green-600 px-2 py-1 text-green-700 hover:bg-green-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Mark Complete"}
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "reopen")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-gray-500 px-2 py-1 text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Reopen"}
+                            </button>
+                          )}
+                          {!task.assigneeId && currentUserId && (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "claim")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-blue-600 px-2 py-1 text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Claim Task"}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </PkpTabsContent>
+
+              <PkpTabsContent value="myQueue" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !myQueue.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={myQueue} 
+                    emptyMessage="Tidak ada submission di My Queue."
+                    tabLabel="My Assigned"
+                  />
+                )}
+              </PkpTabsContent>
+
+              {/* Unassigned and All Active only visible for Manager/Admin */}
+              {(isManagerOrAdmin || showAllTabsForTesting) && (
+                <>
+                  <PkpTabsContent value="unassigned" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !unassigned.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={unassigned} 
+                        emptyMessage="Tidak ada submission yang belum ditugaskan."
+                        tabLabel="Unassigned"
+                      />
+                    )}
+                  </PkpTabsContent>
+
+                  <PkpTabsContent value="active" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !active.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={active} 
+                        emptyMessage="Tidak ada submission aktif."
+                        tabLabel="All Active"
+                      />
+                    )}
+                  </PkpTabsContent>
+                </>
+              )}
+
+              <PkpTabsContent value="archive" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !archived.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={archived} 
+                    emptyMessage="Tidak ada submission yang diarsipkan."
+                    tabLabel="Archives"
+                  />
+                )}
+              </PkpTabsContent>
+              {editingTask && (
+                <PkpModal
+                  isOpen={Boolean(editingTask)}
+                  onClose={closeTaskEditor}
+                  title="Ubah Task"
+                  footer={
+                    <>
+                      <PkpButton variant="onclick" onClick={closeTaskEditor} disabled={editSubmitting}>
+                        Batal
+                      </PkpButton>
+                      <PkpButton
+                        variant="primary"
+                        onClick={handleSaveTaskDetails}
+                        disabled={editSubmitting}
+                        loading={editSubmitting}
+                      >
+                        Simpan
+                      </PkpButton>
+                    </>
+                  }
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="text-sm text-[var(--muted)]">
+                      Submission: {editingTask.submissionTitle ?? editingTask.submissionId}
+                    </div>
+                    {editError && <FormMessage tone="error">{editError}</FormMessage>}
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Assignee
+                      {editLoading ? (
+                        <p className="text-xs text-[var(--muted)]">Memuat daftar peserta…</p>
+                      ) : (
+                        <PkpSelect
+                          value={editAssigneeId}
+                          onChange={(e) => setEditAssigneeId(e.target.value)}
+                        >
+                          <option value="">Tidak ada (unassigned)</option>
+                          {editParticipants.map((participant) => (
+                            <option key={participant.userId} value={participant.userId}>
+                              {participant.name} ({participant.role})
+                            </option>
+                          ))}
+                        </PkpSelect>
+                      )}
+                    </label>
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Due Date
+                      <PkpInput
+                        type="date"
+                        value={editDueDate}
+                        onChange={(e) => setEditDueDate(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                </PkpModal>
+              )}
+      </PkpTabs>
+    </section>
+  );
+}
+                    justifyContent: 'center'
+                  }}>
+                    {stats.tasks}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            {/* My Queue Tab */}
+              <PkpTabsTrigger value="myQueue">
+                My Queue
+                {stats?.myQueue > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: 'rgba(0, 0, 0, 0.54)',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.myQueue}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            
+            {/* Unassigned Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="unassigned">
+                Unassigned
+                {stats?.unassigned > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.unassigned}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* All Active Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="active">
+                All Active
+                {stats?.allActive > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.allActive}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* Archives Tab - Always visible for Editor */}
+              <PkpTabsTrigger value="archive">
+              Archives
+                {stats?.archived > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: '#006798',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.archived}
+                  </span>
+                )}
+                 </PkpTabsTrigger>
+               </PkpTabsList>
+          </div>
+          
+          {/* Help Link - Right side of tabs */}
+          <div style={{
+            padding: '0 0 0 1rem', // Padding left untuk spacing dari tabs
+            display: 'flex',
+            alignItems: 'center',
+            height: '3rem'
+          }}>
+            <a
+              href="#"
+              title="Help"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                textDecoration: 'none',
+                color: 'inherit',
+                fontSize: '0.875rem'
+              }}
+              className="hover:opacity-80"
+            >
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: '#00B24E', /* OJS green */
+                color: 'white',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                lineHeight: '1',
+                flexShrink: 0
+              }}>
+                i
+              </span>
+              <span style={{
+                color: '#006798',
+                fontSize: '0.875rem',
+                fontWeight: 400
+              }}>
+                Help
+              </span>
+            </a>
+          </div>
+        </div>
+
+              {/* Tab Contents - OJS 3.3 Exact Layout with Safe Area */}
+              <PkpTabsContent value="tasks" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {tasksLoading ? (
+                  <p className="text-sm text-[var(--muted)]">Loading tasks…</p>
+                ) : tasksError ? (
+                  <p className="text-sm text-red-500">{tasksError}</p>
+                ) : tasks.length === 0 ? (
+                  <div className="rounded-md border border-dashed border-[var(--border)] bg-[var(--surface-muted)] px-4 py-6 text-center text-sm text-[var(--muted)]">
+                    No outstanding tasks.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <label className="text-sm font-medium text-[var(--foreground)]">Filter:</label>
+                      <select
+                        value={tasksFilter}
+                        onChange={(e) => setTasksFilter(e.target.value as typeof tasksFilter)}
+                        className="border border-[var(--border)] rounded px-2 py-1 text-sm"
+                      >
+                        <option value="open">Open</option>
+                        <option value="completed">Completed</option>
+                        <option value="all">All</option>
+                      </select>
+                    </div>
+                    {taskActionError && (
+                      <div className="rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
+                        {taskActionError}
+                      </div>
+                    )}
+                    {tasks.map((task) => (
+                      <div
+                        key={task.id}
+                        className="rounded-md border border-[var(--border)] bg-white px-4 py-3 flex flex-col gap-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold text-sm text-[var(--foreground)]">
+                            {task.title}
+                          </div>
+                          <span className="text-xs font-semibold uppercase text-[var(--muted)]">
+                            {task.stage}
+                          </span>
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Submission: {task.submissionTitle ?? task.submissionId}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Assignee: {task.assigneeId ? (task.assigneeId === currentUserId ? "You" : task.assigneeId) : "Unassigned"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Due: {task.dueDate ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(task.dueDate)) : "—"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Status: {task.status}
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {(isManagerOrAdmin || task.assigneeId === currentUserId) && (
+                            <button
+                              type="button"
+                              onClick={() => openTaskEditor(task)}
+                              className="text-xs font-semibold rounded border border-slate-400 px-2 py-1 text-slate-700 hover:bg-slate-50"
+                            >
+                              Edit
+                            </button>
+                          )}
+                          {task.status !== "completed" ? (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "complete")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-green-600 px-2 py-1 text-green-700 hover:bg-green-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Mark Complete"}
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "reopen")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-gray-500 px-2 py-1 text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Reopen"}
+                            </button>
+                          )}
+                          {!task.assigneeId && currentUserId && (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "claim")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-blue-600 px-2 py-1 text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Claim Task"}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </PkpTabsContent>
+
+              <PkpTabsContent value="myQueue" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !myQueue.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={myQueue} 
+                    emptyMessage="Tidak ada submission di My Queue."
+                    tabLabel="My Assigned"
+                  />
+                )}
+              </PkpTabsContent>
+
+              {/* Unassigned and All Active only visible for Manager/Admin */}
+              {(isManagerOrAdmin || showAllTabsForTesting) && (
+                <>
+                  <PkpTabsContent value="unassigned" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !unassigned.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={unassigned} 
+                        emptyMessage="Tidak ada submission yang belum ditugaskan."
+                        tabLabel="Unassigned"
+                      />
+                    )}
+                  </PkpTabsContent>
+
+                  <PkpTabsContent value="active" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !active.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={active} 
+                        emptyMessage="Tidak ada submission aktif."
+                        tabLabel="All Active"
+                      />
+                    )}
+                  </PkpTabsContent>
+                </>
+              )}
+
+              <PkpTabsContent value="archive" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !archived.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={archived} 
+                    emptyMessage="Tidak ada submission yang diarsipkan."
+                    tabLabel="Archives"
+                  />
+                )}
+              </PkpTabsContent>
+              {editingTask && (
+                <PkpModal
+                  isOpen={Boolean(editingTask)}
+                  onClose={closeTaskEditor}
+                  title="Ubah Task"
+                  footer={
+                    <>
+                      <PkpButton variant="onclick" onClick={closeTaskEditor} disabled={editSubmitting}>
+                        Batal
+                      </PkpButton>
+                      <PkpButton
+                        variant="primary"
+                        onClick={handleSaveTaskDetails}
+                        disabled={editSubmitting}
+                        loading={editSubmitting}
+                      >
+                        Simpan
+                      </PkpButton>
+                    </>
+                  }
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="text-sm text-[var(--muted)]">
+                      Submission: {editingTask.submissionTitle ?? editingTask.submissionId}
+                    </div>
+                    {editError && <FormMessage tone="error">{editError}</FormMessage>}
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Assignee
+                      {editLoading ? (
+                        <p className="text-xs text-[var(--muted)]">Memuat daftar peserta…</p>
+                      ) : (
+                        <PkpSelect
+                          value={editAssigneeId}
+                          onChange={(e) => setEditAssigneeId(e.target.value)}
+                        >
+                          <option value="">Tidak ada (unassigned)</option>
+                          {editParticipants.map((participant) => (
+                            <option key={participant.userId} value={participant.userId}>
+                              {participant.name} ({participant.role})
+                            </option>
+                          ))}
+                        </PkpSelect>
+                      )}
+                    </label>
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Due Date
+                      <PkpInput
+                        type="date"
+                        value={editDueDate}
+                        onChange={(e) => setEditDueDate(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                </PkpModal>
+              )}
+      </PkpTabs>
+    </section>
+  );
+}
+                    justifyContent: 'center'
+                  }}>
+                    {stats.tasks}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            {/* My Queue Tab */}
+              <PkpTabsTrigger value="myQueue">
+                My Queue
+                {stats?.myQueue > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: 'rgba(0, 0, 0, 0.54)',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.myQueue}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            
+            {/* Unassigned Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="unassigned">
+                Unassigned
+                {stats?.unassigned > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.unassigned}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* All Active Tab - Only visible for Manager/Admin */}
+            {(isManagerOrAdmin || showAllTabsForTesting) && (
+              <PkpTabsTrigger value="active">
+                All Active
+                {stats?.allActive > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid rgba(0, 0, 0, 0.2)',
+                    color: '#006798',
+                    padding: '0 0.25rem',
+                    borderRadius: '50%',
+                    minWidth: '20px',
+                    height: '20px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    lineHeight: '1',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    {stats.allActive}
+                  </span>
+                )}
+              </PkpTabsTrigger>
+            )}
+            
+            {/* Archives Tab - Always visible for Editor */}
+              <PkpTabsTrigger value="archive">
+              Archives
+                {stats?.archived > 0 && (
+                  <span style={{
+                    marginLeft: '0.5rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.2)',
+                  color: '#006798',
+                  padding: '0 0.25rem',
+                  borderRadius: '50%',
+                  minWidth: '20px',
+                  height: '20px',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  lineHeight: '1',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                  }}>
+                    {stats.archived}
+                  </span>
+                )}
+                 </PkpTabsTrigger>
+               </PkpTabsList>
+          </div>
+          
+          {/* Help Link - Right side of tabs */}
+          <div style={{
+            padding: '0 0 0 1rem', // Padding left untuk spacing dari tabs
+            display: 'flex',
+            alignItems: 'center',
+            height: '3rem'
+          }}>
+            <a
+              href="#"
+              title="Help"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                textDecoration: 'none',
+                color: 'inherit',
+                fontSize: '0.875rem'
+              }}
+              className="hover:opacity-80"
+            >
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: '#00B24E', /* OJS green */
+                color: 'white',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                lineHeight: '1',
+                flexShrink: 0
+              }}>
+                i
+              </span>
+              <span style={{
+                color: '#006798',
+                fontSize: '0.875rem',
+                fontWeight: 400
+              }}>
+                Help
+              </span>
+            </a>
+          </div>
+        </div>
+
+              {/* Tab Contents - OJS 3.3 Exact Layout with Safe Area */}
+              <PkpTabsContent value="tasks" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {tasksLoading ? (
+                  <p className="text-sm text-[var(--muted)]">Loading tasks…</p>
+                ) : tasksError ? (
+                  <p className="text-sm text-red-500">{tasksError}</p>
+                ) : tasks.length === 0 ? (
+                  <div className="rounded-md border border-dashed border-[var(--border)] bg-[var(--surface-muted)] px-4 py-6 text-center text-sm text-[var(--muted)]">
+                    No outstanding tasks.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-2">
+                      <label className="text-sm font-medium text-[var(--foreground)]">Filter:</label>
+                      <select
+                        value={tasksFilter}
+                        onChange={(e) => setTasksFilter(e.target.value as typeof tasksFilter)}
+                        className="border border-[var(--border)] rounded px-2 py-1 text-sm"
+                      >
+                        <option value="open">Open</option>
+                        <option value="completed">Completed</option>
+                        <option value="all">All</option>
+                      </select>
+                    </div>
+                    {taskActionError && (
+                      <div className="rounded bg-red-50 border border-red-200 px-3 py-2 text-sm text-red-600">
+                        {taskActionError}
+                      </div>
+                    )}
+                    {tasks.map((task) => (
+                      <div
+                        key={task.id}
+                        className="rounded-md border border-[var(--border)] bg-white px-4 py-3 flex flex-col gap-1"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold text-sm text-[var(--foreground)]">
+                            {task.title}
+                          </div>
+                          <span className="text-xs font-semibold uppercase text-[var(--muted)]">
+                            {task.stage}
+                          </span>
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Submission: {task.submissionTitle ?? task.submissionId}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Assignee: {task.assigneeId ? (task.assigneeId === currentUserId ? "You" : task.assigneeId) : "Unassigned"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Due: {task.dueDate ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(task.dueDate)) : "—"}
+                        </div>
+                        <div className="text-xs text-[var(--muted)]">
+                          Status: {task.status}
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {(isManagerOrAdmin || task.assigneeId === currentUserId) && (
+                            <button
+                              type="button"
+                              onClick={() => openTaskEditor(task)}
+                              className="text-xs font-semibold rounded border border-slate-400 px-2 py-1 text-slate-700 hover:bg-slate-50"
+                            >
+                              Edit
+                            </button>
+                          )}
+                          {task.status !== "completed" ? (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "complete")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-green-600 px-2 py-1 text-green-700 hover:bg-green-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Mark Complete"}
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "reopen")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-gray-500 px-2 py-1 text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Reopen"}
+                            </button>
+                          )}
+                          {!task.assigneeId && currentUserId && (
+                            <button
+                              type="button"
+                              onClick={() => onTaskAction(task, "claim")}
+                              disabled={updatingTaskId === task.id}
+                              className="text-xs font-semibold rounded border border-blue-600 px-2 py-1 text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                            >
+                              {updatingTaskId === task.id ? "Updating…" : "Claim Task"}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </PkpTabsContent>
+
+              <PkpTabsContent value="myQueue" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !myQueue.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={myQueue} 
+                    emptyMessage="Tidak ada submission di My Queue."
+                    tabLabel="My Assigned"
+                  />
+                )}
+              </PkpTabsContent>
+
+              {/* Unassigned and All Active only visible for Manager/Admin */}
+              {(isManagerOrAdmin || showAllTabsForTesting) && (
+                <>
+                  <PkpTabsContent value="unassigned" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !unassigned.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={unassigned} 
+                        emptyMessage="Tidak ada submission yang belum ditugaskan."
+                        tabLabel="Unassigned"
+                      />
+                    )}
+                  </PkpTabsContent>
+
+                  <PkpTabsContent value="active" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                    {loading && !active.length ? (
+                      <p className="text-sm text-[var(--muted)]">Loading…</p>
+                    ) : error ? (
+                      <p className="text-sm text-red-500">{error}</p>
+                    ) : (
+                      <SubmissionTable 
+                        submissions={active} 
+                        emptyMessage="Tidak ada submission aktif."
+                        tabLabel="All Active"
+                      />
+                    )}
+                  </PkpTabsContent>
+                </>
+              )}
+
+              <PkpTabsContent value="archive" style={{ position: "relative", padding: "1.5rem 2rem", backgroundColor: "#eaedee" }}>
+                {loading && !archived.length ? (
+                  <p className="text-sm text-[var(--muted)]">Loading…</p>
+                ) : error ? (
+                  <p className="text-sm text-red-500">{error}</p>
+                ) : (
+                  <SubmissionTable 
+                    submissions={archived} 
+                    emptyMessage="Tidak ada submission yang diarsipkan."
+                    tabLabel="Archives"
+                  />
+                )}
+              </PkpTabsContent>
+              {editingTask && (
+                <PkpModal
+                  isOpen={Boolean(editingTask)}
+                  onClose={closeTaskEditor}
+                  title="Ubah Task"
+                  footer={
+                    <>
+                      <PkpButton variant="onclick" onClick={closeTaskEditor} disabled={editSubmitting}>
+                        Batal
+                      </PkpButton>
+                      <PkpButton
+                        variant="primary"
+                        onClick={handleSaveTaskDetails}
+                        disabled={editSubmitting}
+                        loading={editSubmitting}
+                      >
+                        Simpan
+                      </PkpButton>
+                    </>
+                  }
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="text-sm text-[var(--muted)]">
+                      Submission: {editingTask.submissionTitle ?? editingTask.submissionId}
+                    </div>
+                    {editError && <FormMessage tone="error">{editError}</FormMessage>}
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Assignee
+                      {editLoading ? (
+                        <p className="text-xs text-[var(--muted)]">Memuat daftar peserta…</p>
+                      ) : (
+                        <PkpSelect
+                          value={editAssigneeId}
+                          onChange={(e) => setEditAssigneeId(e.target.value)}
+                        >
+                          <option value="">Tidak ada (unassigned)</option>
+                          {editParticipants.map((participant) => (
+                            <option key={participant.userId} value={participant.userId}>
+                              {participant.name} ({participant.role})
+                            </option>
+                          ))}
+                        </PkpSelect>
+                      )}
+                    </label>
+                    <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+                      Due Date
+                      <PkpInput
+                        type="date"
+                        value={editDueDate}
+                        onChange={(e) => setEditDueDate(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                </PkpModal>
+              )}
+      </PkpTabs>
+    </section>
+  );
+}

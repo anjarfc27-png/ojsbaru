@@ -786,3 +786,744 @@ export default function SettingsContextPage() {
   );
 }
 
+
+                      placeholder="Enter mailing address"
+                      style={{ width: "100%" }}
+                      value={contact.mailingAddress}
+                      onChange={(e) => setContact({ ...contact, mailingAddress: e.target.value })}
+                    />
+                  </div>
+                  <PkpButton variant="primary" type="submit" disabled={contextSettings.loading} loading={contextSettings.loading}>
+                    {contextSettings.loading ? t('editor.settings.saving') : t('editor.settings.save')}
+                  </PkpButton>
+                </div>
+              </form>
+            </div>
+          </PkpTabsContent>
+
+          {/* Sections Tab */}
+          <PkpTabsContent value="sections" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                {t('editor.settings.context.sections')}
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Sections allow you to publish submissions in different sections of the journal, such as Articles, Reviews, etc.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {sectionsFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: sectionsFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: sectionsFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${sectionsFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {sectionsFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Section title"
+                      value={newSection.title}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Abbreviation"
+                      value={newSection.abbreviation}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, abbreviation: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Policy / description"
+                      value={newSection.policy}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, policy: e.target.value }))}
+                    />
+                    <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <PkpCheckbox
+                        checked={newSection.enabled}
+                        onCheckedChange={(checked) =>
+                          setNewSection((prev) => ({ ...prev, enabled: Boolean(checked) }))
+                        }
+                      />
+                      <span>Enabled</span>
+                    </label>
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddSection} loading={sectionsSaving}>
+                        {t('editor.settings.context.addSection')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Section</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px" }}>Abbreviation</PkpTableHead>
+                      <PkpTableHead style={{ width: "80px", textAlign: "center" }}>Enabled</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {sections.length > 0 ? (
+                      sections.map((section) => (
+                        <PkpTableRow key={section.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{section.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{section.title}</div>
+                            {section.policy && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {section.policy}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px" }}>{section.abbreviation}</PkpTableCell>
+                          <PkpTableCell style={{ width: "80px", textAlign: "center" }}>
+                            <PkpCheckbox checked={section.enabled} onCheckedChange={() => handleToggleSection(section.id)} />
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>
+                                    {t('editor.settings.context.edit')}
+                                  </PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteSection(section.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No sections found. Use the form above to add a new section.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+
+          {/* Categories Tab */}
+          <PkpTabsContent value="categories" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                Categories
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Categories can be used to organize and filter content across the journal.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {categoriesFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: categoriesFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: categoriesFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${categoriesFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {categoriesFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Category title"
+                      value={newCategory.title}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Path (e.g. computer-science)"
+                      value={newCategory.path}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, path: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Description"
+                      value={newCategory.description}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, description: e.target.value }))}
+                    />
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddCategory} loading={categoriesSaving}>
+                        {t('editor.settings.context.addCategory')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Category</PkpTableHead>
+                      <PkpTableHead>Path</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <PkpTableRow key={category.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{category.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{category.title}</div>
+                            {category.description && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {category.description}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell>{category.path}</PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>{t('editor.settings.context.edit')}</PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteCategory(category.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No categories found. Use the form above to add a category.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}
+
+
+                      placeholder="Enter mailing address"
+                      style={{ width: "100%" }}
+                      value={contact.mailingAddress}
+                      onChange={(e) => setContact({ ...contact, mailingAddress: e.target.value })}
+                    />
+                  </div>
+                  <PkpButton variant="primary" type="submit" disabled={contextSettings.loading} loading={contextSettings.loading}>
+                    {contextSettings.loading ? t('editor.settings.saving') : t('editor.settings.save')}
+                  </PkpButton>
+                </div>
+              </form>
+            </div>
+          </PkpTabsContent>
+
+          {/* Sections Tab */}
+          <PkpTabsContent value="sections" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                {t('editor.settings.context.sections')}
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Sections allow you to publish submissions in different sections of the journal, such as Articles, Reviews, etc.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {sectionsFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: sectionsFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: sectionsFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${sectionsFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {sectionsFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Section title"
+                      value={newSection.title}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Abbreviation"
+                      value={newSection.abbreviation}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, abbreviation: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Policy / description"
+                      value={newSection.policy}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, policy: e.target.value }))}
+                    />
+                    <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <PkpCheckbox
+                        checked={newSection.enabled}
+                        onCheckedChange={(checked) =>
+                          setNewSection((prev) => ({ ...prev, enabled: Boolean(checked) }))
+                        }
+                      />
+                      <span>Enabled</span>
+                    </label>
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddSection} loading={sectionsSaving}>
+                        {t('editor.settings.context.addSection')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Section</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px" }}>Abbreviation</PkpTableHead>
+                      <PkpTableHead style={{ width: "80px", textAlign: "center" }}>Enabled</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {sections.length > 0 ? (
+                      sections.map((section) => (
+                        <PkpTableRow key={section.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{section.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{section.title}</div>
+                            {section.policy && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {section.policy}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px" }}>{section.abbreviation}</PkpTableCell>
+                          <PkpTableCell style={{ width: "80px", textAlign: "center" }}>
+                            <PkpCheckbox checked={section.enabled} onCheckedChange={() => handleToggleSection(section.id)} />
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>
+                                    {t('editor.settings.context.edit')}
+                                  </PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteSection(section.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No sections found. Use the form above to add a new section.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+
+          {/* Categories Tab */}
+          <PkpTabsContent value="categories" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                Categories
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Categories can be used to organize and filter content across the journal.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {categoriesFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: categoriesFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: categoriesFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${categoriesFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {categoriesFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Category title"
+                      value={newCategory.title}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Path (e.g. computer-science)"
+                      value={newCategory.path}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, path: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Description"
+                      value={newCategory.description}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, description: e.target.value }))}
+                    />
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddCategory} loading={categoriesSaving}>
+                        {t('editor.settings.context.addCategory')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Category</PkpTableHead>
+                      <PkpTableHead>Path</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <PkpTableRow key={category.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{category.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{category.title}</div>
+                            {category.description && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {category.description}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell>{category.path}</PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>{t('editor.settings.context.edit')}</PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteCategory(category.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No categories found. Use the form above to add a category.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}
+
+
+                      placeholder="Enter mailing address"
+                      style={{ width: "100%" }}
+                      value={contact.mailingAddress}
+                      onChange={(e) => setContact({ ...contact, mailingAddress: e.target.value })}
+                    />
+                  </div>
+                  <PkpButton variant="primary" type="submit" disabled={contextSettings.loading} loading={contextSettings.loading}>
+                    {contextSettings.loading ? t('editor.settings.saving') : t('editor.settings.save')}
+                  </PkpButton>
+                </div>
+              </form>
+            </div>
+          </PkpTabsContent>
+
+          {/* Sections Tab */}
+          <PkpTabsContent value="sections" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                {t('editor.settings.context.sections')}
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Sections allow you to publish submissions in different sections of the journal, such as Articles, Reviews, etc.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {sectionsFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: sectionsFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: sectionsFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${sectionsFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {sectionsFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Section title"
+                      value={newSection.title}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Abbreviation"
+                      value={newSection.abbreviation}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, abbreviation: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Policy / description"
+                      value={newSection.policy}
+                      onChange={(e) => setNewSection((prev) => ({ ...prev, policy: e.target.value }))}
+                    />
+                    <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <PkpCheckbox
+                        checked={newSection.enabled}
+                        onCheckedChange={(checked) =>
+                          setNewSection((prev) => ({ ...prev, enabled: Boolean(checked) }))
+                        }
+                      />
+                      <span>Enabled</span>
+                    </label>
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddSection} loading={sectionsSaving}>
+                        {t('editor.settings.context.addSection')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Section</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px" }}>Abbreviation</PkpTableHead>
+                      <PkpTableHead style={{ width: "80px", textAlign: "center" }}>Enabled</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {sections.length > 0 ? (
+                      sections.map((section) => (
+                        <PkpTableRow key={section.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{section.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{section.title}</div>
+                            {section.policy && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {section.policy}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px" }}>{section.abbreviation}</PkpTableCell>
+                          <PkpTableCell style={{ width: "80px", textAlign: "center" }}>
+                            <PkpCheckbox checked={section.enabled} onCheckedChange={() => handleToggleSection(section.id)} />
+                          </PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>
+                                    {t('editor.settings.context.edit')}
+                                  </PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteSection(section.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={5} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No sections found. Use the form above to add a new section.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+
+          {/* Categories Tab */}
+          <PkpTabsContent value="categories" style={{ padding: "1.5rem", backgroundColor: "#ffffff" }}>
+            <div>
+              <h2 style={{
+                fontSize: "1.125rem",
+                fontWeight: 600,
+                marginBottom: "1rem",
+                color: "#002C40",
+              }}>
+                Categories
+              </h2>
+              <p style={{
+                fontSize: "0.875rem",
+                color: "rgba(0, 0, 0, 0.54)",
+                marginBottom: "1rem",
+              }}>
+                Categories can be used to organize and filter content across the journal.
+              </p>
+              <div style={{
+                backgroundColor: "#ffffff",
+                border: "1px solid #e5e5e5",
+                padding: "1.5rem",
+              }}>
+                <div style={{ marginBottom: "1.5rem" }}>
+                  {categoriesFeedback && (
+                    <div
+                      style={{
+                        marginBottom: "1rem",
+                        padding: "0.75rem 1rem",
+                        borderRadius: "0.375rem",
+                        backgroundColor: categoriesFeedback.type === 'success' ? '#d4edda' : '#f8d7da',
+                        color: categoriesFeedback.type === 'success' ? '#155724' : '#721c24',
+                        border: `1px solid ${categoriesFeedback.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+                      }}
+                    >
+                      {categoriesFeedback.message}
+                    </div>
+                  )}
+                  <div style={{ display: "grid", gap: "0.75rem", marginBottom: "1rem" }}>
+                    <PkpInput
+                      placeholder="Category title"
+                      value={newCategory.title}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, title: e.target.value }))}
+                    />
+                    <PkpInput
+                      placeholder="Path (e.g. computer-science)"
+                      value={newCategory.path}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, path: e.target.value }))}
+                    />
+                    <PkpTextarea
+                      rows={3}
+                      placeholder="Description"
+                      value={newCategory.description}
+                      onChange={(e) => setNewCategory((prev) => ({ ...prev, description: e.target.value }))}
+                    />
+                    <div>
+                      <PkpButton variant="primary" onClick={handleAddCategory} loading={categoriesSaving}>
+                        {t('editor.settings.context.addCategory')}
+                      </PkpButton>
+                    </div>
+                  </div>
+                </div>
+                <PkpTable>
+                  <PkpTableHeader>
+                    <PkpTableRow isHeader>
+                      <PkpTableHead style={{ width: "60px" }}>ID</PkpTableHead>
+                      <PkpTableHead>Category</PkpTableHead>
+                      <PkpTableHead>Path</PkpTableHead>
+                      <PkpTableHead style={{ width: "120px", textAlign: "center" }}>Actions</PkpTableHead>
+                    </PkpTableRow>
+                  </PkpTableHeader>
+                  <tbody>
+                    {categories.length > 0 ? (
+                      categories.map((category) => (
+                        <PkpTableRow key={category.id}>
+                          <PkpTableCell style={{ width: "60px" }}>{category.id}</PkpTableCell>
+                          <PkpTableCell>
+                            <div style={{ fontWeight: 500 }}>{category.title}</div>
+                            {category.description && (
+                              <div style={{ fontSize: "0.75rem", color: "rgba(0, 0, 0, 0.54)", marginTop: "0.25rem" }}>
+                                {category.description}
+                              </div>
+                            )}
+                          </PkpTableCell>
+                          <PkpTableCell>{category.path}</PkpTableCell>
+                          <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
+                                  <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>{t('editor.settings.context.edit')}</PkpButton>
+                                  <PkpButton variant="warnable" size="sm" onClick={() => handleDeleteCategory(category.id)}>
+                                    {t('editor.settings.context.delete')}
+                                  </PkpButton>
+                          </PkpTableCell>
+                        </PkpTableRow>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={4} style={{ padding: "2rem", textAlign: "center", color: "rgba(0, 0, 0, 0.54)", fontSize: "0.875rem" }}>
+                          No categories found. Use the form above to add a category.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </PkpTable>
+              </div>
+            </div>
+          </PkpTabsContent>
+        </PkpTabs>
+      </div>
+    </div>
+  );
+}
+

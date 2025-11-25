@@ -246,3 +246,24 @@ export function GalleyCreationModal({
     </Modal>
   );
 }
+
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
+}

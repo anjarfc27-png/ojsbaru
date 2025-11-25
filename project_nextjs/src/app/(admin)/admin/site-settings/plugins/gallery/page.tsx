@@ -299,3 +299,237 @@ function getCategoryLabel(category: string) {
   };
   return labels[category] ?? category;
 }
+
+              }}>
+                <span>v{plugin.version}</span>
+                <span>By {plugin.author}</span>
+              </div>
+            </div>
+            <div style={{
+              marginTop: '1rem',
+              display: 'flex',
+              gap: '0.5rem'
+            }}>
+              {plugin.installed ? (
+                <button
+                  onClick={() => handleUninstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#d32f2f',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Uninstall
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleInstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#006798',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Install
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredPlugins.length === 0 && (
+        <div style={{
+          textAlign: 'center',
+          padding: '3rem 1rem'
+        }}>
+          <p style={{
+            color: '#666',
+            fontSize: '0.875rem'
+          }}>
+            No plugins found matching your search.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function getCategoryLabel(category: string) {
+  const labels: Record<string, string> = {
+    all: "All Categories",
+    generic: "Generic",
+    importexport: "Import/Export",
+    metadata: "Metadata",
+    reports: "Reports & Tools",
+  };
+  return labels[category] ?? category;
+}
+
+              }}>
+                <span>v{plugin.version}</span>
+                <span>By {plugin.author}</span>
+              </div>
+            </div>
+            <div style={{
+              marginTop: '1rem',
+              display: 'flex',
+              gap: '0.5rem'
+            }}>
+              {plugin.installed ? (
+                <button
+                  onClick={() => handleUninstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#d32f2f',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Uninstall
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleInstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#006798',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Install
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredPlugins.length === 0 && (
+        <div style={{
+          textAlign: 'center',
+          padding: '3rem 1rem'
+        }}>
+          <p style={{
+            color: '#666',
+            fontSize: '0.875rem'
+          }}>
+            No plugins found matching your search.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function getCategoryLabel(category: string) {
+  const labels: Record<string, string> = {
+    all: "All Categories",
+    generic: "Generic",
+    importexport: "Import/Export",
+    metadata: "Metadata",
+    reports: "Reports & Tools",
+  };
+  return labels[category] ?? category;
+}
+
+              }}>
+                <span>v{plugin.version}</span>
+                <span>By {plugin.author}</span>
+              </div>
+            </div>
+            <div style={{
+              marginTop: '1rem',
+              display: 'flex',
+              gap: '0.5rem'
+            }}>
+              {plugin.installed ? (
+                <button
+                  onClick={() => handleUninstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#d32f2f',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Uninstall
+                </button>
+              ) : (
+                <button
+                  onClick={() => handleInstall(plugin)}
+                  style={{
+                    flex: 1,
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    padding: '0.5rem 1rem',
+                    backgroundColor: '#006798',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Install
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filteredPlugins.length === 0 && (
+        <div style={{
+          textAlign: 'center',
+          padding: '3rem 1rem'
+        }}>
+          <p style={{
+            color: '#666',
+            fontSize: '0.875rem'
+          }}>
+            No plugins found matching your search.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function getCategoryLabel(category: string) {
+  const labels: Record<string, string> = {
+    all: "All Categories",
+    generic: "Generic",
+    importexport: "Import/Export",
+    metadata: "Metadata",
+    reports: "Reports & Tools",
+  };
+  return labels[category] ?? category;
+}

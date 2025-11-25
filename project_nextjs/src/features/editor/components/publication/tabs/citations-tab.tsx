@@ -285,3 +285,123 @@ export function CitationsTab({ submissionId, detail, version, isPublished }: Pro
   );
 }
 
+
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Save Button */}
+        {!isPublished && citationList.length > 0 && (
+          <div
+            style={{
+              marginTop: "1.5rem",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Citations"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Save Button */}
+        {!isPublished && citationList.length > 0 && (
+          <div
+            style={{
+              marginTop: "1.5rem",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Citations"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Save Button */}
+        {!isPublished && citationList.length > 0 && (
+          <div
+            style={{
+              marginTop: "1.5rem",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Citations"}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+

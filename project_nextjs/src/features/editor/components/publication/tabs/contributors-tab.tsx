@@ -358,3 +358,393 @@ export function ContributorsTab({ submissionId, detail, version, isPublished }: 
     </form>
   );
 }
+
+                <PkpTableCell>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Given name"
+                        value={contributor.givenName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "givenName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Family name"
+                        value={contributor.familyName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "familyName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                    </div>
+                    <span className="text-xs text-[var(--muted)]">Urutan tampil akan mengikuti susunan di daftar ini.</span>
+                  </div>
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="email"
+                    placeholder="email@example.com"
+                    value={contributor.email}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "email", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="Affiliation / Institution"
+                    value={contributor.affiliation}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "affiliation", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="0000-0000-0000-0000"
+                    value={contributor.orcid}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "orcid", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell style={{ textAlign: "right" }}>
+                  {!isPublished && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveContributor(index)}
+                      className="text-sm font-semibold text-[#c92a2a] hover:underline"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </PkpTableCell>
+              </PkpTableRow>
+            ))}
+          </tbody>
+        </PkpTable>
+      </div>
+
+      <p
+        style={{
+          fontSize: "0.75rem",
+          color: "rgba(0, 0, 0, 0.54)",
+          marginTop: "-0.5rem",
+        }}
+      >
+        Kontributor akan muncul pada metadata publikasi dan daftar penulis. Gunakan tombol di atas untuk menambah, mengubah, ataupun menghapus
+        susunan penulis sesuai OJS 3.3.
+      </p>
+
+      {!isPublished && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "0.5rem",
+            marginTop: "0.5rem",
+          }}
+        >
+          <button
+            type="submit"
+            disabled={isSaving}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "0.25rem",
+              border: "1px solid #006798",
+              backgroundColor: "#006798",
+              color: "#ffffff",
+              height: "2rem",
+              paddingLeft: "0.75rem",
+              paddingRight: "0.75rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              cursor: isSaving ? "not-allowed" : "pointer",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#005a82";
+                event.currentTarget.style.borderColor = "#005a82";
+              }
+            }}
+            onMouseLeave={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#006798";
+                event.currentTarget.style.borderColor = "#006798";
+              }
+            }}
+          >
+            {isSaving ? "Saving..." : "Save Contributors"}
+          </button>
+        </div>
+      )}
+    </form>
+  );
+}
+
+                <PkpTableCell>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Given name"
+                        value={contributor.givenName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "givenName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Family name"
+                        value={contributor.familyName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "familyName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                    </div>
+                    <span className="text-xs text-[var(--muted)]">Urutan tampil akan mengikuti susunan di daftar ini.</span>
+                  </div>
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="email"
+                    placeholder="email@example.com"
+                    value={contributor.email}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "email", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="Affiliation / Institution"
+                    value={contributor.affiliation}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "affiliation", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="0000-0000-0000-0000"
+                    value={contributor.orcid}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "orcid", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell style={{ textAlign: "right" }}>
+                  {!isPublished && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveContributor(index)}
+                      className="text-sm font-semibold text-[#c92a2a] hover:underline"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </PkpTableCell>
+              </PkpTableRow>
+            ))}
+          </tbody>
+        </PkpTable>
+      </div>
+
+      <p
+        style={{
+          fontSize: "0.75rem",
+          color: "rgba(0, 0, 0, 0.54)",
+          marginTop: "-0.5rem",
+        }}
+      >
+        Kontributor akan muncul pada metadata publikasi dan daftar penulis. Gunakan tombol di atas untuk menambah, mengubah, ataupun menghapus
+        susunan penulis sesuai OJS 3.3.
+      </p>
+
+      {!isPublished && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "0.5rem",
+            marginTop: "0.5rem",
+          }}
+        >
+          <button
+            type="submit"
+            disabled={isSaving}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "0.25rem",
+              border: "1px solid #006798",
+              backgroundColor: "#006798",
+              color: "#ffffff",
+              height: "2rem",
+              paddingLeft: "0.75rem",
+              paddingRight: "0.75rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              cursor: isSaving ? "not-allowed" : "pointer",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#005a82";
+                event.currentTarget.style.borderColor = "#005a82";
+              }
+            }}
+            onMouseLeave={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#006798";
+                event.currentTarget.style.borderColor = "#006798";
+              }
+            }}
+          >
+            {isSaving ? "Saving..." : "Save Contributors"}
+          </button>
+        </div>
+      )}
+    </form>
+  );
+}
+
+                <PkpTableCell>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Given name"
+                        value={contributor.givenName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "givenName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Family name"
+                        value={contributor.familyName}
+                        disabled={isPublished}
+                        onChange={(event) => handleChange(index, "familyName", event.target.value)}
+                        className="h-10 flex-1 rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                      />
+                    </div>
+                    <span className="text-xs text-[var(--muted)]">Urutan tampil akan mengikuti susunan di daftar ini.</span>
+                  </div>
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="email"
+                    placeholder="email@example.com"
+                    value={contributor.email}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "email", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="Affiliation / Institution"
+                    value={contributor.affiliation}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "affiliation", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell>
+                  <input
+                    type="text"
+                    placeholder="0000-0000-0000-0000"
+                    value={contributor.orcid}
+                    disabled={isPublished}
+                    onChange={(event) => handleChange(index, "orcid", event.target.value)}
+                    className="h-10 w-full rounded border border-[var(--border)] bg-white px-3 text-sm outline-none focus:border-[#006798]"
+                  />
+                </PkpTableCell>
+                <PkpTableCell style={{ textAlign: "right" }}>
+                  {!isPublished && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveContributor(index)}
+                      className="text-sm font-semibold text-[#c92a2a] hover:underline"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </PkpTableCell>
+              </PkpTableRow>
+            ))}
+          </tbody>
+        </PkpTable>
+      </div>
+
+      <p
+        style={{
+          fontSize: "0.75rem",
+          color: "rgba(0, 0, 0, 0.54)",
+          marginTop: "-0.5rem",
+        }}
+      >
+        Kontributor akan muncul pada metadata publikasi dan daftar penulis. Gunakan tombol di atas untuk menambah, mengubah, ataupun menghapus
+        susunan penulis sesuai OJS 3.3.
+      </p>
+
+      {!isPublished && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            gap: "0.5rem",
+            marginTop: "0.5rem",
+          }}
+        >
+          <button
+            type="submit"
+            disabled={isSaving}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "0.25rem",
+              border: "1px solid #006798",
+              backgroundColor: "#006798",
+              color: "#ffffff",
+              height: "2rem",
+              paddingLeft: "0.75rem",
+              paddingRight: "0.75rem",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              cursor: isSaving ? "not-allowed" : "pointer",
+              transition: "all 0.2s ease",
+            }}
+            onMouseEnter={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#005a82";
+                event.currentTarget.style.borderColor = "#005a82";
+              }
+            }}
+            onMouseLeave={(event) => {
+              if (!isSaving) {
+                event.currentTarget.style.backgroundColor = "#006798";
+                event.currentTarget.style.borderColor = "#006798";
+              }
+            }}
+          >
+            {isSaving ? "Saving..." : "Save Contributors"}
+          </button>
+        </div>
+      )}
+    </form>
+  );
+}

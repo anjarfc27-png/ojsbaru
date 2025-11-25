@@ -333,3 +333,78 @@ on conflict (id) do update set
     updated_at = now();
 
 
+
+    id bigint generated always as identity primary key,
+    task_name text not null,
+    status text not null default 'success',
+    details text,
+    executed_at timestamptz not null default now()
+);
+
+create index if not exists scheduled_task_logs_executed_idx on public.scheduled_task_logs (executed_at desc);
+
+-- Basic lookup data ---------------------------------------------------------
+insert into public.site_plugins (id, name, description, category, enabled)
+values
+    ('custom-block','Custom Block Manager','Kelola blok konten di sidebar.','generic',true),
+    ('google-analytics','Google Analytics','Tambahkan tracking Analytics.','generic',false),
+    ('crossref','Crossref XML Export','Ekspor metadata artikel ke Crossref.','importexport',true),
+    ('doaj','DOAJ Export Plugin','Ekspor metadata ke DOAJ.','importexport',false)
+on conflict (id) do update set
+    name = excluded.name,
+    description = excluded.description,
+    category = excluded.category,
+    enabled = excluded.enabled,
+    updated_at = now();
+
+
+
+    id bigint generated always as identity primary key,
+    task_name text not null,
+    status text not null default 'success',
+    details text,
+    executed_at timestamptz not null default now()
+);
+
+create index if not exists scheduled_task_logs_executed_idx on public.scheduled_task_logs (executed_at desc);
+
+-- Basic lookup data ---------------------------------------------------------
+insert into public.site_plugins (id, name, description, category, enabled)
+values
+    ('custom-block','Custom Block Manager','Kelola blok konten di sidebar.','generic',true),
+    ('google-analytics','Google Analytics','Tambahkan tracking Analytics.','generic',false),
+    ('crossref','Crossref XML Export','Ekspor metadata artikel ke Crossref.','importexport',true),
+    ('doaj','DOAJ Export Plugin','Ekspor metadata ke DOAJ.','importexport',false)
+on conflict (id) do update set
+    name = excluded.name,
+    description = excluded.description,
+    category = excluded.category,
+    enabled = excluded.enabled,
+    updated_at = now();
+
+
+
+    id bigint generated always as identity primary key,
+    task_name text not null,
+    status text not null default 'success',
+    details text,
+    executed_at timestamptz not null default now()
+);
+
+create index if not exists scheduled_task_logs_executed_idx on public.scheduled_task_logs (executed_at desc);
+
+-- Basic lookup data ---------------------------------------------------------
+insert into public.site_plugins (id, name, description, category, enabled)
+values
+    ('custom-block','Custom Block Manager','Kelola blok konten di sidebar.','generic',true),
+    ('google-analytics','Google Analytics','Tambahkan tracking Analytics.','generic',false),
+    ('crossref','Crossref XML Export','Ekspor metadata artikel ke Crossref.','importexport',true),
+    ('doaj','DOAJ Export Plugin','Ekspor metadata ke DOAJ.','importexport',false)
+on conflict (id) do update set
+    name = excluded.name,
+    description = excluded.description,
+    category = excluded.category,
+    enabled = excluded.enabled,
+    updated_at = now();
+
+

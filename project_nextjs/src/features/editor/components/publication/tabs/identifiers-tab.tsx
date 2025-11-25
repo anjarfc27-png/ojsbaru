@@ -291,3 +291,201 @@ export function IdentifiersTab({ submissionId, detail, version, isPublished }: P
   );
 }
 
+
+            flexDirection: "column",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 600,
+              color: "#002C40",
+            }}
+          >
+            ISSN (International Standard Serial Number)
+          </span>
+          <input
+            type="text"
+            value={issn}
+            onChange={(e) => setIssn(e.target.value)}
+            placeholder="1234-5678"
+            disabled={isPublished}
+            style={{
+              height: "2.75rem",
+              padding: "0 0.75rem",
+              borderRadius: "0.25rem",
+              border: "1px solid #e5e5e5",
+              backgroundColor: isPublished ? "#f8f9fa" : "#ffffff",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {/* Save Button */}
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Identifiers"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+
+            flexDirection: "column",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 600,
+              color: "#002C40",
+            }}
+          >
+            ISSN (International Standard Serial Number)
+          </span>
+          <input
+            type="text"
+            value={issn}
+            onChange={(e) => setIssn(e.target.value)}
+            placeholder="1234-5678"
+            disabled={isPublished}
+            style={{
+              height: "2.75rem",
+              padding: "0 0.75rem",
+              borderRadius: "0.25rem",
+              border: "1px solid #e5e5e5",
+              backgroundColor: isPublished ? "#f8f9fa" : "#ffffff",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {/* Save Button */}
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Identifiers"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+
+
+            flexDirection: "column",
+            gap: "0.5rem",
+            fontSize: "0.875rem",
+          }}
+        >
+          <span
+            style={{
+              fontWeight: 600,
+              color: "#002C40",
+            }}
+          >
+            ISSN (International Standard Serial Number)
+          </span>
+          <input
+            type="text"
+            value={issn}
+            onChange={(e) => setIssn(e.target.value)}
+            placeholder="1234-5678"
+            disabled={isPublished}
+            style={{
+              height: "2.75rem",
+              padding: "0 0.75rem",
+              borderRadius: "0.25rem",
+              border: "1px solid #e5e5e5",
+              backgroundColor: isPublished ? "#f8f9fa" : "#ffffff",
+              fontSize: "0.875rem",
+              boxShadow: "inset 0 1px 2px rgba(0,0,0,0.075)",
+              outline: "none",
+              cursor: isPublished ? "not-allowed" : "text",
+            }}
+          />
+        </label>
+
+        {/* Save Button */}
+        {!isPublished && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "0.5rem",
+            }}
+          >
+            <button
+              type="submit"
+              disabled={isSaving}
+              style={{
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.25rem",
+                border: "none",
+                backgroundColor: isSaving ? "#e5e5e5" : "#006798",
+                color: isSaving ? "rgba(0, 0, 0, 0.54)" : "#ffffff",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                cursor: isSaving ? "not-allowed" : "pointer",
+              }}
+            >
+              {isSaving ? "Saving..." : "Save Identifiers"}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+}
+

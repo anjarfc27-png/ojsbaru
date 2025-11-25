@@ -809,3 +809,1434 @@ function AdminUsers() {
 }
 
 export default withAuth(AdminUsers, 'admin')
+
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {users.length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            {users.filter(u => u.status === 'Active').length} active
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Editors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#e9d5ff',
+              color: '#6b21a8',
+              fontWeight: 600
+            }}>
+              ED
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#7c3aed',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Editor')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active editors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Authors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#dbeafe',
+              color: '#1e40af',
+              fontWeight: 600
+            }}>
+              AU
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#3b82f6',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Author')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active authors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Reviewers
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#fed7aa',
+              color: '#9a3412',
+              fontWeight: 600
+            }}>
+              RV
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#ea580c',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Reviewer')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active reviewers
+          </p>
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            User List ({filteredUsers.length} users)
+          </h2>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse'
+          }}>
+            <thead>
+              <tr style={{
+                backgroundColor: '#f8f9fa',
+                borderBottom: '1px solid #e5e5e5'
+              }}>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  User
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Email
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Roles
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Status
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Last Login
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Registered
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Activity
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40'
+                }}>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{
+                    padding: '2rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    color: '#666',
+                    fontStyle: 'italic'
+                  }}>
+                    No users found matching your criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredUsers.map((user) => (
+                  <tr key={user.id} style={{
+                    borderBottom: '1px solid #e5e5e5',
+                    backgroundColor: '#fff'
+                  }}>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div>
+                        <div style={{
+                          fontWeight: 500,
+                          color: '#002C40',
+                          marginBottom: '0.25rem'
+                        }}>
+                          {user.full_name}
+                        </div>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#666'
+                        }}>
+                          @{user.username}
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5',
+                      maxWidth: '250px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {user.email}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.25rem'
+                      }}>
+                        {user.roles.map((role, index) => {
+                          const roleColors: Record<string, { bg: string; text: string }> = {
+                            'Editor': { bg: '#e9d5ff', text: '#6b21a8' },
+                            'Author': { bg: '#dbeafe', text: '#1e40af' },
+                            'Reviewer': { bg: '#fed7aa', text: '#9a3412' }
+                          };
+                          const colors = roleColors[role] || { bg: '#e2e3e5', text: '#383d41' };
+                          return (
+                            <span
+                              key={index}
+                              style={{
+                                fontSize: '0.75rem',
+                                padding: '0.125rem 0.5rem',
+                                borderRadius: '4px',
+                                backgroundColor: colors.bg,
+                                color: colors.text,
+                                fontWeight: 600
+                              }}
+                            >
+                              {role}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <span style={{
+                        fontSize: '0.75rem',
+                        padding: '0.125rem 0.5rem',
+                        borderRadius: '4px',
+                        backgroundColor: user.status === 'Active' ? '#d4edda' : user.status === 'Inactive' ? '#e2e3e5' : '#f8d7da',
+                        color: user.status === 'Active' ? '#155724' : user.status === 'Inactive' ? '#383d41' : '#721c24',
+                        fontWeight: 600
+                      }}>
+                        {user.status}
+                      </span>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.last_login}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.date_registered}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.125rem'
+                      }}>
+                        <div>Submissions: {user.submissions}</div>
+                        <div>Reviews: {user.reviews}</div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        gap: '0.5rem'
+                      }}>
+                        <button
+                          type="button"
+                          title="Send Email"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <Mail style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Enable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#00B24E',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserCheck style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Disable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#d32f2f',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserX style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminUsers, 'admin')
+
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {users.length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            {users.filter(u => u.status === 'Active').length} active
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Editors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#e9d5ff',
+              color: '#6b21a8',
+              fontWeight: 600
+            }}>
+              ED
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#7c3aed',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Editor')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active editors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Authors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#dbeafe',
+              color: '#1e40af',
+              fontWeight: 600
+            }}>
+              AU
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#3b82f6',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Author')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active authors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Reviewers
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#fed7aa',
+              color: '#9a3412',
+              fontWeight: 600
+            }}>
+              RV
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#ea580c',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Reviewer')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active reviewers
+          </p>
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            User List ({filteredUsers.length} users)
+          </h2>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse'
+          }}>
+            <thead>
+              <tr style={{
+                backgroundColor: '#f8f9fa',
+                borderBottom: '1px solid #e5e5e5'
+              }}>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  User
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Email
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Roles
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Status
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Last Login
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Registered
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Activity
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40'
+                }}>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{
+                    padding: '2rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    color: '#666',
+                    fontStyle: 'italic'
+                  }}>
+                    No users found matching your criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredUsers.map((user) => (
+                  <tr key={user.id} style={{
+                    borderBottom: '1px solid #e5e5e5',
+                    backgroundColor: '#fff'
+                  }}>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div>
+                        <div style={{
+                          fontWeight: 500,
+                          color: '#002C40',
+                          marginBottom: '0.25rem'
+                        }}>
+                          {user.full_name}
+                        </div>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#666'
+                        }}>
+                          @{user.username}
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5',
+                      maxWidth: '250px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {user.email}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.25rem'
+                      }}>
+                        {user.roles.map((role, index) => {
+                          const roleColors: Record<string, { bg: string; text: string }> = {
+                            'Editor': { bg: '#e9d5ff', text: '#6b21a8' },
+                            'Author': { bg: '#dbeafe', text: '#1e40af' },
+                            'Reviewer': { bg: '#fed7aa', text: '#9a3412' }
+                          };
+                          const colors = roleColors[role] || { bg: '#e2e3e5', text: '#383d41' };
+                          return (
+                            <span
+                              key={index}
+                              style={{
+                                fontSize: '0.75rem',
+                                padding: '0.125rem 0.5rem',
+                                borderRadius: '4px',
+                                backgroundColor: colors.bg,
+                                color: colors.text,
+                                fontWeight: 600
+                              }}
+                            >
+                              {role}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <span style={{
+                        fontSize: '0.75rem',
+                        padding: '0.125rem 0.5rem',
+                        borderRadius: '4px',
+                        backgroundColor: user.status === 'Active' ? '#d4edda' : user.status === 'Inactive' ? '#e2e3e5' : '#f8d7da',
+                        color: user.status === 'Active' ? '#155724' : user.status === 'Inactive' ? '#383d41' : '#721c24',
+                        fontWeight: 600
+                      }}>
+                        {user.status}
+                      </span>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.last_login}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.date_registered}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.125rem'
+                      }}>
+                        <div>Submissions: {user.submissions}</div>
+                        <div>Reviews: {user.reviews}</div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        gap: '0.5rem'
+                      }}>
+                        <button
+                          type="button"
+                          title="Send Email"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <Mail style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Enable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#00B24E',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserCheck style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Disable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#d32f2f',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserX style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminUsers, 'admin')
+
+            color: '#002C40',
+            marginBottom: '0.25rem'
+          }}>
+            {users.length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            {users.filter(u => u.status === 'Active').length} active
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Editors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#e9d5ff',
+              color: '#6b21a8',
+              fontWeight: 600
+            }}>
+              ED
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#7c3aed',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Editor')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active editors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Authors
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#dbeafe',
+              color: '#1e40af',
+              fontWeight: 600
+            }}>
+              AU
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#3b82f6',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Author')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active authors
+          </p>
+        </div>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.25rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '0.75rem'
+          }}>
+            <h3 style={{
+              fontSize: '0.875rem',
+              fontWeight: 500,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Reviewers
+            </h3>
+            <span style={{
+              fontSize: '0.75rem',
+              padding: '0.125rem 0.5rem',
+              borderRadius: '4px',
+              backgroundColor: '#fed7aa',
+              color: '#9a3412',
+              fontWeight: 600
+            }}>
+              RV
+            </span>
+          </div>
+          <div style={{
+            fontSize: '1.5rem',
+            fontWeight: 700,
+            color: '#ea580c',
+            marginBottom: '0.25rem'
+          }}>
+            {users.filter(u => u.roles.includes('Reviewer')).length}
+          </div>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Active reviewers
+          </p>
+        </div>
+      </div>
+
+      {/* Users Table */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            User List ({filteredUsers.length} users)
+          </h2>
+        </div>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{
+            width: '100%',
+            borderCollapse: 'collapse'
+          }}>
+            <thead>
+              <tr style={{
+                backgroundColor: '#f8f9fa',
+                borderBottom: '1px solid #e5e5e5'
+              }}>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  User
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Email
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Roles
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Status
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Last Login
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Registered
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40',
+                  borderRight: '1px solid #e5e5e5'
+                }}>
+                  Activity
+                </th>
+                <th style={{
+                  padding: '0.75rem 1rem',
+                  textAlign: 'left',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  color: '#002C40'
+                }}>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.length === 0 ? (
+                <tr>
+                  <td colSpan={8} style={{
+                    padding: '2rem',
+                    textAlign: 'center',
+                    fontSize: '0.875rem',
+                    color: '#666',
+                    fontStyle: 'italic'
+                  }}>
+                    No users found matching your criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredUsers.map((user) => (
+                  <tr key={user.id} style={{
+                    borderBottom: '1px solid #e5e5e5',
+                    backgroundColor: '#fff'
+                  }}>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div>
+                        <div style={{
+                          fontWeight: 500,
+                          color: '#002C40',
+                          marginBottom: '0.25rem'
+                        }}>
+                          {user.full_name}
+                        </div>
+                        <div style={{
+                          fontSize: '0.875rem',
+                          color: '#666'
+                        }}>
+                          @{user.username}
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5',
+                      maxWidth: '250px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {user.email}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '0.25rem'
+                      }}>
+                        {user.roles.map((role, index) => {
+                          const roleColors: Record<string, { bg: string; text: string }> = {
+                            'Editor': { bg: '#e9d5ff', text: '#6b21a8' },
+                            'Author': { bg: '#dbeafe', text: '#1e40af' },
+                            'Reviewer': { bg: '#fed7aa', text: '#9a3412' }
+                          };
+                          const colors = roleColors[role] || { bg: '#e2e3e5', text: '#383d41' };
+                          return (
+                            <span
+                              key={index}
+                              style={{
+                                fontSize: '0.75rem',
+                                padding: '0.125rem 0.5rem',
+                                borderRadius: '4px',
+                                backgroundColor: colors.bg,
+                                color: colors.text,
+                                fontWeight: 600
+                              }}
+                            >
+                              {role}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <span style={{
+                        fontSize: '0.75rem',
+                        padding: '0.125rem 0.5rem',
+                        borderRadius: '4px',
+                        backgroundColor: user.status === 'Active' ? '#d4edda' : user.status === 'Inactive' ? '#e2e3e5' : '#f8d7da',
+                        color: user.status === 'Active' ? '#155724' : user.status === 'Inactive' ? '#383d41' : '#721c24',
+                        fontWeight: 600
+                      }}>
+                        {user.status}
+                      </span>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.last_login}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      color: '#333',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      {user.date_registered}
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem',
+                      borderRight: '1px solid #e5e5e5'
+                    }}>
+                      <div style={{
+                        fontSize: '0.75rem',
+                        color: '#666',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.125rem'
+                      }}>
+                        <div>Submissions: {user.submissions}</div>
+                        <div>Reviews: {user.reviews}</div>
+                      </div>
+                    </td>
+                    <td style={{
+                      padding: '0.75rem 1rem',
+                      fontSize: '0.875rem'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        gap: '0.5rem'
+                      }}>
+                        <button
+                          type="button"
+                          title="Send Email"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#006798',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <Mail style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Enable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#00B24E',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserCheck style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                        <button
+                          type="button"
+                          title="Disable User"
+                          style={{
+                            padding: '0.25rem',
+                            backgroundColor: 'transparent',
+                            border: '1px solid #dee2e6',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            color: '#d32f2f',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <UserX style={{ width: '1rem', height: '1rem' }} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminUsers, 'admin')

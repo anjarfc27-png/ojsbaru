@@ -177,3 +177,105 @@ export function PublicationContent({
 
 
 
+
+        )}
+        {activeSubTab === "citations" && (
+          <CitationsTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "identifiers" && (
+          <IdentifiersTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "galleys" && (
+          <GalleysTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "license" && (
+          <LicenseTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "issue" && (
+          <IssueTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+
+
+        )}
+        {activeSubTab === "citations" && (
+          <CitationsTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "identifiers" && (
+          <IdentifiersTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "galleys" && (
+          <GalleysTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "license" && (
+          <LicenseTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "issue" && (
+          <IssueTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+
+
+        )}
+        {activeSubTab === "citations" && (
+          <CitationsTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "identifiers" && (
+          <IdentifiersTab
+            submissionId={submissionId}
+            detail={detail}
+            version={currentVersion}
+            isPublished={isPublished}
+          />
+        )}
+        {activeSubTab === "galleys" && (
+          <GalleysTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "license" && (
+          <LicenseTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+        {activeSubTab === "issue" && (
+          <IssueTab submissionId={submissionId} detail={detail} isPublished={isPublished} />
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+

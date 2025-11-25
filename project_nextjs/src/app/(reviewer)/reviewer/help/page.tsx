@@ -690,3 +690,1227 @@ function ReviewerHelp() {
 }
 
 export default withAuth(ReviewerHelp, 'reviewer')
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          {filteredFaqs.length === 0 ? (
+            <p style={{
+              padding: '2rem',
+              textAlign: 'center',
+              fontSize: '0.875rem',
+              color: '#666',
+              fontStyle: 'italic',
+              margin: 0
+            }}>
+              No FAQs found matching your search.
+            </p>
+          ) : (
+            filteredFaqs.map((faq, index) => (
+              <div key={index} style={{
+                border: '1px solid #e5e5e5',
+                borderRadius: '4px',
+                overflow: 'hidden'
+              }}>
+                <button
+                  onClick={() => toggleFaq(index)}
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: expandedFaq === index ? '#f8f9fa' : '#fff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: '#002C40',
+                    flex: 1
+                  }}>
+                    {faq.question}
+                  </span>
+                  {expandedFaq === index ? (
+                    <ChevronUp style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  ) : (
+                    <ChevronDown style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  )}
+                </button>
+                {expandedFaq === index && (
+                  <div style={{
+                    padding: '0 1rem 1rem 1rem',
+                    backgroundColor: '#f8f9fa',
+                    borderTop: '1px solid #e5e5e5'
+                  }}>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#666',
+                      margin: 0,
+                      lineHeight: '1.6',
+                      paddingTop: '1rem'
+                    }}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Support Ticket - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '1rem'
+        }}>
+          <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#ff9800' }} />
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Contact Support
+          </h2>
+        </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div>
+              <label htmlFor="subject" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Subject
+              </label>
+              <input
+                id="subject"
+                type="text"
+                value={supportTicket.subject}
+                onChange={(e) => setSupportTicket({...supportTicket, subject: e.target.value})}
+                placeholder="Brief description of your issue"
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="category" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Category
+              </label>
+              <select
+                id="category"
+                value={supportTicket.category}
+                onChange={(e) => setSupportTicket({...supportTicket, category: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="">Select a category</option>
+                <option value="review_process">Review Process</option>
+                <option value="technical">Technical Support</option>
+                <option value="account">Account Issues</option>
+                <option value="manuscript_access">Manuscript Access</option>
+                <option value="deadline">Deadline Issues</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="priority" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Priority
+              </label>
+              <select
+                id="priority"
+                value={supportTicket.priority}
+                onChange={(e) => setSupportTicket({...supportTicket, priority: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="low">Low</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="message" style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#002C40',
+              marginBottom: '0.5rem'
+            }}>
+              Message
+            </label>
+            <textarea
+              id="message"
+              rows={8}
+              value={supportTicket.message}
+              onChange={(e) => setSupportTicket({...supportTicket, message: e.target.value})}
+              placeholder="Please provide detailed information about your issue..."
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                border: '1px solid #d5d5d5',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontFamily: 'inherit',
+                resize: 'vertical'
+              }}
+            />
+          </div>
+        </div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            onClick={handleSubmitTicket}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            <Send style={{ width: '1rem', height: '1rem' }} />
+            Submit Ticket
+          </button>
+        </div>
+      </div>
+
+      {/* Contact Information - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#006798' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Email Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Send us an email for general inquiries and support.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            reviewersupport@journal.org
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Response time: 24-48 hours
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <MessageCircle style={{ width: '1.25rem', height: '1.25rem', color: '#10b981' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Live Chat
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Chat with our support team in real-time.
+          </p>
+          <button style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            backgroundColor: 'transparent',
+            border: '1px solid #d5d5d5',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            color: '#006798',
+            marginBottom: '0.5rem'
+          }}>
+            Start Chat
+          </button>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-5PM
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Phone style={{ width: '1.25rem', height: '1.25rem', color: '#9c27b0' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Phone Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Call us for urgent technical issues.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            +1 (555) 234-5678
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-6PM
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerHelp, 'reviewer')
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          {filteredFaqs.length === 0 ? (
+            <p style={{
+              padding: '2rem',
+              textAlign: 'center',
+              fontSize: '0.875rem',
+              color: '#666',
+              fontStyle: 'italic',
+              margin: 0
+            }}>
+              No FAQs found matching your search.
+            </p>
+          ) : (
+            filteredFaqs.map((faq, index) => (
+              <div key={index} style={{
+                border: '1px solid #e5e5e5',
+                borderRadius: '4px',
+                overflow: 'hidden'
+              }}>
+                <button
+                  onClick={() => toggleFaq(index)}
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: expandedFaq === index ? '#f8f9fa' : '#fff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: '#002C40',
+                    flex: 1
+                  }}>
+                    {faq.question}
+                  </span>
+                  {expandedFaq === index ? (
+                    <ChevronUp style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  ) : (
+                    <ChevronDown style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  )}
+                </button>
+                {expandedFaq === index && (
+                  <div style={{
+                    padding: '0 1rem 1rem 1rem',
+                    backgroundColor: '#f8f9fa',
+                    borderTop: '1px solid #e5e5e5'
+                  }}>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#666',
+                      margin: 0,
+                      lineHeight: '1.6',
+                      paddingTop: '1rem'
+                    }}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Support Ticket - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '1rem'
+        }}>
+          <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#ff9800' }} />
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Contact Support
+          </h2>
+        </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div>
+              <label htmlFor="subject" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Subject
+              </label>
+              <input
+                id="subject"
+                type="text"
+                value={supportTicket.subject}
+                onChange={(e) => setSupportTicket({...supportTicket, subject: e.target.value})}
+                placeholder="Brief description of your issue"
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="category" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Category
+              </label>
+              <select
+                id="category"
+                value={supportTicket.category}
+                onChange={(e) => setSupportTicket({...supportTicket, category: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="">Select a category</option>
+                <option value="review_process">Review Process</option>
+                <option value="technical">Technical Support</option>
+                <option value="account">Account Issues</option>
+                <option value="manuscript_access">Manuscript Access</option>
+                <option value="deadline">Deadline Issues</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="priority" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Priority
+              </label>
+              <select
+                id="priority"
+                value={supportTicket.priority}
+                onChange={(e) => setSupportTicket({...supportTicket, priority: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="low">Low</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="message" style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#002C40',
+              marginBottom: '0.5rem'
+            }}>
+              Message
+            </label>
+            <textarea
+              id="message"
+              rows={8}
+              value={supportTicket.message}
+              onChange={(e) => setSupportTicket({...supportTicket, message: e.target.value})}
+              placeholder="Please provide detailed information about your issue..."
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                border: '1px solid #d5d5d5',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontFamily: 'inherit',
+                resize: 'vertical'
+              }}
+            />
+          </div>
+        </div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            onClick={handleSubmitTicket}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            <Send style={{ width: '1rem', height: '1rem' }} />
+            Submit Ticket
+          </button>
+        </div>
+      </div>
+
+      {/* Contact Information - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#006798' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Email Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Send us an email for general inquiries and support.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            reviewersupport@journal.org
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Response time: 24-48 hours
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <MessageCircle style={{ width: '1.25rem', height: '1.25rem', color: '#10b981' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Live Chat
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Chat with our support team in real-time.
+          </p>
+          <button style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            backgroundColor: 'transparent',
+            border: '1px solid #d5d5d5',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            color: '#006798',
+            marginBottom: '0.5rem'
+          }}>
+            Start Chat
+          </button>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-5PM
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Phone style={{ width: '1.25rem', height: '1.25rem', color: '#9c27b0' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Phone Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Call us for urgent technical issues.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            +1 (555) 234-5678
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-6PM
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerHelp, 'reviewer')
+
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem'
+        }}>
+          {filteredFaqs.length === 0 ? (
+            <p style={{
+              padding: '2rem',
+              textAlign: 'center',
+              fontSize: '0.875rem',
+              color: '#666',
+              fontStyle: 'italic',
+              margin: 0
+            }}>
+              No FAQs found matching your search.
+            </p>
+          ) : (
+            filteredFaqs.map((faq, index) => (
+              <div key={index} style={{
+                border: '1px solid #e5e5e5',
+                borderRadius: '4px',
+                overflow: 'hidden'
+              }}>
+                <button
+                  onClick={() => toggleFaq(index)}
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: expandedFaq === index ? '#f8f9fa' : '#fff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left'
+                  }}
+                >
+                  <span style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: '#002C40',
+                    flex: 1
+                  }}>
+                    {faq.question}
+                  </span>
+                  {expandedFaq === index ? (
+                    <ChevronUp style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  ) : (
+                    <ChevronDown style={{ width: '1rem', height: '1rem', color: '#666', flexShrink: 0 }} />
+                  )}
+                </button>
+                {expandedFaq === index && (
+                  <div style={{
+                    padding: '0 1rem 1rem 1rem',
+                    backgroundColor: '#f8f9fa',
+                    borderTop: '1px solid #e5e5e5'
+                  }}>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#666',
+                      margin: 0,
+                      lineHeight: '1.6',
+                      paddingTop: '1rem'
+                    }}>
+                      {faq.answer}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Support Ticket - OJS PKP 3.3 Style */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        padding: '1.5rem',
+        marginBottom: '1.5rem'
+      }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          marginBottom: '1rem'
+        }}>
+          <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#ff9800' }} />
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Contact Support
+          </h2>
+        </div>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '1.5rem',
+          marginBottom: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            <div>
+              <label htmlFor="subject" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Subject
+              </label>
+              <input
+                id="subject"
+                type="text"
+                value={supportTicket.subject}
+                onChange={(e) => setSupportTicket({...supportTicket, subject: e.target.value})}
+                placeholder="Brief description of your issue"
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem'
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="category" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Category
+              </label>
+              <select
+                id="category"
+                value={supportTicket.category}
+                onChange={(e) => setSupportTicket({...supportTicket, category: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="">Select a category</option>
+                <option value="review_process">Review Process</option>
+                <option value="technical">Technical Support</option>
+                <option value="account">Account Issues</option>
+                <option value="manuscript_access">Manuscript Access</option>
+                <option value="deadline">Deadline Issues</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="priority" style={{
+                display: 'block',
+                fontSize: '0.875rem',
+                fontWeight: 600,
+                color: '#002C40',
+                marginBottom: '0.5rem'
+              }}>
+                Priority
+              </label>
+              <select
+                id="priority"
+                value={supportTicket.priority}
+                onChange={(e) => setSupportTicket({...supportTicket, priority: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '0.5rem 0.75rem',
+                  border: '1px solid #d5d5d5',
+                  borderRadius: '4px',
+                  fontSize: '0.875rem',
+                  backgroundColor: '#fff'
+                }}
+              >
+                <option value="low">Low</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label htmlFor="message" style={{
+              display: 'block',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: '#002C40',
+              marginBottom: '0.5rem'
+            }}>
+              Message
+            </label>
+            <textarea
+              id="message"
+              rows={8}
+              value={supportTicket.message}
+              onChange={(e) => setSupportTicket({...supportTicket, message: e.target.value})}
+              placeholder="Please provide detailed information about your issue..."
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                border: '1px solid #d5d5d5',
+                borderRadius: '4px',
+                fontSize: '0.875rem',
+                fontFamily: 'inherit',
+                resize: 'vertical'
+              }}
+            />
+          </div>
+        </div>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            onClick={handleSubmitTicket}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.5rem 1rem',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            <Send style={{ width: '1rem', height: '1rem' }} />
+            Submit Ticket
+          </button>
+        </div>
+      </div>
+
+      {/* Contact Information - OJS PKP 3.3 Style */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '1rem'
+      }}>
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Mail style={{ width: '1.25rem', height: '1.25rem', color: '#006798' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Email Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Send us an email for general inquiries and support.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            reviewersupport@journal.org
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Response time: 24-48 hours
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <MessageCircle style={{ width: '1.25rem', height: '1.25rem', color: '#10b981' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Live Chat
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Chat with our support team in real-time.
+          </p>
+          <button style={{
+            padding: '0.5rem 1rem',
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            backgroundColor: 'transparent',
+            border: '1px solid #d5d5d5',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            color: '#006798',
+            marginBottom: '0.5rem'
+          }}>
+            Start Chat
+          </button>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-5PM
+          </p>
+        </div>
+
+        <div style={{
+          backgroundColor: '#fff',
+          border: '1px solid #dee2e6',
+          borderRadius: '4px',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            marginBottom: '1rem'
+          }}>
+            <Phone style={{ width: '1.25rem', height: '1.25rem', color: '#9c27b0' }} />
+            <h3 style={{
+              fontSize: '1rem',
+              fontWeight: 600,
+              color: '#002C40',
+              margin: 0
+            }}>
+              Phone Support
+            </h3>
+          </div>
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#666',
+            margin: '0 0 1rem 0',
+            lineHeight: '1.6'
+          }}>
+            Call us for urgent technical issues.
+          </p>
+          <p style={{
+            fontSize: '0.875rem',
+            fontWeight: 500,
+            color: '#002C40',
+            margin: '0 0 0.25rem 0'
+          }}>
+            +1 (555) 234-5678
+          </p>
+          <p style={{
+            fontSize: '0.75rem',
+            color: '#666',
+            margin: 0
+          }}>
+            Available: Mon-Fri, 9AM-6PM
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(ReviewerHelp, 'reviewer')

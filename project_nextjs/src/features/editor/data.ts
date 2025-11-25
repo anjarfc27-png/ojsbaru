@@ -777,3 +777,810 @@ async function getUserDisplayMap(
   return Object.fromEntries(entries);
 }
 
+
+            submittedAt: review.submitted_at ?? null,
+          })) ?? [],
+      })) ?? [];
+
+    const mappedQueries = queriesData?.map((query) => ({
+      id: query.id,
+      submissionId: id,
+      stage: (query.stage_id as SubmissionStage) ?? (submission.current_stage as SubmissionStage),
+      stageId: query.stage_id,
+      seq: query.seq,
+      datePosted: query.date_posted,
+      dateModified: query.date_modified ?? null,
+      closed: Boolean(query.closed),
+      participants: (query.query_participants as { user_id: string }[] | null)?.map((p) => p.user_id) ?? [],
+      notes: (query.notes as {
+        id: string;
+        user_id: string;
+        title?: string | null;
+        contents: string;
+        date_created: string;
+        date_modified?: string | null;
+      }[])?.map((note) => ({
+        id: note.id,
+        queryId: query.id,
+        userId: note.user_id,
+        userName: userMap[note.user_id]?.name ?? `User ${note.user_id}`,
+        title: note.title ?? null,
+        contents: note.contents,
+        dateCreated: note.date_created,
+        dateModified: note.date_modified ?? null,
+      })) ?? [],
+    })) ?? [];
+
+    return {
+      summary,
+      metadata: submission.metadata ?? {},
+      versions: mappedVersions,
+      participants: mappedParticipants,
+      files: mappedFiles,
+      activity: mappedActivity,
+      reviewRounds,
+      queries: mappedQueries,
+    };
+  } catch (error) {
+    console.error("Error in getSubmissionDetail:", error);
+    return null;
+  }
+}
+
+type ListTasksParams = {
+  assigneeId?: string | null;
+  status?: string;
+  limit?: number;
+};
+
+export async function listSubmissionTasks(params: ListTasksParams = {}): Promise<SubmissionTask[]> {
+  const { assigneeId, status, limit = 20 } = params;
+  await ensureDummyEditorData();
+  const supabase = getSupabaseAdminClient();
+
+  let query = supabase
+    .from("submission_tasks")
+    .select(
+      `
+        id,
+        submission_id,
+        stage,
+        title,
+        status,
+        assignee_id,
+        due_date,
+        created_at,
+        submissions:submission_id (title)
+      `
+    )
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (assigneeId) {
+    // First try to get tasks assigned to this user
+    query = query.eq("assignee_id", assigneeId);
+  }
+
+  if (status && status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error } = await query;
+  
+  // If no tasks found for this user and we're looking for open tasks, also show unassigned ones
+  if (assigneeId && (!data || data.length === 0) && (!status || status === "open")) {
+    const unassignedQuery = supabase
+      .from("submission_tasks")
+      .select(
+        `
+          id,
+          submission_id,
+          stage,
+          title,
+          status,
+          assignee_id,
+          due_date,
+          created_at,
+          submissions:submission_id (title)
+        `
+      )
+      .is("assignee_id", null)
+      .eq("status", "open")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    
+    const { data: unassignedData, error: unassignedError } = await unassignedQuery;
+    if (!unassignedError && unassignedData) {
+      const mapped = unassignedData.map((row) => ({
+        id: row.id,
+        submissionId: row.submission_id,
+        submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+        stage: row.stage as SubmissionStage,
+        title: row.title,
+        status: row.status,
+        assigneeId: row.assignee_id ?? null,
+        dueDate: row.due_date ?? null,
+        createdAt: row.created_at,
+      }));
+      return mapped;
+    }
+  }
+  
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((row) => ({
+    id: row.id,
+    submissionId: row.submission_id,
+    submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+    stage: row.stage as SubmissionStage,
+    title: row.title,
+    status: row.status,
+    assigneeId: row.assignee_id ?? null,
+    dueDate: row.due_date ?? null,
+    createdAt: row.created_at,
+  }));
+}
+
+async function countSubmissions({
+  supabase,
+  filter,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  filter: { queue?: "my" | "unassigned" | "archived"; stage?: SubmissionStage; editorId?: string | null };
+}) {
+  await ensureDummyEditorData();
+  let query = supabase.from("submissions").select("*", { head: true, count: "exact" });
+
+  if (filter.queue === "archived") {
+    query = query.eq("is_archived", true);
+  } else {
+    query = query.eq("is_archived", false);
+  }
+
+  if (filter.stage) {
+    query = query.eq("current_stage", filter.stage);
+  }
+
+  if (filter.queue === "my" && filter.editorId) {
+    const assignedIds = await getAssignedSubmissionIds(filter.editorId);
+    if (assignedIds.length === 0) return 0;
+    query = query.in("id", assignedIds);
+  }
+
+  if (filter.queue === "unassigned") {
+    const assignedIds = await getAssignedSubmissionIdsForRoles();
+    if (assignedIds.length > 0) {
+      query = query.not("id", "in", assignedIds);
+    }
+  }
+
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function countTasks({
+  supabase,
+  editorId,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  editorId?: string | null;
+}) {
+  let query = supabase.from("submission_tasks").select("*", { head: true, count: "exact" }).eq("status", "open");
+  if (editorId) {
+    query = query.eq("assignee_id", editorId);
+  }
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function getAssignedSubmissionIds(userId: string) {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .eq("user_id", userId)
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+async function getAssignedSubmissionIdsForRoles() {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+// Function removed - now using dummy-helpers.ts functions
+// getDummySubmissions is now replaced by getFilteredSubmissions from dummy-helpers.ts
+
+type UserDisplay = {
+  name: string;
+  email?: string;
+};
+
+async function getUserDisplayMap(
+  supabase: ReturnType<typeof getSupabaseAdminClient>,
+  userIds: string[],
+): Promise<Record<string, UserDisplay>> {
+  const uniqueIds = Array.from(new Set(userIds.filter(Boolean)));
+  if (uniqueIds.length === 0) {
+    return {};
+  }
+
+  const entries = await Promise.all(
+    uniqueIds.map(async (userId) => {
+      try {
+        const { data, error } = await supabase.auth.admin.getUserById(userId);
+        if (error || !data.user) {
+          return [userId, { name: `User ${userId}` }] as const;
+        }
+        const metadata = (data.user.user_metadata as { name?: string } | null) ?? {};
+        const name = metadata.name ?? data.user.email ?? `User ${userId}`;
+        return [userId, { name, email: data.user.email ?? undefined }] as const;
+      } catch {
+        return [userId, { name: `User ${userId}` }] as const;
+      }
+    }),
+  );
+
+  return Object.fromEntries(entries);
+}
+
+
+            submittedAt: review.submitted_at ?? null,
+          })) ?? [],
+      })) ?? [];
+
+    const mappedQueries = queriesData?.map((query) => ({
+      id: query.id,
+      submissionId: id,
+      stage: (query.stage_id as SubmissionStage) ?? (submission.current_stage as SubmissionStage),
+      stageId: query.stage_id,
+      seq: query.seq,
+      datePosted: query.date_posted,
+      dateModified: query.date_modified ?? null,
+      closed: Boolean(query.closed),
+      participants: (query.query_participants as { user_id: string }[] | null)?.map((p) => p.user_id) ?? [],
+      notes: (query.notes as {
+        id: string;
+        user_id: string;
+        title?: string | null;
+        contents: string;
+        date_created: string;
+        date_modified?: string | null;
+      }[])?.map((note) => ({
+        id: note.id,
+        queryId: query.id,
+        userId: note.user_id,
+        userName: userMap[note.user_id]?.name ?? `User ${note.user_id}`,
+        title: note.title ?? null,
+        contents: note.contents,
+        dateCreated: note.date_created,
+        dateModified: note.date_modified ?? null,
+      })) ?? [],
+    })) ?? [];
+
+    return {
+      summary,
+      metadata: submission.metadata ?? {},
+      versions: mappedVersions,
+      participants: mappedParticipants,
+      files: mappedFiles,
+      activity: mappedActivity,
+      reviewRounds,
+      queries: mappedQueries,
+    };
+  } catch (error) {
+    console.error("Error in getSubmissionDetail:", error);
+    return null;
+  }
+}
+
+type ListTasksParams = {
+  assigneeId?: string | null;
+  status?: string;
+  limit?: number;
+};
+
+export async function listSubmissionTasks(params: ListTasksParams = {}): Promise<SubmissionTask[]> {
+  const { assigneeId, status, limit = 20 } = params;
+  await ensureDummyEditorData();
+  const supabase = getSupabaseAdminClient();
+
+  let query = supabase
+    .from("submission_tasks")
+    .select(
+      `
+        id,
+        submission_id,
+        stage,
+        title,
+        status,
+        assignee_id,
+        due_date,
+        created_at,
+        submissions:submission_id (title)
+      `
+    )
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (assigneeId) {
+    // First try to get tasks assigned to this user
+    query = query.eq("assignee_id", assigneeId);
+  }
+
+  if (status && status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error } = await query;
+  
+  // If no tasks found for this user and we're looking for open tasks, also show unassigned ones
+  if (assigneeId && (!data || data.length === 0) && (!status || status === "open")) {
+    const unassignedQuery = supabase
+      .from("submission_tasks")
+      .select(
+        `
+          id,
+          submission_id,
+          stage,
+          title,
+          status,
+          assignee_id,
+          due_date,
+          created_at,
+          submissions:submission_id (title)
+        `
+      )
+      .is("assignee_id", null)
+      .eq("status", "open")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    
+    const { data: unassignedData, error: unassignedError } = await unassignedQuery;
+    if (!unassignedError && unassignedData) {
+      const mapped = unassignedData.map((row) => ({
+        id: row.id,
+        submissionId: row.submission_id,
+        submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+        stage: row.stage as SubmissionStage,
+        title: row.title,
+        status: row.status,
+        assigneeId: row.assignee_id ?? null,
+        dueDate: row.due_date ?? null,
+        createdAt: row.created_at,
+      }));
+      return mapped;
+    }
+  }
+  
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((row) => ({
+    id: row.id,
+    submissionId: row.submission_id,
+    submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+    stage: row.stage as SubmissionStage,
+    title: row.title,
+    status: row.status,
+    assigneeId: row.assignee_id ?? null,
+    dueDate: row.due_date ?? null,
+    createdAt: row.created_at,
+  }));
+}
+
+async function countSubmissions({
+  supabase,
+  filter,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  filter: { queue?: "my" | "unassigned" | "archived"; stage?: SubmissionStage; editorId?: string | null };
+}) {
+  await ensureDummyEditorData();
+  let query = supabase.from("submissions").select("*", { head: true, count: "exact" });
+
+  if (filter.queue === "archived") {
+    query = query.eq("is_archived", true);
+  } else {
+    query = query.eq("is_archived", false);
+  }
+
+  if (filter.stage) {
+    query = query.eq("current_stage", filter.stage);
+  }
+
+  if (filter.queue === "my" && filter.editorId) {
+    const assignedIds = await getAssignedSubmissionIds(filter.editorId);
+    if (assignedIds.length === 0) return 0;
+    query = query.in("id", assignedIds);
+  }
+
+  if (filter.queue === "unassigned") {
+    const assignedIds = await getAssignedSubmissionIdsForRoles();
+    if (assignedIds.length > 0) {
+      query = query.not("id", "in", assignedIds);
+    }
+  }
+
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function countTasks({
+  supabase,
+  editorId,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  editorId?: string | null;
+}) {
+  let query = supabase.from("submission_tasks").select("*", { head: true, count: "exact" }).eq("status", "open");
+  if (editorId) {
+    query = query.eq("assignee_id", editorId);
+  }
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function getAssignedSubmissionIds(userId: string) {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .eq("user_id", userId)
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+async function getAssignedSubmissionIdsForRoles() {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+// Function removed - now using dummy-helpers.ts functions
+// getDummySubmissions is now replaced by getFilteredSubmissions from dummy-helpers.ts
+
+type UserDisplay = {
+  name: string;
+  email?: string;
+};
+
+async function getUserDisplayMap(
+  supabase: ReturnType<typeof getSupabaseAdminClient>,
+  userIds: string[],
+): Promise<Record<string, UserDisplay>> {
+  const uniqueIds = Array.from(new Set(userIds.filter(Boolean)));
+  if (uniqueIds.length === 0) {
+    return {};
+  }
+
+  const entries = await Promise.all(
+    uniqueIds.map(async (userId) => {
+      try {
+        const { data, error } = await supabase.auth.admin.getUserById(userId);
+        if (error || !data.user) {
+          return [userId, { name: `User ${userId}` }] as const;
+        }
+        const metadata = (data.user.user_metadata as { name?: string } | null) ?? {};
+        const name = metadata.name ?? data.user.email ?? `User ${userId}`;
+        return [userId, { name, email: data.user.email ?? undefined }] as const;
+      } catch {
+        return [userId, { name: `User ${userId}` }] as const;
+      }
+    }),
+  );
+
+  return Object.fromEntries(entries);
+}
+
+
+            submittedAt: review.submitted_at ?? null,
+          })) ?? [],
+      })) ?? [];
+
+    const mappedQueries = queriesData?.map((query) => ({
+      id: query.id,
+      submissionId: id,
+      stage: (query.stage_id as SubmissionStage) ?? (submission.current_stage as SubmissionStage),
+      stageId: query.stage_id,
+      seq: query.seq,
+      datePosted: query.date_posted,
+      dateModified: query.date_modified ?? null,
+      closed: Boolean(query.closed),
+      participants: (query.query_participants as { user_id: string }[] | null)?.map((p) => p.user_id) ?? [],
+      notes: (query.notes as {
+        id: string;
+        user_id: string;
+        title?: string | null;
+        contents: string;
+        date_created: string;
+        date_modified?: string | null;
+      }[])?.map((note) => ({
+        id: note.id,
+        queryId: query.id,
+        userId: note.user_id,
+        userName: userMap[note.user_id]?.name ?? `User ${note.user_id}`,
+        title: note.title ?? null,
+        contents: note.contents,
+        dateCreated: note.date_created,
+        dateModified: note.date_modified ?? null,
+      })) ?? [],
+    })) ?? [];
+
+    return {
+      summary,
+      metadata: submission.metadata ?? {},
+      versions: mappedVersions,
+      participants: mappedParticipants,
+      files: mappedFiles,
+      activity: mappedActivity,
+      reviewRounds,
+      queries: mappedQueries,
+    };
+  } catch (error) {
+    console.error("Error in getSubmissionDetail:", error);
+    return null;
+  }
+}
+
+type ListTasksParams = {
+  assigneeId?: string | null;
+  status?: string;
+  limit?: number;
+};
+
+export async function listSubmissionTasks(params: ListTasksParams = {}): Promise<SubmissionTask[]> {
+  const { assigneeId, status, limit = 20 } = params;
+  await ensureDummyEditorData();
+  const supabase = getSupabaseAdminClient();
+
+  let query = supabase
+    .from("submission_tasks")
+    .select(
+      `
+        id,
+        submission_id,
+        stage,
+        title,
+        status,
+        assignee_id,
+        due_date,
+        created_at,
+        submissions:submission_id (title)
+      `
+    )
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (assigneeId) {
+    // First try to get tasks assigned to this user
+    query = query.eq("assignee_id", assigneeId);
+  }
+
+  if (status && status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error } = await query;
+  
+  // If no tasks found for this user and we're looking for open tasks, also show unassigned ones
+  if (assigneeId && (!data || data.length === 0) && (!status || status === "open")) {
+    const unassignedQuery = supabase
+      .from("submission_tasks")
+      .select(
+        `
+          id,
+          submission_id,
+          stage,
+          title,
+          status,
+          assignee_id,
+          due_date,
+          created_at,
+          submissions:submission_id (title)
+        `
+      )
+      .is("assignee_id", null)
+      .eq("status", "open")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    
+    const { data: unassignedData, error: unassignedError } = await unassignedQuery;
+    if (!unassignedError && unassignedData) {
+      const mapped = unassignedData.map((row) => ({
+        id: row.id,
+        submissionId: row.submission_id,
+        submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+        stage: row.stage as SubmissionStage,
+        title: row.title,
+        status: row.status,
+        assigneeId: row.assignee_id ?? null,
+        dueDate: row.due_date ?? null,
+        createdAt: row.created_at,
+      }));
+      return mapped;
+    }
+  }
+  
+  if (error || !data) {
+    return [];
+  }
+
+  return data.map((row) => ({
+    id: row.id,
+    submissionId: row.submission_id,
+    submissionTitle: (row.submissions as { title?: string } | null)?.title ?? null,
+    stage: row.stage as SubmissionStage,
+    title: row.title,
+    status: row.status,
+    assigneeId: row.assignee_id ?? null,
+    dueDate: row.due_date ?? null,
+    createdAt: row.created_at,
+  }));
+}
+
+async function countSubmissions({
+  supabase,
+  filter,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  filter: { queue?: "my" | "unassigned" | "archived"; stage?: SubmissionStage; editorId?: string | null };
+}) {
+  await ensureDummyEditorData();
+  let query = supabase.from("submissions").select("*", { head: true, count: "exact" });
+
+  if (filter.queue === "archived") {
+    query = query.eq("is_archived", true);
+  } else {
+    query = query.eq("is_archived", false);
+  }
+
+  if (filter.stage) {
+    query = query.eq("current_stage", filter.stage);
+  }
+
+  if (filter.queue === "my" && filter.editorId) {
+    const assignedIds = await getAssignedSubmissionIds(filter.editorId);
+    if (assignedIds.length === 0) return 0;
+    query = query.in("id", assignedIds);
+  }
+
+  if (filter.queue === "unassigned") {
+    const assignedIds = await getAssignedSubmissionIdsForRoles();
+    if (assignedIds.length > 0) {
+      query = query.not("id", "in", assignedIds);
+    }
+  }
+
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function countTasks({
+  supabase,
+  editorId,
+}: {
+  supabase: ReturnType<typeof getSupabaseAdminClient>;
+  editorId?: string | null;
+}) {
+  let query = supabase.from("submission_tasks").select("*", { head: true, count: "exact" }).eq("status", "open");
+  if (editorId) {
+    query = query.eq("assignee_id", editorId);
+  }
+  const { count } = await query;
+  return count ?? 0;
+}
+
+async function getAssignedSubmissionIds(userId: string) {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .eq("user_id", userId)
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+async function getAssignedSubmissionIdsForRoles() {
+  try {
+    await ensureDummyEditorData();
+    const supabase = getSupabaseAdminClient();
+    const { data, error } = await supabase
+      .from("submission_participants")
+      .select("submission_id")
+      .in("role", ["editor", "section_editor"]);
+    if (error || !data) {
+      throw error;
+    }
+    return Array.from(new Set(data.map((row) => row.submission_id)));
+  } catch {
+    return [];
+  }
+}
+
+// Function removed - now using dummy-helpers.ts functions
+// getDummySubmissions is now replaced by getFilteredSubmissions from dummy-helpers.ts
+
+type UserDisplay = {
+  name: string;
+  email?: string;
+};
+
+async function getUserDisplayMap(
+  supabase: ReturnType<typeof getSupabaseAdminClient>,
+  userIds: string[],
+): Promise<Record<string, UserDisplay>> {
+  const uniqueIds = Array.from(new Set(userIds.filter(Boolean)));
+  if (uniqueIds.length === 0) {
+    return {};
+  }
+
+  const entries = await Promise.all(
+    uniqueIds.map(async (userId) => {
+      try {
+        const { data, error } = await supabase.auth.admin.getUserById(userId);
+        if (error || !data.user) {
+          return [userId, { name: `User ${userId}` }] as const;
+        }
+        const metadata = (data.user.user_metadata as { name?: string } | null) ?? {};
+        const name = metadata.name ?? data.user.email ?? `User ${userId}`;
+        return [userId, { name, email: data.user.email ?? undefined }] as const;
+      } catch {
+        return [userId, { name: `User ${userId}` }] as const;
+      }
+    }),
+  );
+
+  return Object.fromEntries(entries);
+}
+

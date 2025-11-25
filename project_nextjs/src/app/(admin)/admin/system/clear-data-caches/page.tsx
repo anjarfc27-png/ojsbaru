@@ -99,3 +99,66 @@ export default function ClearDataCachesPage() {
   );
 }
 
+
+          disabled={pending}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: pending ? '#ccc' : '#006798',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: pending ? 'not-allowed' : 'pointer',
+            opacity: pending ? 0.6 : 1
+          }}
+        >
+          {pending ? 'Processing...' : 'Clear Data Caches'}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+
+          disabled={pending}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: pending ? '#ccc' : '#006798',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: pending ? 'not-allowed' : 'pointer',
+            opacity: pending ? 0.6 : 1
+          }}
+        >
+          {pending ? 'Processing...' : 'Clear Data Caches'}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+
+          disabled={pending}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 600,
+            padding: '0.5rem 1rem',
+            backgroundColor: pending ? '#ccc' : '#006798',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: pending ? 'not-allowed' : 'pointer',
+            opacity: pending ? 0.6 : 1
+          }}
+        >
+          {pending ? 'Processing...' : 'Clear Data Caches'}
+        </button>
+      </form>
+    </div>
+  );
+}
+

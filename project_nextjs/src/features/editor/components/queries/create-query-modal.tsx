@@ -312,3 +312,219 @@ export function CreateQueryModal({
     </PkpModal>
   );
 }
+
+            </label>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+                alignItems: "center",
+              }}
+            >
+              <PkpInput
+                value={participantSearch}
+                onChange={(e) => setParticipantSearch(e.target.value)}
+                placeholder="Search by name or role..."
+                style={{ flex: "1 1 200px" }}
+              />
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <PkpButton type="button" variant="onclick" size="sm" onClick={handleSelectAll}>
+                  Select All
+                </PkpButton>
+                <PkpButton type="button" variant="ghost" size="sm" onClick={handleClearSelection}>
+                  Clear
+                </PkpButton>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+                maxHeight: "12rem",
+                overflow: "auto",
+                padding: "0.75rem",
+                borderRadius: "0.25rem",
+                border: "1px solid #e5e5e5",
+                backgroundColor: "#f8f9fa",
+              }}
+            >
+              {filteredParticipants.length === 0 && (
+                <span className="text-xs text-[var(--muted)]">No participants match your search.</span>
+              )}
+              {filteredParticipants.map((participant) => (
+                <label
+                  key={participant.userId}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <PkpCheckbox
+                    checked={selectedParticipants.includes(participant.userId)}
+                    onChange={() => handleToggleParticipant(participant.userId)}
+                  />
+                  <span style={{ color: "#002C40", display: "flex", flexDirection: "column" }}>
+                    <span>{participant.name}</span>
+                    <span style={{ fontSize: "0.75rem", color: "rgba(0,0,0,0.6)" }}>
+                      {participant.role}
+                      {participant.stage ? ` • ${participant.stage}` : ""}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </form>
+    </PkpModal>
+  );
+}
+
+            </label>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+                alignItems: "center",
+              }}
+            >
+              <PkpInput
+                value={participantSearch}
+                onChange={(e) => setParticipantSearch(e.target.value)}
+                placeholder="Search by name or role..."
+                style={{ flex: "1 1 200px" }}
+              />
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <PkpButton type="button" variant="onclick" size="sm" onClick={handleSelectAll}>
+                  Select All
+                </PkpButton>
+                <PkpButton type="button" variant="ghost" size="sm" onClick={handleClearSelection}>
+                  Clear
+                </PkpButton>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+                maxHeight: "12rem",
+                overflow: "auto",
+                padding: "0.75rem",
+                borderRadius: "0.25rem",
+                border: "1px solid #e5e5e5",
+                backgroundColor: "#f8f9fa",
+              }}
+            >
+              {filteredParticipants.length === 0 && (
+                <span className="text-xs text-[var(--muted)]">No participants match your search.</span>
+              )}
+              {filteredParticipants.map((participant) => (
+                <label
+                  key={participant.userId}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <PkpCheckbox
+                    checked={selectedParticipants.includes(participant.userId)}
+                    onChange={() => handleToggleParticipant(participant.userId)}
+                  />
+                  <span style={{ color: "#002C40", display: "flex", flexDirection: "column" }}>
+                    <span>{participant.name}</span>
+                    <span style={{ fontSize: "0.75rem", color: "rgba(0,0,0,0.6)" }}>
+                      {participant.role}
+                      {participant.stage ? ` • ${participant.stage}` : ""}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </form>
+    </PkpModal>
+  );
+}
+
+            </label>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.5rem",
+                alignItems: "center",
+              }}
+            >
+              <PkpInput
+                value={participantSearch}
+                onChange={(e) => setParticipantSearch(e.target.value)}
+                placeholder="Search by name or role..."
+                style={{ flex: "1 1 200px" }}
+              />
+              <div style={{ display: "flex", gap: "0.5rem" }}>
+                <PkpButton type="button" variant="onclick" size="sm" onClick={handleSelectAll}>
+                  Select All
+                </PkpButton>
+                <PkpButton type="button" variant="ghost" size="sm" onClick={handleClearSelection}>
+                  Clear
+                </PkpButton>
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.75rem",
+                maxHeight: "12rem",
+                overflow: "auto",
+                padding: "0.75rem",
+                borderRadius: "0.25rem",
+                border: "1px solid #e5e5e5",
+                backgroundColor: "#f8f9fa",
+              }}
+            >
+              {filteredParticipants.length === 0 && (
+                <span className="text-xs text-[var(--muted)]">No participants match your search.</span>
+              )}
+              {filteredParticipants.map((participant) => (
+                <label
+                  key={participant.userId}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <PkpCheckbox
+                    checked={selectedParticipants.includes(participant.userId)}
+                    onChange={() => handleToggleParticipant(participant.userId)}
+                  />
+                  <span style={{ color: "#002C40", display: "flex", flexDirection: "column" }}>
+                    <span>{participant.name}</span>
+                    <span style={{ fontSize: "0.75rem", color: "rgba(0,0,0,0.6)" }}>
+                      {participant.role}
+                      {participant.stage ? ` • ${participant.stage}` : ""}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+      </form>
+    </PkpModal>
+  );
+}

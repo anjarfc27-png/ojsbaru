@@ -521,3 +521,66 @@ function formatRelative(value: string) {
   }
 }
 
+
+              ? "No submissions found matching the filters."
+              : emptyMessage}
+          </div>
+        ) : (
+          table
+        )}
+      </div>
+    </div>
+  );
+}
+
+function formatRelative(value: string) {
+  try {
+    const date = new Date(value);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  } catch {
+    return value;
+  }
+}
+
+
+              ? "No submissions found matching the filters."
+              : emptyMessage}
+          </div>
+        ) : (
+          table
+        )}
+      </div>
+    </div>
+  );
+}
+
+function formatRelative(value: string) {
+  try {
+    const date = new Date(value);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  } catch {
+    return value;
+  }
+}
+
+
+              ? "No submissions found matching the filters."
+              : emptyMessage}
+          </div>
+        ) : (
+          table
+        )}
+      </div>
+    </div>
+  );
+}
+
+function formatRelative(value: string) {
+  try {
+    const date = new Date(value);
+    return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  } catch {
+    return value;
+  }
+}
+

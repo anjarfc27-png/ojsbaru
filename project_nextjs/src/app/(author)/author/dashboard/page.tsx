@@ -484,3 +484,21 @@ function AuthorDashboardPage() {
 }
 
 export default withAuth(AuthorDashboardPage, 'author')
+
+    </div>
+  );
+}
+
+export default withAuth(AuthorDashboardPage, 'author')
+
+    </div>
+  );
+}
+
+export default withAuth(AuthorDashboardPage, 'author')
+
+    </div>
+  );
+}
+
+export default withAuth(AuthorDashboardPage, 'author')

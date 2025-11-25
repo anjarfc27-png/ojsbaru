@@ -285,3 +285,24 @@ export function QueryDetailModal({
 }
 
 
+
+      )}
+    </PkpModal>
+  );
+}
+
+
+
+      )}
+    </PkpModal>
+  );
+}
+
+
+
+      )}
+    </PkpModal>
+  );
+}
+
+

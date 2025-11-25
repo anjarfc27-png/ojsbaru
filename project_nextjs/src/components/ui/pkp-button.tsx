@@ -238,3 +238,129 @@ export const PkpButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, PkpBu
 
 PkpButton.displayName = "PkpButton";
 
+
+          style={buttonStyles}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          {...linkProps}
+        >
+          {loading && spinner}
+          {children}
+        </Link>
+      );
+    }
+
+    const {
+      className: _ignoredClassName,
+      children: _ignoredChildren,
+      variant: _ignoredVariant,
+      size: _ignoredSize,
+      loading: _ignoredLoading,
+      disabled: _ignoredDisabled,
+      asChild: _ignoredAsChild,
+      ...buttonProps
+    } = props as ButtonProps;
+
+    return (
+      <button
+        ref={ref}
+        className={cn("pkpButton", `pkpButton--is${variant === "primary" ? "Primary" : variant === "onclick" ? "Onclick" : variant === "warnable" ? "Warnable" : "Link"}`, className)}
+        style={buttonStyles}
+        disabled={disabled ?? loading}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...buttonProps}
+      >
+        {loading && spinner}
+        {children}
+      </button>
+    );
+  },
+);
+
+PkpButton.displayName = "PkpButton";
+
+
+          style={buttonStyles}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          {...linkProps}
+        >
+          {loading && spinner}
+          {children}
+        </Link>
+      );
+    }
+
+    const {
+      className: _ignoredClassName,
+      children: _ignoredChildren,
+      variant: _ignoredVariant,
+      size: _ignoredSize,
+      loading: _ignoredLoading,
+      disabled: _ignoredDisabled,
+      asChild: _ignoredAsChild,
+      ...buttonProps
+    } = props as ButtonProps;
+
+    return (
+      <button
+        ref={ref}
+        className={cn("pkpButton", `pkpButton--is${variant === "primary" ? "Primary" : variant === "onclick" ? "Onclick" : variant === "warnable" ? "Warnable" : "Link"}`, className)}
+        style={buttonStyles}
+        disabled={disabled ?? loading}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...buttonProps}
+      >
+        {loading && spinner}
+        {children}
+      </button>
+    );
+  },
+);
+
+PkpButton.displayName = "PkpButton";
+
+
+          style={buttonStyles}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          {...linkProps}
+        >
+          {loading && spinner}
+          {children}
+        </Link>
+      );
+    }
+
+    const {
+      className: _ignoredClassName,
+      children: _ignoredChildren,
+      variant: _ignoredVariant,
+      size: _ignoredSize,
+      loading: _ignoredLoading,
+      disabled: _ignoredDisabled,
+      asChild: _ignoredAsChild,
+      ...buttonProps
+    } = props as ButtonProps;
+
+    return (
+      <button
+        ref={ref}
+        className={cn("pkpButton", `pkpButton--is${variant === "primary" ? "Primary" : variant === "onclick" ? "Onclick" : variant === "warnable" ? "Warnable" : "Link"}`, className)}
+        style={buttonStyles}
+        disabled={disabled ?? loading}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...buttonProps}
+      >
+        {loading && spinner}
+        {children}
+      </button>
+    );
+  },
+);
+
+PkpButton.displayName = "PkpButton";
+

@@ -398,3 +398,69 @@ export default function ReaderLayout({
   );
 }
 
+
+                            }}
+                          >
+                            {segment.replace('-', ' ')}
+                          </Link>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          </div>
+
+          {/* Page Content */}
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+
+                            }}
+                          >
+                            {segment.replace('-', ' ')}
+                          </Link>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          </div>
+
+          {/* Page Content */}
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
+
+
+                            }}
+                          >
+                            {segment.replace('-', ' ')}
+                          </Link>
+                        )}
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+            </nav>
+          </div>
+
+          {/* Page Content */}
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+}
+

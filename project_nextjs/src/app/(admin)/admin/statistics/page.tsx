@@ -217,3 +217,330 @@ function AdminStatisticsPage() {
 }
 
 export default withAuth(AdminStatisticsPage, 'admin')
+
+            <p style={{
+              fontSize: '0.75rem',
+              color: '#00B24E',
+              margin: 0
+            }}>
+              {stat.trend}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Recent Activity */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Recent Activity
+          </h2>
+        </div>
+        <div style={{
+          padding: '1rem 1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            {recentActivities.map((activity, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: index < recentActivities.length - 1 ? '1rem' : '0',
+                borderBottom: index < recentActivities.length - 1 ? '1px solid #e5e5e5' : 'none'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem'
+                }}>
+                  <div style={{
+                    width: '2rem',
+                    height: '2rem',
+                    backgroundColor: '#dbeafe',
+                    borderRadius: '9999px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{
+                      color: '#1e40af',
+                      fontSize: '0.875rem',
+                      fontWeight: 500
+                    }}>
+                      {activity.user.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#002C40',
+                      margin: '0 0 0.25rem 0'
+                    }}>
+                      <span style={{ fontWeight: 500 }}>{activity.user}</span> {activity.action} <span style={{ fontWeight: 500 }}>{activity.target}</span>
+                    </p>
+                    <p style={{
+                      fontSize: '0.75rem',
+                      color: '#666',
+                      margin: 0
+                    }}>
+                      {activity.time}
+                    </p>
+                  </div>
+                </div>
+                <span style={{
+                  fontSize: '0.75rem',
+                  padding: '0.125rem 0.5rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#f8f9fa',
+                  border: '1px solid #dee2e6',
+                  color: '#333',
+                  fontWeight: 600
+                }}>
+                  Recent
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminStatisticsPage, 'admin')
+
+            <p style={{
+              fontSize: '0.75rem',
+              color: '#00B24E',
+              margin: 0
+            }}>
+              {stat.trend}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Recent Activity */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Recent Activity
+          </h2>
+        </div>
+        <div style={{
+          padding: '1rem 1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            {recentActivities.map((activity, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: index < recentActivities.length - 1 ? '1rem' : '0',
+                borderBottom: index < recentActivities.length - 1 ? '1px solid #e5e5e5' : 'none'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem'
+                }}>
+                  <div style={{
+                    width: '2rem',
+                    height: '2rem',
+                    backgroundColor: '#dbeafe',
+                    borderRadius: '9999px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{
+                      color: '#1e40af',
+                      fontSize: '0.875rem',
+                      fontWeight: 500
+                    }}>
+                      {activity.user.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#002C40',
+                      margin: '0 0 0.25rem 0'
+                    }}>
+                      <span style={{ fontWeight: 500 }}>{activity.user}</span> {activity.action} <span style={{ fontWeight: 500 }}>{activity.target}</span>
+                    </p>
+                    <p style={{
+                      fontSize: '0.75rem',
+                      color: '#666',
+                      margin: 0
+                    }}>
+                      {activity.time}
+                    </p>
+                  </div>
+                </div>
+                <span style={{
+                  fontSize: '0.75rem',
+                  padding: '0.125rem 0.5rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#f8f9fa',
+                  border: '1px solid #dee2e6',
+                  color: '#333',
+                  fontWeight: 600
+                }}>
+                  Recent
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminStatisticsPage, 'admin')
+
+            <p style={{
+              fontSize: '0.75rem',
+              color: '#00B24E',
+              margin: 0
+            }}>
+              {stat.trend}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Recent Activity */}
+      <div style={{
+        backgroundColor: '#fff',
+        border: '1px solid #dee2e6',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid #e5e5e5',
+          backgroundColor: '#f8f9fa'
+        }}>
+          <h2 style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: '#002C40',
+            margin: 0
+          }}>
+            Recent Activity
+          </h2>
+        </div>
+        <div style={{
+          padding: '1rem 1.5rem'
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            {recentActivities.map((activity, index) => (
+              <div key={index} style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: index < recentActivities.length - 1 ? '1rem' : '0',
+                borderBottom: index < recentActivities.length - 1 ? '1px solid #e5e5e5' : 'none'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem'
+                }}>
+                  <div style={{
+                    width: '2rem',
+                    height: '2rem',
+                    backgroundColor: '#dbeafe',
+                    borderRadius: '9999px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{
+                      color: '#1e40af',
+                      fontSize: '0.875rem',
+                      fontWeight: 500
+                    }}>
+                      {activity.user.charAt(0)}
+                    </span>
+                  </div>
+                  <div>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#002C40',
+                      margin: '0 0 0.25rem 0'
+                    }}>
+                      <span style={{ fontWeight: 500 }}>{activity.user}</span> {activity.action} <span style={{ fontWeight: 500 }}>{activity.target}</span>
+                    </p>
+                    <p style={{
+                      fontSize: '0.75rem',
+                      color: '#666',
+                      margin: 0
+                    }}>
+                      {activity.time}
+                    </p>
+                  </div>
+                </div>
+                <span style={{
+                  fontSize: '0.75rem',
+                  padding: '0.125rem 0.5rem',
+                  borderRadius: '4px',
+                  backgroundColor: '#f8f9fa',
+                  border: '1px solid #dee2e6',
+                  color: '#333',
+                  fontWeight: 600
+                }}>
+                  Recent
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default withAuth(AdminStatisticsPage, 'admin')

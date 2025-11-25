@@ -174,3 +174,150 @@ export default async function SiteSetupSettingsPage() {
     </div>
   );
 }
+
+              color: '#002C40'
+            }}
+          >
+            Minimum password length <span style={{ color: '#d32f2f' }}>*</span>
+          </label>
+          <input
+            id="minPasswordLength"
+            name="minPasswordLength"
+            type="number"
+            min={6}
+            max={64}
+            defaultValue={settings.minPasswordLength}
+            required
+            style={{
+              maxWidth: '12rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+              color: '#002C40'
+            }}
+          >
+            Minimum password length <span style={{ color: '#d32f2f' }}>*</span>
+          </label>
+          <input
+            id="minPasswordLength"
+            name="minPasswordLength"
+            type="number"
+            min={6}
+            max={64}
+            defaultValue={settings.minPasswordLength}
+            required
+            style={{
+              maxWidth: '12rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+              color: '#002C40'
+            }}
+          >
+            Minimum password length <span style={{ color: '#d32f2f' }}>*</span>
+          </label>
+          <input
+            id="minPasswordLength"
+            name="minPasswordLength"
+            type="number"
+            min={6}
+            max={64}
+            defaultValue={settings.minPasswordLength}
+            required
+            style={{
+              maxWidth: '12rem',
+              fontSize: "0.875rem",
+              padding: "0.5rem 0.75rem",
+              border: '1px solid #dee2e6',
+              borderRadius: '4px',
+              fontFamily: 'inherit'
+            }}
+          />
+        </div>
+
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end'
+        }}>
+          <button
+            type="submit"
+            style={{
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              backgroundColor: '#006798',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

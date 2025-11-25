@@ -266,3 +266,48 @@ export function WorkflowStageView({ detail, stage }: Props) {
   );
 }
 
+
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "rgba(0, 0, 0, 0.54)",
+            }}
+          >
+            Queries feature akan diimplementasikan kemudian.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "rgba(0, 0, 0, 0.54)",
+            }}
+          >
+            Queries feature akan diimplementasikan kemudian.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "rgba(0, 0, 0, 0.54)",
+            }}
+          >
+            Queries feature akan diimplementasikan kemudian.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+

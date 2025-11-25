@@ -194,3 +194,30 @@ export function ProductionFilesPanel({
     </>
   );
 }
+
+          submissionVersionId={submissionVersionId}
+          availableFiles={availableFiles}
+          onSubmit={handleUpdateGalley}
+        />
+      )}
+    </>
+  );
+}
+
+          submissionVersionId={submissionVersionId}
+          availableFiles={availableFiles}
+          onSubmit={handleUpdateGalley}
+        />
+      )}
+    </>
+  );
+}
+
+          submissionVersionId={submissionVersionId}
+          availableFiles={availableFiles}
+          onSubmit={handleUpdateGalley}
+        />
+      )}
+    </>
+  );
+}

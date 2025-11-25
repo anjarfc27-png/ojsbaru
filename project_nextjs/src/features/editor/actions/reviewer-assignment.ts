@@ -246,3 +246,420 @@ export async function removeReviewerAssignment(
     };
   }
 }
+
+/**
+ * Update Reviewer Assignment
+ * Based on OJS PKP 3.3 updateReviewAssignment
+ */
+export async function updateReviewerAssignment(
+  data: UpdateReviewerData
+): Promise<ActionResult> {
+  try {
+    const { reviewId } = data;
+    const supabase = getSupabaseAdminClient();
+
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id, reviewer_id, metadata, due_date, response_due_date")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const updatedMetadata =
+      data.personalMessage !== undefined
+        ? { ...(existing.metadata ?? {}), personalMessage: data.personalMessage }
+        : existing.metadata ?? {};
+
+    const payload: Record<string, unknown> = {};
+    if (data.dueDate !== undefined) {
+      payload.due_date = data.dueDate;
+    }
+    if (data.responseDueDate !== undefined) {
+      payload.response_due_date = data.responseDueDate;
+    }
+    if (data.personalMessage !== undefined) {
+      payload.metadata = updatedMetadata;
+    }
+
+    if (Object.keys(payload).length === 0) {
+      return {
+        ok: true,
+        message: "No changes applied",
+      };
+    }
+
+    const { error } = await supabase
+      .from("submission_reviews")
+      .update(payload)
+      .eq("id", reviewId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment updated.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment updated successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to update reviewer assignment",
+    };
+  }
+}
+
+/**
+ * Remove Reviewer Assignment
+ * Based on OJS PKP 3.3 deleteReviewAssignment
+ */
+export async function removeReviewerAssignment(
+  reviewId: string
+): Promise<ActionResult> {
+  try {
+    const supabase = getSupabaseAdminClient();
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const { error } = await supabase.from("submission_reviews").delete().eq("id", reviewId);
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment removed.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment removed successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to remove reviewer assignment",
+    };
+  }
+}
+
+/**
+ * Update Reviewer Assignment
+ * Based on OJS PKP 3.3 updateReviewAssignment
+ */
+export async function updateReviewerAssignment(
+  data: UpdateReviewerData
+): Promise<ActionResult> {
+  try {
+    const { reviewId } = data;
+    const supabase = getSupabaseAdminClient();
+
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id, reviewer_id, metadata, due_date, response_due_date")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const updatedMetadata =
+      data.personalMessage !== undefined
+        ? { ...(existing.metadata ?? {}), personalMessage: data.personalMessage }
+        : existing.metadata ?? {};
+
+    const payload: Record<string, unknown> = {};
+    if (data.dueDate !== undefined) {
+      payload.due_date = data.dueDate;
+    }
+    if (data.responseDueDate !== undefined) {
+      payload.response_due_date = data.responseDueDate;
+    }
+    if (data.personalMessage !== undefined) {
+      payload.metadata = updatedMetadata;
+    }
+
+    if (Object.keys(payload).length === 0) {
+      return {
+        ok: true,
+        message: "No changes applied",
+      };
+    }
+
+    const { error } = await supabase
+      .from("submission_reviews")
+      .update(payload)
+      .eq("id", reviewId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment updated.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment updated successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to update reviewer assignment",
+    };
+  }
+}
+
+/**
+ * Remove Reviewer Assignment
+ * Based on OJS PKP 3.3 deleteReviewAssignment
+ */
+export async function removeReviewerAssignment(
+  reviewId: string
+): Promise<ActionResult> {
+  try {
+    const supabase = getSupabaseAdminClient();
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const { error } = await supabase.from("submission_reviews").delete().eq("id", reviewId);
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment removed.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment removed successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to remove reviewer assignment",
+    };
+  }
+}
+
+/**
+ * Update Reviewer Assignment
+ * Based on OJS PKP 3.3 updateReviewAssignment
+ */
+export async function updateReviewerAssignment(
+  data: UpdateReviewerData
+): Promise<ActionResult> {
+  try {
+    const { reviewId } = data;
+    const supabase = getSupabaseAdminClient();
+
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id, reviewer_id, metadata, due_date, response_due_date")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const updatedMetadata =
+      data.personalMessage !== undefined
+        ? { ...(existing.metadata ?? {}), personalMessage: data.personalMessage }
+        : existing.metadata ?? {};
+
+    const payload: Record<string, unknown> = {};
+    if (data.dueDate !== undefined) {
+      payload.due_date = data.dueDate;
+    }
+    if (data.responseDueDate !== undefined) {
+      payload.response_due_date = data.responseDueDate;
+    }
+    if (data.personalMessage !== undefined) {
+      payload.metadata = updatedMetadata;
+    }
+
+    if (Object.keys(payload).length === 0) {
+      return {
+        ok: true,
+        message: "No changes applied",
+      };
+    }
+
+    const { error } = await supabase
+      .from("submission_reviews")
+      .update(payload)
+      .eq("id", reviewId);
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment updated.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment updated successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to update reviewer assignment",
+    };
+  }
+}
+
+/**
+ * Remove Reviewer Assignment
+ * Based on OJS PKP 3.3 deleteReviewAssignment
+ */
+export async function removeReviewerAssignment(
+  reviewId: string
+): Promise<ActionResult> {
+  try {
+    const supabase = getSupabaseAdminClient();
+    const { data: existing, error: fetchError } = await supabase
+      .from("submission_reviews")
+      .select("review_round_id")
+      .eq("id", reviewId)
+      .maybeSingle();
+
+    if (fetchError || !existing) {
+      throw new Error("Review assignment not found");
+    }
+
+    const { data: round } = await supabase
+      .from("submission_review_rounds")
+      .select("submission_id")
+      .eq("id", existing.review_round_id)
+      .maybeSingle();
+
+    if (!round) {
+      throw new Error("Review round not found");
+    }
+
+    const { userId } = await assertEditorAccess(round.submission_id);
+
+    const { error } = await supabase.from("submission_reviews").delete().eq("id", reviewId);
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    await logActivity({
+      submissionId: round.submission_id,
+      actorId: userId,
+      category: "review",
+      message: "Reviewer assignment removed.",
+    });
+
+    return {
+      ok: true,
+      message: "Reviewer assignment removed successfully",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Failed to remove reviewer assignment",
+    };
+  }
+}
