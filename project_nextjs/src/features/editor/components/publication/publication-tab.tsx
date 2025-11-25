@@ -17,7 +17,11 @@ export function PublicationTab({ submissionId, detail }: Props) {
 
   // Get current publication version (using first version for now)
   const currentVersion = detail.versions?.[0];
-  const publicationStatus = currentVersion?.status ?? "queued"; // queued, scheduled, published
+  const rawStatus = currentVersion?.status;
+  const publicationStatus: "queued" | "scheduled" | "published" =
+    rawStatus === "scheduled" || rawStatus === "published" || rawStatus === "queued"
+      ? rawStatus
+      : "queued"; // queued, scheduled, published
 
   const subTabs = [
     { key: "titleAbstract" as const, label: "Title & Abstract" },

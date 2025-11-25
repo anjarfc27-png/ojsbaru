@@ -221,7 +221,7 @@ export const PkpButton = forwardRef<HTMLButtonElement | HTMLAnchorElement, PkpBu
 
     return (
       <button
-        ref={ref}
+        ref={ref as React.Ref<HTMLButtonElement>}
         className={cn("pkpButton", `pkpButton--is${variant === "primary" ? "Primary" : variant === "onclick" ? "Onclick" : variant === "warnable" ? "Warnable" : "Link"}`, className)}
         style={buttonStyles}
         disabled={disabled ?? loading}

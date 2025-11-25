@@ -137,7 +137,8 @@ export async function sendToExternalReview(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    // Ensure submission exists and editor has access (similar to OJS PKP 3.3 behaviour)
+    await getSubmissionRow(submissionId);
 
     await createReviewRound(submissionId, "review");
     await applyDecisionTransition({
@@ -173,7 +174,7 @@ export async function acceptSubmission(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await applyDecisionTransition({
       decision: SUBMISSION_EDITOR_DECISION_ACCEPT,
@@ -208,7 +209,7 @@ export async function declineSubmission(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     const decisionType =
       data.decision === SUBMISSION_EDITOR_DECISION_INITIAL_DECLINE
@@ -248,7 +249,7 @@ export async function requestRevisions(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await logActivity({
       submissionId,
@@ -279,7 +280,7 @@ export async function resubmitForReview(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await createReviewRound(submissionId, "review");
     await applyDecisionTransition({
@@ -315,7 +316,7 @@ export async function sendToProduction(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await applyDecisionTransition({
       decision: SUBMISSION_EDITOR_DECISION_SEND_TO_PRODUCTION,
@@ -350,7 +351,7 @@ export async function revertDecline(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await applyDecisionTransition({
       decision: SUBMISSION_EDITOR_DECISION_REVERT_DECLINE,
@@ -385,7 +386,7 @@ export async function sendRecommendation(
   try {
     const { submissionId } = data;
     const { userId } = await assertEditorAccess(submissionId);
-    await getSubmission(submissionId);
+    await getSubmissionRow(submissionId);
 
     await logActivity({
       submissionId,

@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { redirect } from "next/navigation";
 import { getCurrentUserServer } from "@/lib/auth-server";
 import Link from "next/link";

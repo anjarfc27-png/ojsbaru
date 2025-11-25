@@ -130,3 +130,22 @@ export function PkpTableCell({ children, className, style }: PkpTableCellProps) 
   );
 }
 
+type PkpTableBodyProps = {
+  children: ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+};
+
+export function PkpTableBody({ children, className, style }: PkpTableBodyProps) {
+  return (
+    <tbody
+      className={cn(className)}
+      style={{
+        ...style,
+      }}
+    >
+      {children}
+    </tbody>
+  );
+}
+

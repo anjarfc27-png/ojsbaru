@@ -113,8 +113,6 @@ export function ReviewRequestStep({ assignment, onComplete, onStatusChange }: Pr
 
   return (
     <form className="pkp_form" style={{ fontFamily: 'Arial, sans-serif' }}>
-      <div style={{ marginBottom: '1rem' }}>
-
       {/* Form Area - OJS PKP 3.3 Style */}
       <div className="pkp_form_area" style={{ marginBottom: '1.5rem' }}>
         {/* Review Request Message Section */}

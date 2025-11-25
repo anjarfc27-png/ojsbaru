@@ -151,16 +151,19 @@ export async function updateGalley(data: UpdateGalleyData): Promise<ActionResult
       throw updateError;
     }
 
+    const submissionVersionForLog = (existingGalley.submission_versions as { submission_id: string }[] | null)?.[0];
+    const submissionIdForLog = submissionVersionForLog?.submission_id ?? null;
+
     await supabase.from("submission_activity_logs").insert({
       id: randomUUID(),
-      submission_id: (existingGalley.submission_versions as { submission_id: string } | null)?.submission_id,
+      submission_id: submissionIdForLog as any,
       actor_id: user.id,
       category: "production",
       message: `Memperbarui galley "${data.label}".`,
       metadata: {
         galleyId: data.galleyId,
       },
-    });
+    } as any);
 
     return {
       ok: true,
@@ -200,16 +203,19 @@ export async function deleteGalley(galleyId: string): Promise<ActionResult> {
       throw deleteError;
     }
 
+    const submissionVersionForLog = (existingGalley.submission_versions as { submission_id: string }[] | null)?.[0];
+    const submissionIdForLog = submissionVersionForLog?.submission_id ?? null;
+
     await supabase.from("submission_activity_logs").insert({
       id: randomUUID(),
-      submission_id: (existingGalley.submission_versions as { submission_id: string } | null)?.submission_id,
+      submission_id: submissionIdForLog as any,
       actor_id: user.id,
       category: "production",
       message: `Menghapus galley "${existingGalley.label}".`,
       metadata: {
         galleyId,
       },
-    });
+    } as any);
 
     return {
       ok: true,

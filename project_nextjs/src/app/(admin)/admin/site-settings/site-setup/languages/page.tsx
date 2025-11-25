@@ -2,9 +2,18 @@ import { getSiteLanguages, updateSiteLanguagesAction, installLocaleAction } from
 import { getLocaleInfo } from "@/lib/locales";
 import LanguagesPageClient from "./languages-client";
 
+async function installLocaleActionWrapper(formData: FormData): Promise<void> {
+  "use server";
+  const localeCode = formData.get('localeCode') as string;
+  if (!localeCode) return;
+  await installLocaleAction(localeCode);
+}
+
 export default async function SiteSetupLanguagesPage() {
   const initial = await getSiteLanguages();
-  const installedLocales = initial.enabled_locales.map((code) => getLocaleInfo(code)).filter(Boolean);
+  const installedLocales = initial.enabled_locales
+    .map((code) => getLocaleInfo(code))
+    .filter((locale): locale is NonNullable<typeof locale> => locale !== null);
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif' }}>
@@ -28,7 +37,7 @@ export default async function SiteSetupLanguagesPage() {
         initial={initial} 
         installedLocales={installedLocales}
         updateAction={updateSiteLanguagesAction}
-        installAction={installLocaleAction}
+        installAction={installLocaleActionWrapper}
       />
     </div>
   );

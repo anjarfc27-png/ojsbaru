@@ -166,13 +166,8 @@ export default async function AppearanceSetupPage() {
                   gap: '0.5rem',
                   cursor: 'pointer',
                   padding: "0.5rem",
-                  borderRadius: "0.25rem"
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#f8f9fa';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
+                  borderRadius: "0.25rem",
+                  transition: "background-color 0.2s ease",
                 }}
               >
                 <input

@@ -612,8 +612,8 @@ export default function SettingsContextPage() {
                     <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <PkpCheckbox
                         checked={newSection.enabled}
-                        onCheckedChange={(checked) =>
-                          setNewSection((prev) => ({ ...prev, enabled: Boolean(checked) }))
+                        onChange={(e) =>
+                          setNewSection((prev) => ({ ...prev, enabled: e.target.checked }))
                         }
                       />
                       <span>Enabled</span>
@@ -650,7 +650,7 @@ export default function SettingsContextPage() {
                           </PkpTableCell>
                           <PkpTableCell style={{ width: "120px" }}>{section.abbreviation}</PkpTableCell>
                           <PkpTableCell style={{ width: "80px", textAlign: "center" }}>
-                            <PkpCheckbox checked={section.enabled} onCheckedChange={() => handleToggleSection(section.id)} />
+                            <PkpCheckbox checked={section.enabled} onChange={() => handleToggleSection(section.id)} />
                           </PkpTableCell>
                           <PkpTableCell style={{ width: "120px", textAlign: "center" }}>
                                   <PkpButton variant="onclick" size="sm" style={{ marginRight: "0.5rem" }} disabled>

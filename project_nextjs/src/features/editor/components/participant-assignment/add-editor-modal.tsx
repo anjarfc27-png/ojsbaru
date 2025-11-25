@@ -98,7 +98,7 @@ export function AddEditorModal({
       isOpen={open}
       onClose={onClose}
       title="Assign Editor"
-      size="lg"
+      size="large"
       footer={
         <>
           <PkpButton
@@ -201,19 +201,23 @@ export function AddEditorModal({
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "0.75rem",
+              gap: "0.5rem",
             }}
           >
-            <PkpCheckbox
-              checked={recommendOnly}
-              onChange={(e) => setRecommendOnly(e.target.checked)}
-              label="Recommend Only (cannot make final decisions)"
-            />
-            <PkpCheckbox
-              checked={canChangeMetadata}
-              onChange={(e) => setCanChangeMetadata(e.target.checked)}
-              label="Can Change Metadata"
-            />
+            <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", color: "#002C40" }}>
+              <PkpCheckbox
+                checked={recommendOnly}
+                onChange={(e) => setRecommendOnly(e.target.checked)}
+              />
+              <span>Recommend Only (cannot make final decisions)</span>
+            </label>
+            <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.875rem", color: "#002C40" }}>
+              <PkpCheckbox
+                checked={canChangeMetadata}
+                onChange={(e) => setCanChangeMetadata(e.target.checked)}
+              />
+              <span>Can Change Metadata</span>
+            </label>
           </div>
         </div>
 

@@ -205,7 +205,7 @@ export function ReviewerAssignmentList({
                         {onViewReview && (
                           <PkpButton
                             size="sm"
-                            variant="text"
+                            variant="link"
                             onClick={() => onViewReview(review.id)}
                           >
                             View
@@ -214,7 +214,7 @@ export function ReviewerAssignmentList({
                         {onEditReview && (
                           <PkpButton
                             size="sm"
-                            variant="text"
+                            variant="link"
                             onClick={() => onEditReview(review.id)}
                           >
                             Edit

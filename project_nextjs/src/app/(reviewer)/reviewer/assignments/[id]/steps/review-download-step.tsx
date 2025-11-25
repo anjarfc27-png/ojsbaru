@@ -10,7 +10,7 @@ import { QueriesGrid } from "@/components/reviewer/queries-grid";
 
 type Props = {
   assignment: ReviewerAssignment;
-  onComplete: (step: "download", nextStep?: "completion") => void;
+  onComplete: (step: "download", nextStep?: "guidelines" | "completion") => void;
   onStatusChange: (status: ReviewerAssignment["status"]) => void;
 };
 

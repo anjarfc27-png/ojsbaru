@@ -364,14 +364,14 @@ export default function EditorPage() {
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {stats.tasks}
+                    {stats?.tasks ?? 0}
                   </span>
                 )}
               </PkpTabsTrigger>
             {/* My Queue Tab */}
               <PkpTabsTrigger value="myQueue">
                 My Queue
-                {stats?.myQueue > 0 && (
+                {stats?.myQueue && stats.myQueue > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
                   backgroundColor: '#ffffff',
@@ -388,7 +388,7 @@ export default function EditorPage() {
                   alignItems: 'center',
                   justifyContent: 'center'
                   }}>
-                    {stats.myQueue}
+                    {stats?.myQueue ?? 0}
                   </span>
                 )}
               </PkpTabsTrigger>
@@ -397,7 +397,7 @@ export default function EditorPage() {
             {(isManagerOrAdmin || showAllTabsForTesting) && (
               <PkpTabsTrigger value="unassigned">
                 Unassigned
-                {stats?.unassigned > 0 && (
+                {stats?.unassigned && stats.unassigned > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
                     backgroundColor: '#ffffff',
@@ -414,7 +414,7 @@ export default function EditorPage() {
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {stats.unassigned}
+                    {stats?.unassigned ?? 0}
                   </span>
                 )}
               </PkpTabsTrigger>
@@ -424,7 +424,7 @@ export default function EditorPage() {
             {(isManagerOrAdmin || showAllTabsForTesting) && (
               <PkpTabsTrigger value="active">
                 All Active
-                {stats?.allActive > 0 && (
+                {stats?.allActive && stats.allActive > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
                     backgroundColor: '#ffffff',
@@ -441,7 +441,7 @@ export default function EditorPage() {
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {stats.allActive}
+                    {stats?.allActive ?? 0}
                   </span>
                 )}
               </PkpTabsTrigger>
@@ -450,7 +450,7 @@ export default function EditorPage() {
             {/* Archives Tab - Always visible for Editor */}
               <PkpTabsTrigger value="archive">
               Archives
-                {stats?.archived > 0 && (
+                {stats?.archived && stats.archived > 0 && (
                   <span style={{
                     marginLeft: '0.5rem',
                   backgroundColor: '#ffffff',
@@ -467,7 +467,7 @@ export default function EditorPage() {
                   alignItems: 'center',
                   justifyContent: 'center'
                   }}>
-                    {stats.archived}
+                    {stats?.archived ?? 0}
                   </span>
                 )}
                  </PkpTabsTrigger>

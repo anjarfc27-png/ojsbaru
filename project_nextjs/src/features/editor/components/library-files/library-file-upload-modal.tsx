@@ -20,7 +20,7 @@ type UploadMode = "upload" | "remote";
 
 export function LibraryFileUploadModal({ isOpen, journalId, onClose, onUploaded }: LibraryFileUploadModalProps) {
   const [label, setLabel] = useState("");
-  const [stage, setStage] = useState(LIBRARY_FILE_STAGE_OPTIONS[0]?.value ?? "general");
+  const [stage, setStage] = useState<string>(LIBRARY_FILE_STAGE_OPTIONS[0]?.value ?? "general");
   const [description, setDescription] = useState("");
   const [mode, setMode] = useState<UploadMode>("upload");
   const [file, setFile] = useState<File | null>(null);

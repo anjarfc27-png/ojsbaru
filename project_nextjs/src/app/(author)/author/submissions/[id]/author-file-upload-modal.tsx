@@ -216,7 +216,7 @@ export function AuthorFileUploadModal({ isOpen, onClose, submissionId, currentSt
           )}
 
           {feedback && (
-            <FormMessage tone={feedback.tone} message={feedback.message} />
+            <FormMessage tone={feedback.tone}>{feedback.message}</FormMessage>
           )}
 
           <div

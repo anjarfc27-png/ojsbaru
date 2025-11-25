@@ -90,7 +90,7 @@ export function AddCopyeditorModal({
       isOpen={open}
       onClose={onClose}
       title="Assign Copyeditor"
-      size="lg"
+      size="large"
       footer={
         <>
           <PkpButton

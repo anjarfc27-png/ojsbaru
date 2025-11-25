@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import type { Awaited<ReturnType<typeof import('../../actions').getSiteLanguages>> } from '../../actions';
-import type { ReturnType<typeof import('@/lib/locales').getLocaleInfo> } from '@/lib/locales';
+import type { SiteLanguages } from '../../actions';
+import type { LocaleInfo } from '@/lib/locales';
 
 type Props = {
-  initial: Awaited<ReturnType<typeof import('../../actions').getSiteLanguages>>;
-  installedLocales: ReturnType<typeof import('@/lib/locales').getLocaleInfo>[];
+  initial: SiteLanguages;
+  installedLocales: LocaleInfo[];
   updateAction: (formData: FormData) => Promise<void>;
   installAction: (formData: FormData) => Promise<void>;
 };

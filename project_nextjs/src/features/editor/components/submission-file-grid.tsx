@@ -48,6 +48,16 @@ export function SubmissionFileGrid({ submissionId, stage, files, allFiles }: Pro
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [isCopyModalOpen, setIsCopyModalOpen] = useState(false);
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setForm((prev) => ({
+      ...prev,
+      file,
+      size: file ? String(file.size) : "",
+      storagePath: prev.storagePath || (file ? file.name : ""),
+    }));
+  };
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setCurrentUserId(user?.id ?? null));
   }, [supabase]);
@@ -89,6 +99,7 @@ export function SubmissionFileGrid({ submissionId, stage, files, allFiles }: Pro
         }
         setForm({
           label: "",
+          file: null,
           storagePath: "",
           size: "",
           versionLabel: "",

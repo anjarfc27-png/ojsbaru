@@ -112,7 +112,7 @@ export function GalleyGrid({
               <PkpTableCell style={{ textAlign: "right" }}>
                 <div className="flex justify-end gap-2">
                   {onEdit && (
-                    <PkpButton variant="text" size="sm" onClick={() => onEdit(galley.id)}>
+                    <PkpButton variant="link" size="sm" onClick={() => onEdit(galley.id)}>
                       Edit
                     </PkpButton>
                   )}

@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { redirect } from "next/navigation";
 import { getCurrentUserServer } from "@/lib/auth-server";
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -48,9 +51,11 @@ async function getUsers(journalId?: string) {
       }
     >();
 
-    userRoles?.forEach((ur) => {
+    (userRoles ?? []).forEach((ur: any) => {
       const userId = ur.user_id as string;
-      const userData = ur.users as { id: string; email: string; raw_user_meta_data: any } | null;
+      const userData = (ur.users as any[] | null)?.[0] as
+        | { id: string; email: string; raw_user_meta_data: any }
+        | null;
 
       if (!userData) return;
 

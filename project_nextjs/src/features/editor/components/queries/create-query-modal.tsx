@@ -260,7 +260,7 @@ export function CreateQueryModal({
                 <PkpButton type="button" variant="onclick" size="sm" onClick={handleSelectAll}>
                   Select All
                 </PkpButton>
-                <PkpButton type="button" variant="ghost" size="sm" onClick={handleClearSelection}>
+                <PkpButton type="button" variant="onclick" size="sm" onClick={handleClearSelection}>
                   Clear
                 </PkpButton>
               </div>

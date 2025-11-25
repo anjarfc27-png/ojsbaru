@@ -90,7 +90,7 @@ export function AddLayoutEditorModal({
       isOpen={open}
       onClose={onClose}
       title="Assign Layout Editor"
-      size="lg"
+      size="large"
       footer={
         <>
           <PkpButton

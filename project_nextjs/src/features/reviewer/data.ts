@@ -1,3 +1,9 @@
+const getFirst = <T>(value: T | T[] | null | undefined): T | undefined => {
+  if (Array.isArray(value)) {
+    return value[0];
+  }
+  return value ?? undefined;
+};
 import { getSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export type ReviewerAssignmentStatus = "pending" | "accepted" | "declined" | "completed" | "cancelled";
@@ -168,8 +174,9 @@ export async function getReviewerAssignment(
       return null;
     }
 
-    const round = review.submission_review_rounds;
-    const submission = round?.submissions;
+    const round = getFirst(review.submission_review_rounds);
+    const submission = getFirst(round?.submissions);
+    const journal = getFirst(submission?.journals);
 
     // Extract author names from metadata
     const metadata = submission?.metadata as any;
@@ -183,7 +190,7 @@ export async function getReviewerAssignment(
       id: review.id,
       submissionId: submission?.id || "",
       submissionTitle: submission?.title || "Untitled",
-      journalTitle: round?.journals?.title || undefined,
+      journalTitle: journal?.title || undefined,
       reviewRoundId: round?.id || "",
       round: round?.round || 1,
       stage: round?.stage || "review",

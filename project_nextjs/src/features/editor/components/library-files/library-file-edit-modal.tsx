@@ -20,7 +20,7 @@ type LibraryFileEditModalProps = {
 
 export function LibraryFileEditModal({ isOpen, file, journalId, onClose, onUpdated }: LibraryFileEditModalProps) {
   const [label, setLabel] = useState("");
-  const [stage, setStage] = useState(LIBRARY_FILE_STAGE_OPTIONS[0]?.value ?? "general");
+  const [stage, setStage] = useState<string>(LIBRARY_FILE_STAGE_OPTIONS[0]?.value ?? "general");
   const [description, setDescription] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

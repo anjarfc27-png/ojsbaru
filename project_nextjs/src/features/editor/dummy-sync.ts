@@ -304,7 +304,8 @@ async function ensureJournals(supabase: SupabaseClient) {
   const uniqueDummyJournals = new Map<string, { title: string }>();
   DUMMY_SUBMISSIONS.forEach((submission) => {
     if (!uniqueDummyJournals.has(submission.journalId)) {
-      uniqueDummyJournals.set(submission.journalId, { title: submission.journalTitle });
+      const fallbackTitle = submission.journalTitle?.trim() || `Journal ${submission.journalId}`;
+      uniqueDummyJournals.set(submission.journalId, { title: fallbackTitle });
     }
   });
 
@@ -425,7 +426,16 @@ async function seedQueries(
     return;
   }
 
-  const queries = [];
+  const queries: Array<{
+    id: string;
+    submission_id: string;
+    assoc_type: number;
+    assoc_id: string;
+    stage_id: string;
+    seq: number;
+    date_posted: string;
+    closed: boolean;
+  }> = [];
   const participantsRows: Array<{ query_id: string; user_id: string }> = [];
   const notesRows: Array<{
     id: string;

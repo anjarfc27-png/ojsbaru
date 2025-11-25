@@ -173,7 +173,7 @@ export default function ToolsPage() {
       </div>
 
       {/* Tabs - OJS 3.3 Style */}
-      <PkpTabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      <PkpTabs defaultValue="importexport" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div style={{
           borderBottom: "2px solid #e5e5e5",
           background: "#ffffff",

@@ -90,7 +90,7 @@ export function AddProofreaderModal({
       isOpen={open}
       onClose={onClose}
       title="Assign Proofreader"
-      size="lg"
+      size="large"
       footer={
         <>
           <PkpButton

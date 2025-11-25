@@ -49,7 +49,7 @@ export function AuthorWorkflowStageView({ detail, stage }: Props) {
         >
           Files
         </h2>
-        <SubmissionFileGrid submissionId={summary.id} stage={stage} files={files} readOnly={true} />
+        <SubmissionFileGrid submissionId={summary.id} stage={stage} files={files} />
       </div>
 
       {/* Review Rounds Section - Only for Review stage */}
@@ -73,7 +73,7 @@ export function AuthorWorkflowStageView({ detail, stage }: Props) {
           >
             Review Rounds
           </h2>
-          <ReviewRoundsPanel submissionId={summary.id} rounds={reviewRounds} journalId={summary.journalId} readOnly={true} />
+          <ReviewRoundsPanel submissionId={summary.id} rounds={reviewRounds} journalId={summary.journalId} />
         </div>
       )}
 
@@ -118,13 +118,13 @@ export function AuthorWorkflowStageView({ detail, stage }: Props) {
                   color: "#002C40",
                   marginBottom: "0.5rem",
                 }}>
-                  {galley.label || galley.fileKind}
+                  {galley.label}
                 </div>
                 <div style={{
                   fontSize: "0.875rem",
                   color: "#666",
                 }}>
-                  {galley.fileKind}
+                  {galley.label}
                 </div>
               </div>
             ))}

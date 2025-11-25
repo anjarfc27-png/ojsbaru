@@ -61,13 +61,15 @@ export function useJournalSettings<T extends SettingsMap = SettingsMap>(
     setError(null);
 
     try {
-      const response = await fetch(
-        `/api/editor/settings/${section}?journalId=${currentJournalId}`
-      );
+      const response = await fetch(`/api/editor/settings/${section}?journalId=${currentJournalId}`);
       const data = (await response.json()) as SettingsApiResponse<T>;
 
-      if (!response.ok || !data.ok) {
-        throw new Error(!response.ok ? response.statusText : data.message || "Failed to load settings");
+      if (!response.ok) {
+        throw new Error(response.statusText || "Failed to load settings");
+      }
+
+      if (!data.ok) {
+        throw new Error(data.message || "Failed to load settings");
       }
 
       setSettings(data.settings ?? ({} as T));
@@ -106,8 +108,12 @@ export function useJournalSettings<T extends SettingsMap = SettingsMap>(
 
         const data = (await response.json()) as SettingsApiResponse<T>;
 
-        if (!response.ok || !data.ok) {
-          throw new Error(!response.ok ? response.statusText : data.message || "Failed to save settings");
+        if (!response.ok) {
+          throw new Error(response.statusText || "Failed to save settings");
+        }
+
+        if (!data.ok) {
+          throw new Error(data.message || "Failed to save settings");
         }
 
         // Update local state with saved settings

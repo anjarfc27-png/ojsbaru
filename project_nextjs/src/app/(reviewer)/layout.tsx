@@ -83,8 +83,7 @@ export default function ReviewerLayout({
       name: "Review Assignments",
       href: "/reviewer/assignments",
       icon: FileText,
-      current: pathname.startsWith("/reviewer/assignments"),
-      badge: 3
+      current: pathname.startsWith("/reviewer/assignments")
     },
     {
       name: "Completed Reviews",
@@ -322,23 +321,6 @@ export default function ReviewerLayout({
                       <Icon className={item.current ? "h-5 w-5 text-[#002C40]" : "h-5 w-5 text-white"} style={{width: '1.25rem', height: '1.25rem'}} />
                       <span style={{color: item.current ? '#002C40' : 'white'}}>{item.name}</span>
                     </div>
-                    {item.badge && (
-                      <Badge 
-                        className={`text-xs px-2 py-0.5 ${
-                          item.current 
-                            ? "bg-[#002C40] text-white" 
-                            : "bg-white bg-opacity-30 text-white"
-                        }`}
-                        style={{
-                          fontSize: '0.75rem',
-                          padding: '0.125rem 0.5rem',
-                          borderRadius: '9999px',
-                          color: 'white'
-                        }}
-                      >
-                        {item.badge}
-                      </Badge>
-                    )}
                   </Link>
                 );
               })}

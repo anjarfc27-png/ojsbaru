@@ -207,7 +207,7 @@ function parseSettingValue(value: string | null, type: SettingType): any {
 
   switch (type) {
     case "bool":
-      return value === "1" || value === "true" || value === true;
+      return value === "1" || value === "true";
     case "int":
       return parseInt(value, 10);
     case "float":
